@@ -1,0 +1,31 @@
+/* Image list */
+.modx-pb-thumb-wrap {border: 1px solid #efefef; cursor: pointer;}
+.modx-pb-thumb-wrap:hover {border: 1px solid #AAA;}
+.modx-pb-thumb-wrap.inactive {opacity: .6;}
+.modx-gal-item-thumb {width: 120px; height: 90px;}
+.modx-gal-item-thumb img {max-width: 120px; max-height: 90px; display: block; margin: auto;}
+
+
+/* Image preview */
+.modx-gallery-details-thumb {padding-bottom: 20px; border-bottom: 1px solid #efefef;}
+.modx-gallery-details-thumb a {color: #005580;}
+.modx-gallery-details-thumb img {max-width: 300px; display: block; margin: auto; width: 100%;}
+.modx-gallery-details-inactive {text-align: right; color: brown;}
+.modx-gallery-details-info {padding-top: 0; border: 0;}
+
+
+/* Progress bar:*/
+td.x-grid3-td-progress-cell {padding: 0;}
+td.x-grid3-td-progress-cell div.x-grid3-cell-inner {padding: 0;position: relative;line-height: 36px;height: 41px;}
+.ux-progress-cell-inner {position: absolute;top: 0;left: 0;height: 100%;width: 100%;overflow: hidden;}
+.ux-progress-cell-background {background: #E0E8F3;white-space: nowrap;}
+.x-grid3-td-progress-cell .low {background: #11aa11;}
+.x-grid3-td-progress-cell .medium {background: #f1fa1a;}
+.x-grid3-td-progress-cell .high {background: #ee1111;}
+.ux-progress-cell-foreground {color: #000;background-color: #cadaba;white-space: nowrap;overflow: hidden}
+.ux-progress-cell-inner-right {text-align: right;}
+.ux-progress-cell-inner-center {text-align: center;}
+.ux-progress-cell .ux-progress-cell-inner div {padding: 3px 0 0 4px;}
+.ux-progress-cell-inner-right div {padding: 3px 4px 0 0;position: relative;}
+.ux-progress-cell-inner-center div {padding: 3px 0 0 0;position: relative;}
+.ux-progress-cell-inner-left div {padding: 3px 0 0 4px;position: relative;}

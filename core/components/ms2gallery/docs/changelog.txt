@@ -1,0 +1,76 @@
+Changelog for ms2Gallery.
+
+1.1.0-rc2
+==============
+- Added new parameter for media source: "imageUploadDir".
+- Added new setting for component: "ms2gallery_page_size".
+
+1.1.0-rc1
+==============
+- Removed class msUtil
+- Refactored main class
+- Added support for upload non-image files
+- Removed ms2Gallery::initialize().
+- Moved scripts and styles parameters to snippet ms2Gallery.
+- Updated chunks for Bootstrap 3.
+- Ability to update chunks on upgrade.
+- Placeholders with gallery files on web page.
+- Ability to disable files in gallery.
+- Various fixes.
+- UI improvements.
+- Fixed uninstall issue.
+- Progressive JPG thumbnails.
+- Fixed parameter "offset" in snippet.
+- Fixed parameter "idx" in snippet.
+
+1.0.4 rc5
+==============
+- fix initialize ms2Gallery class in snippets
+
+1.0.4 rc4
+==============
+- fix mediasource load properties
+
+1.0.4 rc3
+==============
+- fix resize on client
+
+1.0.4 rc2
+==============
+- fix view ms2Gallery panel in mgr
+
+1.0.4 rc1
+==============
+- fix resource param in snippet
+- fix config in tv call
+- fix file date
+
+Added changes from https://github.com/bezumkin/miniShop2/ (Thanks to bezumkin):
+- Added new fields in "msProductFile": "hash" for sha1 of file and json field "properties".
+- Added renaming files of resource gallery together with thumbnails.
+- [#63] Added new parameters for media source: "imageNameType". Switching to "friendly" will generate names for uploaded files by FURLs algorithm.
+- [#62] Fixed work with "*.gif" files in products gallery.
+- [#56] Added JSON field "properties" to "msResourceFile".
+- Updated jQuery to version 1.10.2
+- Added german lexicon.
+
+1.0.3 rc7
+==============
+- fix error change source
+- move the gallery to tab "ms2Gallery"
+
+1.0.3 rc6
+==============
+- fix lexicon for system settings
+
+1.0.3 rc5
+==============
+- Update all changes from http://github.com/bezumkin/miniShop2/
+- Change file uploader to Plupload (http://www.plupload.com/)
+- Add resize images before upload, add this size to settings
+- Update languages
+- Fix bug's
+
+1.0.1 beta-1
+==============
+- Initial release.

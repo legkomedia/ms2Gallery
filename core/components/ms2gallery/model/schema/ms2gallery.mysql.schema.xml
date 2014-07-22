@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="ms2gallery" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="ms2gallery" phpdoc-subpackage="" version="1.1">
+
+	<object class="msResourceFile" table="ms2_resource_files" extends="xPDOSimpleObject">
+		<field key="resource_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" />
+		<field key="source" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="1" />
+		<field key="parent" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0" />
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="true" default="" />
+		<field key="description" dbtype="text" phptype="string" null="true" />
+		<field key="path" dbtype="varchar" precision="255" phptype="string" null="true" default="" />
+		<field key="file" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="type" dbtype="varchar" precision="50" phptype="string" null="true" />
+		<field key="createdon" dbtype="datetime" phptype="datetime" null="true" default="0000-00-00 00:00:00" />
+		<field key="createdby" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0" />
+		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
+		<field key="url" dbtype="varchar" precision="255" phptype="string" null="true" default="" />
+		<field key="properties" dbtype="text" phptype="json" null="true" />
+		<field key="hash" dbtype="char" precision="40" phptype="string" null="true" default="" index="index" />
+		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
+
+		<index alias="resource_id" name="resource_id" primary="false" unique="false" type="BTREE" >
+			<column key="resource_id" length="" collation="A" null="false" />
+		</index>
+		<index alias="type" name="type" primary="false" unique="false" type="BTREE" >
+			<column key="type" length="" collation="A" null="false" />
+		</index>
+		<index alias="parent" name="parent" primary="false" unique="false" type="BTREE" >
+			<column key="parent" length="" collation="A" null="false" />
+		</index>
+		<index alias="hash" name="hash" primary="false" unique="false" type="BTREE" >
+			<column key="hash" length="" collation="A" null="false" />
+		</index>
+		<index alias="active" name="active" primary="false" unique="false" type="BTREE" >
+			<column key="active" length="" collation="A" null="false" />
+		</index>
+
+		<composite alias="Children" class="msResourceFile" local="id" foreign="parent" cardinality="many" owner="local" />
+		<aggregate alias="Parent" class="msResourceFile" local="parent" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="Resource" class="msResource" local="resource_id" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+
+</model>
