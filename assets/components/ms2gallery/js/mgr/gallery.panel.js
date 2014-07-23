@@ -161,10 +161,14 @@ ms2Gallery.view.ResourceImages = function(config) {
 			,limit: config.pageSize || MODx.config.default_per_page
 		}
 		,loadingText: _('loading')
-		,tpl: this.templates.thumb
 		,enableDD: true
 		,multiSelect: true
-		,listeners: {}
+		,tpl: this.templates.thumb
+		,itemSelector: 'div.modx-browser-thumb-wrap'
+		,listeners: {
+			selectionchange: {fn:this.showDetails, scope:this, buffer:100}
+			,dblclick: config.onSelect || {fn:Ext.emptyFn,scope:this}
+		}
 		,prepareData: this.formatData.createDelegate(this)
 	});
 	ms2Gallery.view.ResourceImages.superclass.constructor.call(this,config);
@@ -416,8 +420,8 @@ Ext.extend(ms2Gallery.view.ResourceImages,MODx.DataView,{
 	,_initTemplates: function() {
 		this.templates.thumb = new Ext.XTemplate(
 			'<tpl for=".">'
-				,'<div class="modx-pb-thumb-wrap {class}" id="ms2-resource-image-{id}">'
-					,'<div class="modx-gal-item-thumb">'
+				,'<div class="modx-browser-thumb-wrap modx-pb-thumb-wrap" id="ms2-resource-image-{id}">'
+					,'<div class="modx-browser-thumb modx-gal-item-thumb">'
 						,'<img src="{thumbnail}" title="{name}" />'
 					,'</div>'
 					,'<span>{shortName}</span>'
@@ -539,11 +543,10 @@ ms2Gallery.window.UpdateImage = function(config) {
 		,id: this.ident
 		,closeAction: 'close'
 		,width: 450
-		,height: 350
+		,autoHeight: true
 		,url: ms2Gallery.config.connector_url
 		,action: 'mgr/gallery/update'
-		,layout: 'anchor'
-		,autoHeight: false
+		,layout: 'form'
 		,fields: [
 			{xtype: 'hidden',name: 'id',id: this.ident+'-id'}
 			,{xtype: 'textfield',fieldLabel: _('ms2gallery_file_name'),name: 'file',id: this.ident+'-file',anchor: '100%'}
@@ -565,11 +568,11 @@ ms2Gallery.window.UpdateImage = function(config) {
 					,defaults: { msgTarget: 'under' }
 					,border:false
 					,items: [
-						{xtype: 'xcheckbox',fieldLabel: _('ms2gallery_file_active'),name: 'active',id: this.ident+'-active'}
+						{xtype: 'xcheckbox',fieldLabel: _('ms2gallery_file_active'),name: 'active',id: this.ident+'-active',anchor: '100%'}
 					]
 				}]
 			}
-			,{xtype: 'textarea',fieldLabel: _('ms2gallery_file_description'),name: 'description',id: this.ident+'-description',anchor: '100% -150'}
+			,{xtype: 'textarea',fieldLabel: _('ms2gallery_file_description'),name: 'description',id: this.ident+'-description',anchor: '100%'}
 		]
 		,keys: [{key: Ext.EventObject.ENTER,shift: true,fn: this.submit,scope: this}]
 	});
@@ -832,13 +835,7 @@ Ext.extend(ms2Gallery.panel.Plupload,MODx.Panel, {
 	}
 
 	,fireAlert: function() {
-		Ext.MessageBox.show({
-			title: _('ms2gallery_errors')
-			,msg: this.errors
-			,buttons: Ext.Msg.OK
-			,modal: false
-			,minWidth: 400
-		});
+		MODx.msg.alert(_('ms2gallery_errors'), this.errors);
 	}
 
 });
