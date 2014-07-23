@@ -1,7 +1,7 @@
 <?php
 
 
-class msResourceFileRemoveProcessor extends modObjectProcessor {
+class msResourceFileRemoveProcessor extends modObjectRemoveProcessor {
 	public $classKey = 'msResourceFile';
 	public $languageTopics = array('ms2gallery:default');
 
@@ -11,17 +11,18 @@ class msResourceFileRemoveProcessor extends modObjectProcessor {
 	 */
 	public function process() {
 		$id = $this->getProperty('id');
-		if (empty($id)) return $this->failure($this->modx->lexicon('ms2gallery_err_ns'));
-
-		$resource_id ='';
+		if (empty($id)) {
+			return $this->failure($this->modx->lexicon('ms2gallery_err_ns'));
+		}
+		$resource_id = '';
 		/* @var msResourceFile $file */
 		if ($file = $this->modx->getObject('msResourceFile', $id)) {
 			$resource_id = $file->get('resource_id');
 			$file->remove();
 		}
+		$this->modx->ms2Gallery->rankResourceImages($resource_id);
 
-		$thumb = $this->modx->ms2Gallery->updateResourceImage($resource_id);
-		return $this->success($thumb);
+		return $this->success();
 	}
 }
 

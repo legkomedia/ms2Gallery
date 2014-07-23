@@ -63,7 +63,7 @@ class msResourceFileUploadProcessor extends modObjectProcessor {
 			? $this->resource->cleanAlias($data['name'])
 			: $hash . '.' . $extension;
 
-		$rank = !empty($properties['imageUploadDir']) && $properties['imageUploadDir']['value'] == 0
+		$rank = isset($properties['imageUploadDir']) && empty($properties['imageUploadDir']['value'])
 			? 0
 			: $this->modx->getCount('msResourceFile', array('parent' => 0, 'resource_id' => $this->resource->id));
 
@@ -96,13 +96,10 @@ class msResourceFileUploadProcessor extends modObjectProcessor {
 			$product_file->set('url', $url);
 			$product_file->save();
 
-			if($rank==0){
+			if(empty($rank)) {
 				$imagesTable = $this->modx->getTableName('msResourceFile');
-				$sql="
-                    UPDATE {$imagesTable} SET rank = rank + 1 WHERE resource_id ='".$this->resource->id."' AND id !='".$product_file->get('id')."'
-                ";
-				$c = new xPDOCriteria($this->modx, $sql);
-				$c->stmt->execute();
+				$sql = "UPDATE {$imagesTable} SET rank = rank + 1 WHERE resource_id ='".$this->resource->id."' AND id !='".$product_file->get('id')."'";
+				$this->modx->exec($sql);
 			}
 
 			$generate = $product_file->generateThumbnails($this->mediaSource);
@@ -111,8 +108,7 @@ class msResourceFileUploadProcessor extends modObjectProcessor {
 				return $this->failure($this->modx->lexicon('ms2gallery_err_gallery_thumb'));
 			}
 			else {
-				$this->modx->ms2Gallery->updateResourceImage($this->resource->id);
-				return $this->success($url);
+				return $this->success();
 			}
 		}
 		else {

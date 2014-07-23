@@ -23,7 +23,7 @@ class msResourceFileSortProcessor extends modObjectProcessor {
 		if ($source->get('rank') < $target->get('rank')) {
 			$this->modx->exec("UPDATE {$this->modx->getTableName('msResourceFile')}
 				SET rank = rank - 1 WHERE
-					resource_id = ".$resource_id."
+					resource_id = " . $resource_id . "
 					AND parent = 0
 					AND type = 'image'
 					AND rank <= {$target->get('rank')}
@@ -31,10 +31,11 @@ class msResourceFileSortProcessor extends modObjectProcessor {
 					AND rank > 0
 			");
 			$newRank = $target->get('rank');
-		} else {
+		}
+		else {
 			$this->modx->exec("UPDATE {$this->modx->getTableName('msResourceFile')}
 				SET rank = rank + 1 WHERE
-					resource_id = ".$resource_id."
+					resource_id = " . $resource_id . "
 					AND parent = 0
 					AND type = 'image'
 					AND rank >= {$target->get('rank')}
@@ -42,11 +43,11 @@ class msResourceFileSortProcessor extends modObjectProcessor {
 			");
 			$newRank = $target->get('rank');
 		}
-		$source->set('rank',$newRank);
+		$source->set('rank', $newRank);
 		$source->save();
+		$this->modx->ms2Gallery->rankResourceImages($resource_id);
 
-		$thumb = $this->modx->ms2Gallery->updateResourceImage($resource_id);
-		return $this->modx->error->success($thumb);
+		return $this->modx->error->success();
 	}
 }
 

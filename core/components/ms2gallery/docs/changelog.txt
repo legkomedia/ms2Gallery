@@ -3,6 +3,7 @@ Changelog for ms2Gallery.
 1.1.0-pl
 ==============
 - Fixed work with MODX 2.3.
+- Fixed sorting issues.
 
 1.1.0-rc2
 ==============

@@ -150,34 +150,6 @@ class ms2Gallery {
 
 
 	/**
-	 * @param int $resource_id
-	 *
-	 * @return mixed
-	 */
-	public function updateResourceImage($resource_id = 0) {
-		/* @var msResourceFile $file*/
-		if ($resource_id && $file = $this->modx->getObject('msResourceFile', array('resource_id' => $resource_id, 'parent' => 0, 'rank' => 0, 'type' => 'image'))) {
-			$this->rankResourceImages($resource_id);
-			$thumb = $file->getFirstThumbnail();
-			$arr = array(
-				'image' => $file->get('url'),
-				'thumb' => !empty($thumb['url'])
-						? $thumb['url']
-						: '',
-			);
-		}
-		else {
-			$arr = array(
-				'image' => null,
-				'thumb' => null,
-			);
-		}
-
-		return $arr['thumb'];
-	}
-
-
-	/**
 	 * @param $source
 	 *
 	 * @return array

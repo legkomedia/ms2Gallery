@@ -216,7 +216,17 @@ class msResourceFile extends xPDOSimpleObject {
 	 */
 	public function remove(array $ancestors= array ()) {
 		$this->prepareSource();
-		$this->mediaSource->removeObject($this->get('path').$this->get('file'));
+		if (!$this->mediaSource->removeObject($this->get('path').$this->get('file'))) {
+			$this->xpdo->log(xPDO::LOG_LEVEL_ERROR,
+				'Could not remove file at "'.$this->get('path').$this->get('file').'": '.$this->mediaSource->errors['file']
+			);
+		}
+
+		$children = $this->xpdo->getIterator('msResourceFile', array('parent' => $this->get('id')));
+		/** @var msResourceFile $child */
+		foreach ($children as $child) {
+			$child->remove();
+		}
 
 		return parent::remove($ancestors);
 	}
@@ -227,6 +237,8 @@ class msResourceFile extends xPDOSimpleObject {
 	 *
 	 * @param string $new_name
 	 * @param string $old_name
+	 *
+	 * @return bool
 	 */
 	public function rename($new_name, $old_name = '') {
 		if (empty($old_name)) {
