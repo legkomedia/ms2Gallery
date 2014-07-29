@@ -79,6 +79,7 @@ ms2Gallery.view.Images = function(config) {
 		,multiSelect: true
 		,tpl: this.templates.thumb
 		,itemSelector: 'div.modx-browser-thumb-wrap'
+		,listeners: {}
 		,prepareData: this.formatData.createDelegate(this)
 	});
 	ms2Gallery.view.Images.superclass.constructor.call(this,config);
