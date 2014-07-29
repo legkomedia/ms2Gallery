@@ -4,14 +4,10 @@ $plugins = array();
 
 $tmp = array(
 	'ms2Gallery' => array(
-		'file' => 'ms2gallery'
-		,'description' => 'Main plugin for ms2Gallery'
-		,'events' => array(
+		'file' => 'ms2gallery',
+		'description' => 'Main plugin for ms2Gallery',
+		'events' => array(
 			'OnDocFormRender',
-			'OnTVInputPropertiesList',
-			'OnTVInputRenderList',
-			'OnTVOutputRenderList',
-			'OnTVOutputRenderPropertiesList',
 			'OnLoadWebDocument',
 		)
 	)
@@ -21,14 +17,14 @@ foreach ($tmp as $k => $v) {
 	/* @avr modplugin $plugin */
 	$plugin = $modx->newObject('modPlugin');
 	$plugin->fromArray(array(
-		'id' => 0
-		,'name' => $k
-		,'category' => 0
-		,'description' => @$v['description']
-		,'plugincode' => getSnippetContent($sources['source_core'].'/elements/plugins/plugin.'.$v['file'].'.php')
-		,'static' => BUILD_PLUGIN_STATIC
-		,'source' => 1
-		,'static_file' => 'core/components/'.PKG_NAME_LOWER.'/elements/plugins/plugin.'.$v['file'].'.php'
+		'id' => 0,
+		'name' => $k,
+		'category' => 0,
+		'description' => @$v['description'],
+		'plugincode' => getSnippetContent($sources['source_core'].'/elements/plugins/plugin.'.$v['file'].'.php'),
+		'static' => BUILD_PLUGIN_STATIC,
+		'source' => 1,
+		'static_file' => 'core/components/'.PKG_NAME_LOWER.'/elements/plugins/plugin.'.$v['file'].'.php',
 	),'',true,true);
 
 	$events = array();

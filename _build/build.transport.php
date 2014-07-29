@@ -102,15 +102,6 @@ if (!is_array($plugins)) {
 	$modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($plugins).' plugins.');
 }
 
-/* add tvs */
-$tvs = include $sources['data'].'transport.tv.php';
-if (!is_array($tvs)) {
-	$modx->log(modX::LOG_LEVEL_ERROR,'Could not package in tvs.');
-} else {
-	$category->addMany($tvs);
-	$modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($tvs).' tvs.');
-}
-
 /* create category vehicle */
 $attr = array(
 	xPDOTransport::UNIQUE_KEY => 'category',
@@ -118,11 +109,6 @@ $attr = array(
 	xPDOTransport::UPDATE_OBJECT => true,
 	xPDOTransport::RELATED_OBJECTS => true,
 	xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
-		'TemplateVars' => array (
-			xPDOTransport::PRESERVE_KEYS => false,
-			xPDOTransport::UPDATE_OBJECT => BUILD_TVS_UPDATE,
-			xPDOTransport::UNIQUE_KEY => 'name',
-		),
 		'Snippets' => array(
 			xPDOTransport::PRESERVE_KEYS => false,
 			xPDOTransport::UPDATE_OBJECT => BUILD_SNIPPET_UPDATE,

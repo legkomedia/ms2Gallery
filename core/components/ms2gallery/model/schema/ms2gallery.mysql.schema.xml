@@ -37,6 +37,7 @@
 		<composite alias="Children" class="msResourceFile" local="id" foreign="parent" cardinality="many" owner="local" />
 		<aggregate alias="Parent" class="msResourceFile" local="parent" foreign="id" cardinality="one" owner="foreign" />
 		<aggregate alias="Resource" class="msResource" local="resource_id" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="Source" class="modMediaSource" local="source" foreign="id" cardinality="one" owner="foreign" />
 	</object>
 
 </model>

@@ -18,7 +18,8 @@ class msResourceFileUploadProcessor extends modObjectProcessor {
 			return $this->modx->lexicon('ms2gallery_err_no_resource');
 		}
 		$ctx = $resource->get('context_key');
-		$source = $this->modx->getOption('source', $_GET, $this->modx->getOption('ms2gallery_source_default', null, 1, true), true);
+		$properties = $resource->getProperties('ms2gallery');
+		$source = $properties['media_source'];
 
 		if (!$this->mediaSource = $this->modx->ms2Gallery->initializeMediaSource($ctx, $source)) {
 			return $this->modx->lexicon('ms2gallery_err_no_source');
@@ -165,6 +166,7 @@ class msResourceFileUploadProcessor extends modObjectProcessor {
 				);
 			}
 			unlink($tf);
+
 			return $data;
 		}
 		else {

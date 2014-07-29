@@ -1,5 +1,17 @@
 Changelog for ms2Gallery.
 
+1.2.0-rc
+==============
+- Removed TV "ms2Gallery".
+- Improved user interface.
+- Refactored gallery panel.
+- Fixed work with media sources.
+- Fixed panel resizing issues.
+- Fixed work with AjaxManager.
+- Improved getlist processor.
+- Disabled for msProducts pages.
+- Replaced Bootstrap icons to Font Awesome.
+
 1.1.0-pl
 ==============
 - Fixed work with MODX 2.3.

@@ -17,7 +17,7 @@ $_lang['ms2gallery_disabled_while_creating'] = '<i>This function is disabled whe
 $_lang['ms2gallery_parent'] = '';
 $_lang['ms2gallery_parent_help'] = '';
 $_lang['ms2gallery_emptymsg'] = 'Drag and drop files to this table for upload, or select them by clicking on the button at the top.';
-$_lang['ms2gallery_introtext'] = 'Here you can manage the resource gallery. Upload new images simply by dragging them to the table. The first image in the gallery is main for the resource.';
+$_lang['ms2gallery_introtext'] = 'Here you can manage the resource gallery. Upload new images simply by dragging them to the table.';
 $_lang['ms2gallery_id'] = 'Id';
 $_lang['ms2gallery_rank'] = 'Position';
 $_lang['ms2gallery_filename'] = 'Filename';
@@ -70,9 +70,9 @@ $_lang['ms2gallery_file_name'] = 'Dateiname';
 $_lang['ms2gallery_file_title'] = 'Titel';
 $_lang['ms2gallery_file_description'] = 'Beschreibung';
 
-$_lang['ms2gallery_status_code_1'] = '<i class="bicon-repeat"></i> Queued';
-$_lang['ms2gallery_status_code_2'] = '<i class="bicon-repeat"></i> Uploading';
-$_lang['ms2gallery_status_code_4'] = '<i class="bicon-remove"></i> Error';
-$_lang['ms2gallery_status_code_5'] = '<i class="bicon-ok"></i> Done';
+$_lang['ms2gallery_status_code_1'] = 'Queued';
+$_lang['ms2gallery_status_code_2'] = 'Uploading';
+$_lang['ms2gallery_status_code_4'] = 'Error';
+$_lang['ms2gallery_status_code_5'] = 'Done';
 
 $_lang['ms2gallery_errors'] = 'Fehler beim Upload';

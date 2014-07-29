@@ -4,8 +4,8 @@
 define('PKG_NAME','ms2Gallery');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
 
-define('PKG_VERSION','1.1.0');
-define('PKG_RELEASE','pl');
+define('PKG_VERSION','1.2.0');
+define('PKG_RELEASE','rc');
 define('PKG_AUTO_INSTALL', true);
 
 /* define paths */
@@ -34,7 +34,6 @@ define('BUILD_ACTION_UPDATE', false);
 define('BUILD_SETTING_UPDATE', false);
 define('BUILD_CHUNK_UPDATE', false);
 
-define('BUILD_TVS_UPDATE', true);
 define('BUILD_SNIPPET_UPDATE', true);
 define('BUILD_PLUGIN_UPDATE', true);
 define('BUILD_EVENT_UPDATE', true);
@@ -44,11 +43,12 @@ define('BUILD_PERMISSION_UPDATE', true);
 
 define('BUILD_CHUNK_STATIC', false);
 define('BUILD_SNIPPET_STATIC', false);
-define('BUILD_PLUGIN_STATIC', false);
+define('BUILD_PLUGIN_STATIC', true);
 
 $BUILD_RESOLVERS = array(
 	'tables',
 	'sources',
 	'update',
 	'setup',
+	'tv',
 );

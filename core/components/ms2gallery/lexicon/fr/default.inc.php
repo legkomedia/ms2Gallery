@@ -17,7 +17,7 @@ $_lang['ms2gallery_disabled_while_creating'] = '<i>Cette fonction est désactiv�
 $_lang['ms2gallery_parent'] = '';
 $_lang['ms2gallery_parent_help'] = '';
 $_lang['ms2gallery_emptymsg'] = 'Glisser/déplacer les fichiers dans ce tableau pour le télécharger, ou sélectionnez les en cliquant sur le bouton du haut.';
-$_lang['ms2gallery_introtext'] = 'Ici vous pouvez gérer la gallerie des articles. Télécharger de nouvelle images simplement en les déplaçant dans le tableau. La prelière image du tableau sera l\'image principale de l\'article.';
+$_lang['ms2gallery_introtext'] = 'Ici vous pouvez gérer la gallerie des articles. Télécharger de nouvelle images simplement en les déplaçant dans le tableau.';
 $_lang['ms2gallery_id'] = 'Id';
 $_lang['ms2gallery_rank'] = 'Position';
 $_lang['ms2gallery_filename'] = 'Nom du fichier';
@@ -70,9 +70,9 @@ $_lang['ms2gallery_file_name'] = 'Nom du fichier';
 $_lang['ms2gallery_file_title'] = 'Titre';
 $_lang['ms2gallery_file_description'] = 'Description';
 
-$_lang['ms2gallery_status_code_1'] = '<i class="bicon-repeat"></i> Queued';
-$_lang['ms2gallery_status_code_2'] = '<i class="bicon-repeat"></i> Envoi';
-$_lang['ms2gallery_status_code_4'] = '<i class="bicon-remove"></i> Error';
-$_lang['ms2gallery_status_code_5'] = '<i class="bicon-ok"></i> Terminé';
+$_lang['ms2gallery_status_code_1'] = 'Queued';
+$_lang['ms2gallery_status_code_2'] = 'Envoi';
+$_lang['ms2gallery_status_code_4'] = 'Error';
+$_lang['ms2gallery_status_code_5'] = 'Terminé';
 
 $_lang['ms2gallery_errors'] = 'Erreurs lors du téléchargement';

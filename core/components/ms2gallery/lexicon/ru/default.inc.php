@@ -23,7 +23,7 @@ $_lang['ms2gallery_disabled_while_creating'] = '<i>Эта функция отк�
 $_lang['ms2gallery_parent'] = '';
 $_lang['ms2gallery_parent_help'] = '';
 $_lang['ms2gallery_emptymsg'] = 'Перетяните в эту таблицу файлы для загрузки, или выберите их кнопкой вверху.';
-$_lang['ms2gallery_introtext'] = 'Здесь вы управляете галереей ресурса. Вы можете загрузить новые изображения просто перетянув их в таблицу. Первое изображение в галерее является основным для ресурса.';
+$_lang['ms2gallery_introtext'] = 'Здесь вы управляете галереей ресурса. Вы можете загрузить новые изображения просто перетянув их в таблицу.';
 $_lang['ms2gallery_id'] = 'Id';
 $_lang['ms2gallery_rank'] = 'Позиция';
 $_lang['ms2gallery_filename'] = 'Имя файла';
@@ -76,9 +76,9 @@ $_lang['ms2gallery_file_name'] = 'Имя файла';
 $_lang['ms2gallery_file_title'] = 'Название';
 $_lang['ms2gallery_file_description'] = 'Описание';
 
-$_lang['ms2gallery_status_code_1'] = '<i class="bicon-repeat"></i> В очереди';
-$_lang['ms2gallery_status_code_2'] = '<i class="bicon-repeat"></i> В процессе';
-$_lang['ms2gallery_status_code_4'] = '<i class="bicon-remove"></i> Ошибка';
-$_lang['ms2gallery_status_code_5'] = '<i class="bicon-ok"></i> Готово';
+$_lang['ms2gallery_status_code_1'] = 'В очереди';
+$_lang['ms2gallery_status_code_2'] = 'В процессе';
+$_lang['ms2gallery_status_code_4'] = 'Ошибка';
+$_lang['ms2gallery_status_code_5'] = 'Готово';
 
 $_lang['ms2gallery_errors'] = 'Ошибки при загрузке';

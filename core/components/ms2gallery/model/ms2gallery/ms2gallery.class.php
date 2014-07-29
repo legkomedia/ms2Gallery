@@ -17,7 +17,7 @@ class ms2Gallery {
 		$corePath = $this->modx->getOption('ms2gallery.core_path', $config, $this->modx->getOption('core_path').'components/ms2gallery/');
 		$assetsUrl = $this->modx->getOption('ms2gallery.assets_url', $config, $this->modx->getOption('assets_url').'components/ms2gallery/');
 		$actionUrl = $this->modx->getOption('ms2gallery.action_url', $config, $assetsUrl.'action.php');
-		$connectorUrl = $assetsUrl.'connector.php';
+		$connectorUrl = $assetsUrl . 'connector.php';
 		$pageSize = $this->modx->getOption('ms2gallery_page_size', null, 20);
 
 		$this->config = array_merge(array(
@@ -27,7 +27,7 @@ class ms2Gallery {
 			,'imagesUrl' => $assetsUrl.'images/'
 			,'customPath' => $corePath.'custom/'
 
-			,'connectorUrl' => $connectorUrl
+			,'connector_url' => $connectorUrl
 			,'actionUrl' => $actionUrl
 
 			,'corePath' => $corePath

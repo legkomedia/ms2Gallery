@@ -1,4 +1,6 @@
 <?php
+/**@TODO It can be replaced by propertySet for pdoResources */
+
 /* @var ms2Gallery $ms2Gallery */
 $ms2Gallery = $modx->getService('ms2gallery','ms2Gallery', MODX_CORE_PATH.'components/ms2gallery/model/ms2gallery/');
 //$ms2Gallery->initialize($modx->context->key);

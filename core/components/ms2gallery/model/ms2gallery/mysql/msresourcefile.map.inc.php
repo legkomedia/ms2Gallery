@@ -255,5 +255,13 @@ $xpdo_meta_map['msResourceFile']= array (
       'cardinality' => 'one',
       'owner' => 'foreign',
     ),
+    'Source' => 
+    array (
+      'class' => 'modMediaSource',
+      'local' => 'source',
+      'foreign' => 'id',
+      'cardinality' => 'one',
+      'owner' => 'foreign',
+    ),
   ),
 );
