@@ -12,6 +12,7 @@ if ($object->xpdo) {
 
 
 	switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+		case xPDOTransport::ACTION_INSTALL:
 		case xPDOTransport::ACTION_UPGRADE:
 			if ($tv = $modx->getObject('modTemplateVar', array('type' => 'ms2gallery.input'))) {
 				$tv_id = $tv->get('id');
@@ -33,7 +34,6 @@ if ($object->xpdo) {
 			}
 			break;
 
-		case xPDOTransport::ACTION_INSTALL:
 		case xPDOTransport::ACTION_UNINSTALL:
 			break;
 	}

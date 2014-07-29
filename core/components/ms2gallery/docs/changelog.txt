@@ -1,6 +1,6 @@
 Changelog for ms2Gallery.
 
-1.2.0-rc1
+1.2.0-rc2
 ==============
 - Removed TV "ms2Gallery".
 - Improved user interface.
