@@ -2,7 +2,7 @@ ms2Gallery.window.Image = function(config) {
 	config = config || {};
 	this.ident = config.ident || 'gupdit'+Ext.id();
 
-	var img = '/connectors/system/phpthumb.php?src=' + config.record['url']+ '&w=333&h=198&f=jpg&q=90&HTTP_MODAUTH=' + MODx.siteId + '&wctx=mgr&source=' + config.record['source'];
+	var img = MODx.config.connectors_url + 'system/phpthumb.php?src=' + config.record['url']+ '&w=333&h=198&f=jpg&q=90&HTTP_MODAUTH=' + MODx.siteId + '&wctx=mgr&source=' + config.record['source'];
 	img += MODx.modx23 ? '&far=1' : '&zc=1';
 	var fields = {
 		ms2gallery_source: config.record['source_name'],
