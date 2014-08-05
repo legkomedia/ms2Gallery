@@ -1,5 +1,9 @@
 Changelog for ms2Gallery.
 
+1.2.0-pl
+==============
+- Fixed adding of media_source in properties of new resource.
+
 1.2.0-rc3
 ==============
 - Fixed connectors_url for previews in window.

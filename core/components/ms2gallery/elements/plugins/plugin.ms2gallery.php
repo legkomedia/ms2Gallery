@@ -36,7 +36,7 @@ switch ($modx->event->name) {
 		$properties = $resource->getProperties('ms2gallery');
 		if (empty($properties['media_source'])) {
 			if (!$source_id = $resource->getTVValue('ms2Gallery')) {
-				$source_id = $properties['media_source'];
+				$source_id = $modx->getOption('ms2gallery_source_default');
 			}
 			$resource->setProperties(array('media_source' => $source_id), 'ms2gallery');
 			$resource->save();
