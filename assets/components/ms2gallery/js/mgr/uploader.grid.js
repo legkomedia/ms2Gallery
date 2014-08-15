@@ -21,8 +21,8 @@ ms2Gallery.grid.Plupload = function(config) {
 			,{xtype: 'displayfield',html: '<b>' + _('ms2gallery_source') + '</b>:&nbsp;&nbsp;'}
 			,{xtype: 'ms2gallery-combo-source',id: 'ms2gallery-resource-source',description: '<b>[[+source]]</b><br />'+_('ms2gallery_source_help')
 				,value: config.record.source
-				,name: 'properties[ms2gallery][media_source]'
-				,hiddenName: 'properties[ms2gallery][media_source]'
+				,name: 'media_source'
+				,hiddenName: 'media_source'
 				,listeners: {select: {fn: this.sourceWarning, scope: this}}
 			}
 			,'-'

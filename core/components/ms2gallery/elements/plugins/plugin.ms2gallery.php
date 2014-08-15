@@ -48,6 +48,8 @@ switch ($modx->event->name) {
 		if (empty($source_id)) {
 			$source_id = $modx->getOption('ms2gallery_source_default');
 		}
+		$resource->set('media_source', $source_id);
+
 		$source_config = array();
 		/** @var modMediaSource $source */
 		if ($source = $modx->getObject('modMediaSource', $source_id)) {
@@ -107,6 +109,12 @@ switch ($modx->event->name) {
 					});
 				});
 			</script>');
+		}
+		break;
+
+	case 'OnBeforeDocFormSave':
+		if ($source_id = $resource->get('media_source')) {
+			$resource->setProperties(array('media_source' => $source_id), 'ms2gallery');
 		}
 		break;
 

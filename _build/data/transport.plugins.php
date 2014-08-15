@@ -9,6 +9,7 @@ $tmp = array(
 		'events' => array(
 			'OnDocFormRender',
 			'OnLoadWebDocument',
+			'OnBeforeDocFormSave',
 		)
 	)
 );

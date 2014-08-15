@@ -1,5 +1,9 @@
 Changelog for ms2Gallery.
 
+1.2.1-pl
+==============
+- Fixed overwriting of resource properties on save.
+
 1.2.0-pl
 ==============
 - Fixed adding of media_source in properties of new resource.
