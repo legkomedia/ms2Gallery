@@ -1,8 +1,9 @@
 Changelog for ms2Gallery.
 
-1.2.1-pl
+1.2.1-pl1
 ==============
 - Fixed overwriting of resource properties on save.
+- Fixed pagination in the list of images.
 
 1.2.0-pl
 ==============

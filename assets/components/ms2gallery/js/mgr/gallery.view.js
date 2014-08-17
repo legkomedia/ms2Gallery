@@ -16,7 +16,7 @@ ms2Gallery.panel.Images = function(config) {
 		,cls: 'browser-view'
 		,border: false
 		,items: [this.view]
-		,tbar: [new Ext.PagingToolbar({
+		,tbar: new Ext.PagingToolbar({
 			pageSize: config.pageSize || MODx.config.default_per_page
 			,store: this.view.store
 			,displayInfo: true
@@ -27,11 +27,10 @@ ms2Gallery.panel.Images = function(config) {
 					,width: 50
 					,listeners: {
 						change: {fn:function(tf,nv,ov) {
-							if (!Ext.isEmpty(nv)) {
-								nv = parseInt(nv);
-								this.view.pagingBar.pageSize = nv;
-								this.view.store.load({params:{start:0, limit: nv}});
-							}
+							if (Ext.isEmpty(nv)) {return;}
+							nv = parseInt(nv);
+							this.getTopToolbar().pageSize = nv;
+							this.view.getStore().load({params:{start:0,limit: nv}});
 						}, scope:this}
 						,render: {fn: function(cmp) {
 							new Ext.KeyMap(cmp.getEl(), {
@@ -44,7 +43,7 @@ ms2Gallery.panel.Images = function(config) {
 				}
 				,'-'
 			]
-		})]
+		})
 	});
 	ms2Gallery.panel.Images.superclass.constructor.call(this,config);
 
@@ -286,7 +285,7 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 		var v = {};
 		Ext.apply(v,this.store.baseParams);
 		Ext.apply(v,p);
-		this.pagingBar.changePage(1);
+		this.changePage(1);
 		this.store.baseParams = v;
 		this.store.load();
 	}
