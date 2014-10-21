@@ -4,8 +4,8 @@
 define('PKG_NAME','ms2Gallery');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
 
-define('PKG_VERSION','1.2.1');
-define('PKG_RELEASE','pl1');
+define('PKG_VERSION','1.3.0');
+define('PKG_RELEASE','rc');
 define('PKG_AUTO_INSTALL', true);
 
 /* define paths */
