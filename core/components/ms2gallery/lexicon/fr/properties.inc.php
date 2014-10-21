@@ -26,3 +26,7 @@ $_lang['ms2gallery_prop_showInactive'] = 'Show inactive images.';
 
 $_lang['ms2gallery_prop_frontend_css'] = 'Chemin du fichier avec des styles de la boutique. Si vous souhaitez utiliser vos propres styles - préciser ici, ou nettoyer ce paramètre et de les charger dans le modèle de site.';
 $_lang['ms2gallery_prop_frontend_js'] = 'Chemin du fichier avec son de la boutique. Si vous souhaitez utiliser vos propres sscripts - préciser ici, ou nettoyer ce paramètre et de les charger dans le modèle de site.';
+
+$_lang['ms2gallery_prop_typeOfJoin'] = 'Type de l`adhésion des images de la ressource. Left, Left Join, qui est, les ressources seront choisis, même si elles n`ont pas d`images. Et inner est un Inner Join, seront choisis de ressources uniquement avec des images.';
+$_lang['ms2gallery_prop_includeThumbs'] = 'Liste des autorisations extraits séparés par des virgules. Par exemple, "120x90,360x270".';
+$_lang['ms2gallery_prop_includeOriginal'] = 'Ajouter dans l`échantillon supplémentaire de join avec le lien vers l`image originale. Sera disponible dans le tableau de la ressource comme "résolution.original", par exemple "120x90.original".';

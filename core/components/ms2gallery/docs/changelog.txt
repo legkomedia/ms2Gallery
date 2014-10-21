@@ -1,5 +1,10 @@
 Changelog for ms2Gallery.
 
+1.3.0-rc
+==============
+- Added snippet "ms2GalleryResources".
+- Removed snippet "ms2GalleryFirstImages".
+
 1.2.1-pl1
 ==============
 - Fixed overwriting of resource properties on save.

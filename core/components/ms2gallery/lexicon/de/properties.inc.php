@@ -24,5 +24,9 @@ $_lang['ms2gallery_prop_resources'] = 'Durch Kommata getrennte Liste von IDs in 
 $_lang['ms2gallery_prop_prefix'] = 'Das Präfix für Bilder Eigenschaften "img" zum Beispiel. Standardmäßig ist "ms2g".';
 $_lang['ms2gallery_prop_showInactive'] = 'Show inactive images.';
 
-$_lang['ms2gallery_prop_frontend_css'] = 'Path to file with styles of the shop. If you want to use your own styles - specify them here, or clean this parameter and load them in site template.';
-$_lang['ms2gallery_prop_frontend_js'] = 'Path to file with scripts of the shop. If you want to use your own sscripts - specify them here, or clean this parameter and load them in site template.';
+$_lang['ms2gallery_prop_frontend_css'] = 'Pfad zur Datei mit den Stilen des Shops. Wenn Sie möchten, verwenden Sie Ihre eigenen Stile, geben Sie hier, oder reinigen Sie diesen parameter, und laden Sie Sie in der site-template.';
+$_lang['ms2gallery_prop_frontend_js'] = 'Pfad zu der Datei mit scripts für das Geschäft. Wenn Sie möchten, verwenden Sie Ihre eigenen Skripte, geben Sie hier, oder reinigen Sie diesen parameter, und laden Sie Sie in der site-template.';
+
+$_lang['ms2gallery_prop_typeOfJoin'] = 'Typ Anschlüsse Bilder Ressource. Left ist ein Left Join, das heißt, die Ressourcen gewählt werden, auch wenn Sie keine Bilder. Und inner - es Inner Join, gewählt werden kann nur Ressourcen mit den Bildern.';
+$_lang['ms2gallery_prop_includeThumbs'] = 'Liste der Berechtigungen Daumen durch Komma getrennt. Zum Beispiel "120x90,360x270".';
+$_lang['ms2gallery_prop_includeOriginal'] = 'Hinzufügen in die Stichprobe zusätzliche join mit der Verbannung auf die ursprüngliche Bild. Verfügbar im array Ressource als "auflösung.original", Z. B. "120x90.original".';

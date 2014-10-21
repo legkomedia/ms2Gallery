@@ -26,4 +26,8 @@ $_lang['ms2gallery_prop_filetype'] = 'Type of files for select. You can use "ima
 $_lang['ms2gallery_prop_showInactive'] = 'Show inactive images.';
 
 $_lang['ms2gallery_prop_frontend_css'] = 'Path to file with styles of the shop. If you want to use your own styles - specify them here, or clean this parameter and load them in site template.';
-$_lang['ms2gallery_prop_frontend_js'] = 'Path to file with scripts of the shop. If you want to use your own sscripts - specify them here, or clean this parameter and load them in site template.';
+$_lang['ms2gallery_prop_frontend_js'] = 'Path to file with scripts of the shop. If you want to use your own scripts - specify them here, or clean this parameter and load them in site template.';
+
+$_lang['ms2gallery_prop_typeOfJoin'] = 'attachment Type image resource. Left is the Left Join, that is, the resources will be selected, even if they have no pictures. And the inner is the Inner Join will only be selected resources with pictures.';
+$_lang['ms2gallery_prop_includeThumbs'] = 'List of permissions preview separated by commas. For example, "120x90,360x270".';
+$_lang['ms2gallery_prop_includeOriginal'] = 'Adding to the sample an additional join with a link to the original image. Will be available in an array of resource as "resolution.original", for example "120x90.original".';
