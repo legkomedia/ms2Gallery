@@ -1,6 +1,6 @@
 Changelog for ms2Gallery.
 
-1.3.0-rc
+1.3.0-pl
 ==============
 - Added snippet "ms2GalleryResources".
 - Removed snippet "ms2GalleryFirstImages".
