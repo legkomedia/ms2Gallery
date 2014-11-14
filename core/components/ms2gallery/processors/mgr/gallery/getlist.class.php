@@ -94,8 +94,8 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 		if (empty($row['thumbnail'])) {
 			if ($row['type'] != 'image') {
 				$row['thumbnail'] = (file_exists(MODX_ASSETS_PATH . 'components/ms2gallery/img/mgr/extensions/' . $row['type'] . '.png'))
-					? MODX_ASSETS_URL . 'components/minishop2/img/mgr/extensions/' . $row['type'] . '.png'
-					: MODX_ASSETS_URL . 'components/minishop2/img/mgr/extensions/other.png';
+					? MODX_ASSETS_URL . 'components/ms2gallery/img/mgr/extensions/' . $row['type'] . '.png'
+					: MODX_ASSETS_URL . 'components/ms2gallery/img/mgr/extensions/other.png';
 			}
 			else {
 				//$row['thumbnail'] = $row['url'];
