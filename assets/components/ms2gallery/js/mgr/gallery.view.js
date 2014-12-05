@@ -93,6 +93,8 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 	,windows: {}
 
 	,onSort: function(o) {
+		var el = this.getEl();
+		el.mask(_('loading'),'x-mask-loading');
 		MODx.Ajax.request({
 			url: ms2Gallery.config.connector_url
 			,params: {
@@ -100,6 +102,12 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 				,resource_id: this.config.resource_id
 				,source: o.source.id
 				,target: o.target.id
+			}
+			,listeners: {
+				success: {fn: function() {
+					el.unmask();
+					//this.store.load();
+				}, scope: this}
 			}
 		});
 	}

@@ -104,8 +104,8 @@ $xpdo_meta_map['msResourceFile']= array (
     ),
     'rank' => 
     array (
-      'dbtype' => 'tinyint',
-      'precision' => '1',
+      'dbtype' => 'smallint',
+      'precision' => '3',
       'attributes' => 'unsigned',
       'phptype' => 'integer',
       'null' => true,

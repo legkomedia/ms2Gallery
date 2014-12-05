@@ -45,7 +45,6 @@ class msResourceFileSortProcessor extends modObjectProcessor {
 		}
 		$source->set('rank', $newRank);
 		$source->save();
-		$this->modx->ms2Gallery->rankResourceImages($resource_id);
 
 		return $this->modx->error->success();
 	}

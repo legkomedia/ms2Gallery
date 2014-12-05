@@ -27,6 +27,7 @@ if ($object->xpdo) {
 			$manager->addIndex('msResourceFile', 'hash');
 			$manager->addField('msResourceFile', 'active');
 			$manager->addIndex('msResourceFile', 'active');
+			$modx->exec("ALTER TABLE {$modx->getTableName('msResourceFile')} CHANGE `rank` `rank` SMALLINT(3) UNSIGNED NULL DEFAULT '0'");
 
 			$modx->setLogLevel($level);
 			break;

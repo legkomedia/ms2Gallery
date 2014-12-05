@@ -1,5 +1,9 @@
 Changelog for ms2Gallery.
 
+1.3.1-pl
+==============
+- Extended capacity of field "rank".
+
 1.3.0-pl
 ==============
 - Added snippet "ms2GalleryResources".
