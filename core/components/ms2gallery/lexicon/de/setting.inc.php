@@ -12,17 +12,19 @@ $_lang['setting_ms2gallery_source_default'] = 'Standard Medienquelle';
 $_lang['setting_ms2gallery_source_default_desc'] = 'Standard Medienquelle für die Produktgalerie.';
 $_lang['setting_ms2gallery_thumbnail_size'] = 'Standard Thumbnail-Grösse';
 $_lang['setting_ms2gallery_thumbnail_size_desc'] = 'Size of default pre-generated thumbnail for field "thumb" in msProduct table. Of course, this size should exist in the settings of your media source that generates the previews. Otherwise you will receive  miniShop2 logo instead of product image in manager.';
-
 $_lang['setting_ms2gallery_date_format'] = 'Datums-Format';
 $_lang['setting_ms2gallery_date_format_desc'] = 'ms2Gallery formatiert das Datum mit Hilfe der PHP strftime() Syntax. Standardmäßig ist das Format "%d.%m.%y %H:%M".';
+$_lang['setting_ms2gallery_disable_for_templates'] = 'Deaktivieren für Vorlagen';
+$_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Geben Sie eine Komma-getrennte Liste von ids der a-Vorlagen, für die Sie nicht wollen, um die Anzeige der Registerkarte mit Galerie.';
 
 $_lang['setting_ms2gallery_set_placeholders'] = 'Enable auto-placeholders?';
 $_lang['setting_ms2gallery_set_placeholders_desc'] = 'You can enable auto set of placeholders with images of gallery on page.';
 $_lang['setting_ms2gallery_placeholders_prefix'] = 'Prefix of placeholders';
 $_lang['setting_ms2gallery_placeholders_prefix_desc'] = 'You can specify placeholders prefix for images. Than you will can use it as [[+prefix.rank.field]]. For example: [[+ms2g.0.url]] or [[+ms2g.1.120x90]]. Placeholder [[+prefix.rank]] will print array with the whole available file properties.';
-
-$_lang['setting_ms2gallery_disable_for_templates'] = 'Deaktivieren für Vorlagen';
-$_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Geben Sie eine Komma-getrennte Liste von ids der a-Vorlagen, für die Sie nicht wollen, um die Anzeige der Registerkarte mit Galerie.';
+$_lang['setting_ms2gallery_placeholders_tpl'] = 'Vorlage für Platzhalter';
+$_lang['setting_ms2gallery_placeholders_tpl_desc'] = 'Geben Sie den TV oder ein Stück für die Vorlage der Bild-Platzhalter auf der Seite.';
+$_lang['setting_ms2gallery_placeholders_thumbs'] = 'die Daumen für Platzhalter';
+$_lang['setting_ms2gallery_placeholders_thumbs_desc'] = 'Geben Sie eine Komma-getrennte Liste von Größen von Daumen, dass Sie möchten, zu wählen, der für die Platzierung in den Platzhaltern. Zum Beispiel "120х90,360x270".';
 
 $_lang['setting_ms2gallery_page_size'] = 'Anzahl der Dateien auf Seite';
 $_lang['setting_ms2gallery_page_size_desc'] = 'Sie können die Anzahl der Dateien auf der Seite angezeigt gesetzt, Standard ist 20. 0 - zeigt alle Dateien.';

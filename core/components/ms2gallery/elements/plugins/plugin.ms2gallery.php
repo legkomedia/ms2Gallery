@@ -126,7 +126,28 @@ switch ($modx->event->name) {
 		if (!$modx->getOption('ms2gallery_set_placeholders', null, false, true) || !$pdoFetch = $modx->getService('pdoFetch')) {
 			return;
 		}
-		$plPrefix = $modx->getOption('ms2gallery_placeholders_prefix', null, 'ms2g', true);
+		$plPrefix = $modx->getOption('ms2gallery_placeholders_prefix', null, 'ms2g.', true);
+		$tplName = $modx->getOption('ms2gallery_placeholders_tpl');
+		$plThumbs = array_map('trim', explode(',', $modx->getOption('ms2gallery_placeholders_thumbs')));
+
+		// Check for TV
+		$q = $modx->newQuery('modTemplateVarTemplate');
+		$q->innerJoin('modTemplateVar', 'TemplateVar');
+		$q->innerJoin('modTemplate', 'Template');
+		$q->where(array(
+			'TemplateVar.name' => $tplName,
+			'Template.id' => $modx->resource->get('template')
+		));
+		$q->select('TemplateVar.id');
+
+		$tpl = '';
+		if ($modx->getCount('modTemplateVarTemplate', $q)) {
+			$tpl = $modx->resource->getTVValue($tplName);
+		}
+		/** @var modChunk $chunk */
+		if (empty($tpl) && $chunk = $modx->getObject('modChunk', array('name' => $tplName))) {
+			$tpl = $chunk->getContent();
+		}
 
 		$options = array('loadModels' => 'ms2gallery');
 		$where = array('resource_id' => $modx->resource->id, 'parent' => 0);
@@ -135,6 +156,12 @@ switch ($modx->event->name) {
 		$options['select'] = 'url';
 		foreach ($parents as &$parent) {
 			$where = array('parent' => $parent['id']);
+			if (!empty($plThumbs) && !empty($plThumbs[0])) {
+				$where['path:IN'] = array();
+				foreach ($plThumbs as $thumb) {
+					$where['path:IN'][] = $parent['path'] . $thumb . '/';
+				}
+			}
 			if ($children = $pdoFetch->getCollection('msResourceFile', $where, $options)) {
 				foreach ($children as $child) {
 					if (preg_match('/((?:\d{1,4}|)x(?:\d{1,4}|))/', $child['url'], $size)) {
@@ -143,7 +170,9 @@ switch ($modx->event->name) {
 				}
 			}
 			$pls = $pdoFetch->makePlaceholders($parent, $plPrefix . $parent['rank'] . '.', '[[+', ']]', false);
-			$pls['vl'][$plPrefix . $parent['rank']] = htmlentities(print_r($parent, 1), ENT_QUOTES, 'UTF-8');
+			$pls['vl'][$plPrefix . $parent['rank']] = !empty($tpl)
+				? $pdoFetch->getChunk('@INLINE ' . $tpl, $parent)
+				: htmlentities(print_r($parent, 1), ENT_QUOTES, 'UTF-8');
 			$modx->setPlaceholders($pls['vl']);
 		}
 
