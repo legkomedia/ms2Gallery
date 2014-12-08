@@ -10,6 +10,7 @@ $tmp = array(
 			'OnDocFormRender',
 			'OnLoadWebDocument',
 			'OnBeforeDocFormSave',
+			'OnBeforeEmptyTrash',
 		)
 	)
 );

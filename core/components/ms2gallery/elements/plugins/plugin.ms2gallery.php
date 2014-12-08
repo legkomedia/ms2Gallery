@@ -1,6 +1,5 @@
 <?php
-$corePath = $modx->getOption('core_path', null, MODX_CORE_PATH).'components/ms2gallery/';
-
+/** @var array $scriptProperties */
 switch ($modx->event->name) {
 	case 'OnDocFormRender':
 		/** @var modResource $resource */
@@ -10,12 +9,12 @@ switch ($modx->event->name) {
 		$modx23 = !empty($modx->version) && version_compare($modx->version['full_version'], '2.3.0', '>=');
 		$modx->controller->addHtml('<script type="text/javascript">
 			Ext.onReady(function() {
-				MODx.modx23 = '.(int)$modx23.';
+				MODx.modx23 = ' . (int)$modx23 . ';
 			});
 		</script>');
 
 		/** @var ms2Gallery $ms2Gallery */
-		$ms2Gallery = $modx->getService('ms2gallery','ms2Gallery', MODX_CORE_PATH.'components/ms2gallery/model/ms2gallery/');
+		$ms2Gallery = $modx->getService('ms2gallery', 'ms2Gallery', MODX_CORE_PATH . 'components/ms2gallery/model/ms2gallery/');
 		$modx->controller->addLexiconTopic('ms2gallery:default');
 		$url = $ms2Gallery->config['assetsUrl'];
 
@@ -76,7 +75,7 @@ switch ($modx->event->name) {
 								record: {
 									id: ' . $resource->get('id') . '
 									,source: ' . $source_id . '
-								},
+								}
 							});
 						}
 					}, 10);
@@ -97,7 +96,7 @@ switch ($modx->event->name) {
 							record: {
 								id: ' . $resource->get('id') . '
 								,source: ' . $source_id . '
-							},
+							}
 						});
 					});
 					Ext.apply(this, {
@@ -121,7 +120,9 @@ switch ($modx->event->name) {
 	case 'OnLoadWebDocument':
 		$tstart = microtime(true);
 		/** @var pdoFetch $pdoFetch */
-		if (!$modx->getOption('ms2gallery_set_placeholders', null, false, true) || !$pdoFetch = $modx->getService('pdoFetch')) {return;}
+		if (!$modx->getOption('ms2gallery_set_placeholders', null, false, true) || !$pdoFetch = $modx->getService('pdoFetch')) {
+			return;
+		}
 		$plPrefix = $modx->getOption('ms2gallery_placeholders_prefix', null, 'ms2g', true);
 
 		$options = array('loadModels' => 'ms2gallery');
@@ -143,6 +144,38 @@ switch ($modx->event->name) {
 			$modx->setPlaceholders($pls['vl']);
 		}
 
-		$modx->log(modX::LOG_LEVEL_INFO, '[ms2Gallery] Set image placeholders for page id = ' . $modx->resource->id .' in ' . number_format(microtime(true) - $tstart, 7) . ' sec.');
+		$modx->log(modX::LOG_LEVEL_INFO, '[ms2Gallery] Set image placeholders for page id = ' . $modx->resource->id . ' in ' . number_format(microtime(true) - $tstart, 7) . ' sec.');
+		break;
+
+	case 'OnBeforeEmptyTrash':
+		if (empty($scriptProperties['ids']) || !is_array($scriptProperties['ids'])) {
+			return;
+		}
+		if (!$modx->addPackage('ms2gallery', MODX_CORE_PATH . 'components/ms2gallery/model/')) {
+			return;
+		}
+		$resources = $modx->getIterator('modResource', array('id:IN' => $scriptProperties['ids']));
+		/** @var modResource $resource */
+		foreach ($resources as $resource) {
+			$properties = $resource->getProperties('ms2gallery');
+			if (!empty($properties['media_source'])) {
+				/** @var modMediaSource $source */
+				$source = $modx->getObject('modMediaSource', $properties['media_source']);
+				$resource_id = $resource->get('id');
+				if ($source) {
+					$source->set('ctx', $resource->get('context_key'));
+					$source->initialize();
+				}
+				$images = $modx->getIterator('msResourceFile', array('resource_id' => $resource_id, 'parent' => 0));
+				/** @var msResourceFile $image */
+				foreach ($images as $image) {
+					$image->prepareSource($source);
+					$image->remove();
+				}
+				if ($source) {
+					$source->removeContainer($source->getBasePath() . $resource_id);
+				}
+			}
+		}
 		break;
 }
