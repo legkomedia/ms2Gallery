@@ -22,6 +22,9 @@ $_lang['setting_ms2gallery_set_placeholders_desc'] = 'You can enable auto set of
 $_lang['setting_ms2gallery_placeholders_prefix'] = 'Prefix of placeholders';
 $_lang['setting_ms2gallery_placeholders_prefix_desc'] = 'You can specify placeholders prefix for images. Than you will can use it as [[+prefix.rank.field]]. For example: [[+ms2g.0.url]] or [[+ms2g.1.120x90]]. Placeholder [[+prefix.rank]] will print array with the whole available file properties.';
 
+$_lang['setting_ms2gallery_disable_for_templates'] = 'Désactiver pour les modèles';
+$_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Indiquez liste séparée par des virgules de l`id d`un des modèles, pour lesquels vous ne souhaitez pas afficher l`onglet galerie.';
+
 $_lang['setting_ms2gallery_page_size'] = 'Nombre de fichiers à la page';
 $_lang['setting_ms2gallery_page_size_desc'] = 'Vous pouvez définir le nombre de fichiers affichés sur la page, par défaut est 20. 0 - afficher tous les fichiers.';
 

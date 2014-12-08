@@ -22,6 +22,9 @@ $_lang['setting_ms2gallery_set_placeholders_desc'] = 'Вы можете вклю
 $_lang['setting_ms2gallery_placeholders_prefix'] = 'Префикс плейсхолдеров';
 $_lang['setting_ms2gallery_placeholders_prefix_desc'] = 'Вы можете указать префикс для плейсхолдеров с изображениями - тогда они будут доступн на странице как [[+prefix.rank.field]]. Например: [[+ms2g.0.url]] или [[+ms2g.1.120x90]]. Плейсхолдер [[+prefix.rank]] выведет массив со всеми доступными свойствами файла.';
 
+$_lang['setting_ms2gallery_disable_for_templates'] = 'Отключить показ у шаблонов';
+$_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Перечислите id шаблонов через запятую, для которых не нужно выводить вкладку с галерей.';
+
 $_lang['setting_ms2gallery_page_size'] = 'Файлов на странице';
 $_lang['setting_ms2gallery_page_size_desc'] = 'Вы можете задать количество выводимых файлов на странице, по умолчанию 20. 0 - вывести все.';
 

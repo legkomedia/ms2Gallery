@@ -21,6 +21,9 @@ $_lang['setting_ms2gallery_set_placeholders_desc'] = 'You can enable auto set of
 $_lang['setting_ms2gallery_placeholders_prefix'] = 'Prefix of placeholders';
 $_lang['setting_ms2gallery_placeholders_prefix_desc'] = 'You can specify placeholders prefix for images. Than you will can use it as [[+prefix.rank.field]]. For example: [[+ms2g.0.url]] or [[+ms2g.1.120x90]]. Placeholder [[+prefix.rank]] will print array with the whole available file properties.';
 
+$_lang['setting_ms2gallery_disable_for_templates'] = 'Deaktivieren für Vorlagen';
+$_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Geben Sie eine Komma-getrennte Liste von ids der a-Vorlagen, für die Sie nicht wollen, um die Anzeige der Registerkarte mit Galerie.';
+
 $_lang['setting_ms2gallery_page_size'] = 'Anzahl der Dateien auf Seite';
 $_lang['setting_ms2gallery_page_size_desc'] = 'Sie können die Anzahl der Dateien auf der Seite angezeigt gesetzt, Standard ist 20. 0 - zeigt alle Dateien.';
 

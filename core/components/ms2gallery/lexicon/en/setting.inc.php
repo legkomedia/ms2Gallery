@@ -21,6 +21,9 @@ $_lang['setting_ms2gallery_set_placeholders_desc'] = 'You can enable auto set of
 $_lang['setting_ms2gallery_placeholders_prefix'] = 'Prefix of placeholders';
 $_lang['setting_ms2gallery_placeholders_prefix_desc'] = 'You can specify placeholders prefix for images. Than you will can use it as [[+prefix.rank.field]]. For example: [[+ms2g.0.url]] or [[+ms2g.1.120x90]]. Placeholder [[+prefix.rank]] will print array with the whole available file properties.';
 
+$_lang['setting_ms2gallery_disable_for_templates'] = 'Disable for templates';
+$_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Specify comma-separated list of ids of a templates, for which you do not want to display the tab with gallery.';
+
 $_lang['setting_ms2gallery_page_size'] = 'Number of files on page';
 $_lang['setting_ms2gallery_page_size_desc'] = 'You can set the number of files displayed on the page, default is 20. 0 - display all files.';
 

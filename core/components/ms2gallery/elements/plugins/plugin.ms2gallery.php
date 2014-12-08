@@ -6,6 +6,9 @@ switch ($modx->event->name) {
 		if ($resource instanceof msProduct || $mode == 'new') {
 			return;
 		}
+		elseif (in_array($resource->get('template'), array_map('trim', explode(',', $modx->getOption('ms2gallery_disable_for_templates'))))) {
+			return;
+		}
 		$modx23 = !empty($modx->version) && version_compare($modx->version['full_version'], '2.3.0', '>=');
 		$modx->controller->addHtml('<script type="text/javascript">
 			Ext.onReady(function() {
