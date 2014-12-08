@@ -5,6 +5,7 @@ Changelog for ms2Gallery.
 - [#5] Added system setting for disabling gallery tab for specified templates.
 - [#3] Files are removed along with resources.
 - [#1] Added system setting for template placeholders with resource images.
+- Added system setting for limiting resources by templates ids for which placeholders will be set.
 - Removed "fr" and "de" lexicons.
 
 1.3.1-pl

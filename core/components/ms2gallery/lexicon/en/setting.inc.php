@@ -24,7 +24,9 @@ $_lang['setting_ms2gallery_placeholders_prefix_desc'] = 'You can specify placeho
 $_lang['setting_ms2gallery_placeholders_tpl'] = 'Template for placeholders';
 $_lang['setting_ms2gallery_placeholders_tpl_desc'] = 'Specify the name of the TV or chunk, for template the output of placeholders of type [[+ms2g.0]], [[+ms2g.1]] on the page. The TV must be assigned to a resource, otherwise would be used chunk with the same name. If both the TV and the chunk does not exist or is empty, then you will receive a printed array with image data in this placeholder.';
 $_lang['setting_ms2gallery_placeholders_thumbs'] = 'Thumbs for placeholders';
-$_lang['setting_ms2gallery_placeholders_thumbs_desc'] = 'Specify a comma-separated list of sizes of thumbs, that you want to choose for placing in placeholders. For example "120х90,360x270".';
+$_lang['setting_ms2gallery_placeholders_thumbs_desc'] = 'Specify a comma-separated list of thumbs sizes, that you want to choose for placing in placeholders. For example "120х90,360x270".';
+$_lang['setting_ms2gallery_placeholders_for_templates'] = 'Set placeholders for templates';
+$_lang['setting_ms2gallery_placeholders_for_templates_desc'] = 'Specify a comma-separated list of templates ids for which you want to set placeholders with images. If empty, placeholders will be set for all resources.';
 
 $_lang['setting_ms2gallery_page_size'] = 'Number of files on page';
 $_lang['setting_ms2gallery_page_size_desc'] = 'You can set the number of files displayed on the page, default is 20. 0 - display all files.';

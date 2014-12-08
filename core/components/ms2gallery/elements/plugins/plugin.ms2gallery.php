@@ -126,11 +126,15 @@ switch ($modx->event->name) {
 		if (!$modx->getOption('ms2gallery_set_placeholders', null, false, true) || !$pdoFetch = $modx->getService('pdoFetch')) {
 			return;
 		}
+		$plTemplates = array_map('trim', explode(',', $modx->getOption('ms2gallery_placeholders_for_templates')));
+		if (!empty($plTemplates) && !in_array($modx->resource->get('template'), $plTemplates)) {
+			return;
+		}
 		$plPrefix = $modx->getOption('ms2gallery_placeholders_prefix', null, 'ms2g.', true);
-		$tplName = $modx->getOption('ms2gallery_placeholders_tpl');
 		$plThumbs = array_map('trim', explode(',', $modx->getOption('ms2gallery_placeholders_thumbs')));
+		$tplName = $modx->getOption('ms2gallery_placeholders_tpl');
 
-		// Check for TV
+		// Check for assigned TV
 		$q = $modx->newQuery('modTemplateVarTemplate');
 		$q->innerJoin('modTemplateVar', 'TemplateVar');
 		$q->innerJoin('modTemplate', 'Template');

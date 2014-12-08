@@ -48,6 +48,11 @@ $tmp = array(
 		'xtype' => 'textfield',
 		'area' => 'ms2gallery_frontend',
 	),
+	'placeholders_for_templates' => array(
+		'value' => '',
+		'xtype' => 'textfield',
+		'area' => 'ms2gallery_frontend',
+	),
 	'placeholders_thumbs' => array(
 		'value' => '',
 		'xtype' => 'textfield',
