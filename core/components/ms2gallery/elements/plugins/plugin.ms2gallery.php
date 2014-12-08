@@ -127,7 +127,7 @@ switch ($modx->event->name) {
 			return;
 		}
 		$plTemplates = array_map('trim', explode(',', $modx->getOption('ms2gallery_placeholders_for_templates')));
-		if (!empty($plTemplates) && !in_array($modx->resource->get('template'), $plTemplates)) {
+		if (!empty($plTemplates[0]) && !in_array($modx->resource->get('template'), $plTemplates)) {
 			return;
 		}
 		$plPrefix = $modx->getOption('ms2gallery_placeholders_prefix', null, 'ms2g.', true);
@@ -160,7 +160,7 @@ switch ($modx->event->name) {
 		$options['select'] = 'url';
 		foreach ($parents as &$parent) {
 			$where = array('parent' => $parent['id']);
-			if (!empty($plThumbs) && !empty($plThumbs[0])) {
+			if (!empty($plThumbs[0])) {
 				$where['path:IN'] = array();
 				foreach ($plThumbs as $thumb) {
 					$where['path:IN'][] = $parent['path'] . $thumb . '/';
