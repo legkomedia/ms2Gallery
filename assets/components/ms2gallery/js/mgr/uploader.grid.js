@@ -142,7 +142,7 @@ Ext.extend(ms2Gallery.grid.Plupload,MODx.grid.LocalGrid, {
 			,container: this.id
 			,drop_element: this.config.id
 			,multipart: false
-			,max_file_size : ms2Gallery.config.maxUploadSize || 10485760
+			,max_file_size : ms2Gallery.config.media_source.maxUploadSize || 10485760
 			,flash_swf_url : ms2Gallery.config.assets_url + 'js/mgr/misc//plupload/plupload.flash.swf'
 			,filters : [{
 				title : "Image files"
