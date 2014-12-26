@@ -1,5 +1,9 @@
 Changelog for ms2Gallery.
 
+1.3.3-pl
+==============
+- Fixed sort processor.
+
 1.3.2-pl2
 ==============
 - [#5] Added system setting for disabling gallery tab for specified templates.

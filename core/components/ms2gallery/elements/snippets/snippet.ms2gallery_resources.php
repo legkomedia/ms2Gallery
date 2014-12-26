@@ -54,7 +54,8 @@ if (!empty($thumbs[0])) {
 				`$thumb`.`resource_id` = `$class`.`id` AND
 				`$thumb`.`parent` != 0 AND
 				`$thumb`.`path` LIKE '%/$thumb/' AND
-				`$thumb`.`active` = 1
+				`$thumb`.`active` = 1 AND
+				`$thumb`.`rank` = 0
 			")
 		);
 		$select[$thumb] = preg_replace('/(\n|\t)/', '', "
@@ -73,7 +74,8 @@ if (!empty($thumbs[0])) {
 				'on' => preg_replace('/(\n|\t)/', '', "
 					`{$thumb}o`.`resource_id` = `$class`.`id` AND
 					`{$thumb}o`.`parent` = 0 AND
-					`{$thumb}o`.`active` = 1
+					`{$thumb}o`.`active` = 1 AND
+					`{$thumb}o`.`rank` = 0
 				")
 			);
 			$select[$thumb] .= ", `{$thumb}o`.`url` as `$thumb.original`";
