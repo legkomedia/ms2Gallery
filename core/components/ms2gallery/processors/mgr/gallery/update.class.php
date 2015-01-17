@@ -35,8 +35,15 @@ class msResourceFileUpdateProcessor extends modObjectUpdateProcessor {
 	 * @return bool
 	 */
 	public function afterSave() {
-		if ($this->old_name != $this->object->get('file')) {
+		$tmp = explode('.', $this->old_name);
+		$extension = end($tmp);
+		$file = preg_replace('/\.' . $extension . '$/', '', $this->object->get('file')) . '.' . $extension;
+		if ($this->old_name != $file) {
 			$this->object->rename($this->object->get('file'), $this->old_name);
+		}
+		else {
+			$this->object->set('file', $this->old_name);
+			$this->object->save();
 		}
 
 		$children = $this->object->getMany('Children');
@@ -45,7 +52,9 @@ class msResourceFileUpdateProcessor extends modObjectUpdateProcessor {
 			foreach ($children as $child) {
 				$child->fromArray(array(
 					'name' => $this->object->get('name'),
+					'alt' => $this->object->get('alt'),
 					'description' => $this->object->get('description'),
+					'add' => $this->object->get('add'),
 				));
 				$child->save();
 			}

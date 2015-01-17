@@ -6,7 +6,9 @@
 		<field key="source" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="1" />
 		<field key="parent" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0" />
 		<field key="name" dbtype="varchar" precision="255" phptype="string" null="true" default="" />
+		<field key="alt" dbtype="varchar" precision="255" phptype="string" null="true" default="" />
 		<field key="description" dbtype="text" phptype="string" null="true" />
+		<field key="add" dbtype="text" phptype="string" null="true" />
 		<field key="path" dbtype="varchar" precision="255" phptype="string" null="true" default="" />
 		<field key="file" dbtype="varchar" precision="255" phptype="string" null="false" />
 		<field key="type" dbtype="varchar" precision="50" phptype="string" null="true" />
@@ -35,9 +37,26 @@
 		</index>
 
 		<composite alias="Children" class="msResourceFile" local="id" foreign="parent" cardinality="many" owner="local" />
+		<composite alias="Tags" class="msResourceFileTag" local="id" foreign="file_id" cardinality="many" owner="local" />
 		<aggregate alias="Parent" class="msResourceFile" local="parent" foreign="id" cardinality="one" owner="foreign" />
 		<aggregate alias="Resource" class="msResource" local="resource_id" foreign="id" cardinality="one" owner="foreign" />
 		<aggregate alias="Source" class="modMediaSource" local="source" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+
+	<object class="msResourceFileTag" table="ms2_resource_files_tags" extends="xPDOObject">
+		<field key="file_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" />
+		<field key="tag" dbtype="varchar" precision="255" phptype="string" null="false" />
+
+		<index alias="file" name="product" primary="true" unique="true" type="BTREE" >
+			<column key="file_id" length="" collation="A" null="false" />
+			<column key="tag" length="" collation="A" null="false" />
+		</index>
+
+		<aggregate alias="File" class="msResourceFile" local="file_id" foreign="id" cardinality="one" owner="foreign">
+			<criteria target="foreign"><![CDATA[
+			{"parent":"0"}
+			]]></criteria>
+		</aggregate>
 	</object>
 
 </model>

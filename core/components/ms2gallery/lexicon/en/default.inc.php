@@ -25,8 +25,8 @@ $_lang['ms2gallery_size'] = 'Size';
 $_lang['ms2gallery_status'] = 'Status';
 $_lang['ms2gallery_progress'] = 'Progress';
 $_lang['ms2gallery_inactive'] = 'Inactive';
-$_lang['ms2gallery_createdon'] = 'Created on';
-$_lang['ms2gallery_createdby'] = 'Created by';
+$_lang['ms2gallery_createdon'] = 'Uploaded on';
+$_lang['ms2gallery_createdby'] = 'Uploaded by';
 $_lang['ms2gallery_url'] = 'Url';
 $_lang['ms2gallery_name'] = 'Name';
 $_lang['ms2gallery_status'] = 'Status';
@@ -39,6 +39,7 @@ $_lang['ms2gallery_combo_select'] = 'Click to select';
 
 $_lang['ms2gallery_image_generate_thumbs'] = 'Regenerate thumbnails';
 $_lang['ms2gallery_file_update'] = 'Update properties';
+$_lang['ms2gallery_file_show'] = 'Show in new window';
 $_lang['ms2gallery_file_delete'] = 'Delete file';
 $_lang['ms2gallery_file_delete_confirm'] = 'Are you shure you want to delete this file with all of it thumbnails? <br/> This operation is irreversible.';
 $_lang['ms2gallery_file_delete_multiple'] = 'Delete files';
@@ -66,9 +67,13 @@ $_lang['ms2gallery_err_gallery_exists'] = 'Such an image is already in the resou
 
 $_lang['ms2gallery_file_active'] = 'Active';
 $_lang['ms2gallery_file_inactive'] = 'Inactive';
-$_lang['ms2gallery_file_name'] = 'File name';
+$_lang['ms2gallery_file_name'] = 'File';
 $_lang['ms2gallery_file_title'] = 'Title';
 $_lang['ms2gallery_file_description'] = 'Description';
+$_lang['ms2gallery_file_add'] = 'Additional';
+$_lang['ms2gallery_file_alt'] = 'Alt name';
+$_lang['ms2gallery_file_tags'] = 'Tags (Groups)';
+$_lang['ms2gallery_file_search'] = 'Search...';
 
 $_lang['ms2gallery_status_code_1'] = 'Queued';
 $_lang['ms2gallery_status_code_2'] = 'Uploading';

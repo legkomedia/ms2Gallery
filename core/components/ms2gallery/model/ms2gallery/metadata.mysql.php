@@ -5,4 +5,8 @@ $xpdo_meta_map = array (
   array (
     0 => 'msResourceFile',
   ),
+  'xPDOObject' => 
+  array (
+    0 => 'msResourceFileTag',
+  ),
 );

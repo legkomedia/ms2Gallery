@@ -10,8 +10,6 @@ $_lang['area_ms2gallery_frontend'] = 'Frontend';
 
 $_lang['setting_ms2gallery_source_default'] = 'Default media source';
 $_lang['setting_ms2gallery_source_default_desc'] = 'Default media source for the resource gallery.';
-$_lang['setting_ms2gallery_thumbnail_size'] = 'Default thumbnail size';
-$_lang['setting_ms2gallery_thumbnail_size_desc'] = 'Size of default pre-generated thumbnail for field "thumb" in msProduct table. Of course, this size should exist in the settings of your media source that generates the previews. Otherwise you will receive  miniShop2 logo instead of resource image in manager.';
 $_lang['setting_ms2gallery_date_format'] = 'Format of dates';
 $_lang['setting_ms2gallery_date_format_desc'] = 'You can specify how to format dates using php strftime() syntax. By default format is "%d.%m.%y %H:%M".';
 $_lang['setting_ms2gallery_disable_for_templates'] = 'Disable for templates';

@@ -10,7 +10,9 @@ $xpdo_meta_map['msResourceFile']= array (
     'source' => 1,
     'parent' => 0,
     'name' => '',
+    'alt' => '',
     'description' => NULL,
+    'add' => NULL,
     'path' => '',
     'file' => NULL,
     'type' => NULL,
@@ -58,7 +60,21 @@ $xpdo_meta_map['msResourceFile']= array (
       'null' => true,
       'default' => '',
     ),
+    'alt' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => true,
+      'default' => '',
+    ),
     'description' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => true,
+    ),
+    'add' => 
     array (
       'dbtype' => 'text',
       'phptype' => 'string',
@@ -233,6 +249,14 @@ $xpdo_meta_map['msResourceFile']= array (
       'class' => 'msResourceFile',
       'local' => 'id',
       'foreign' => 'parent',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
+    'Tags' => 
+    array (
+      'class' => 'msResourceFileTag',
+      'local' => 'id',
+      'foreign' => 'file_id',
       'cardinality' => 'many',
       'owner' => 'local',
     ),

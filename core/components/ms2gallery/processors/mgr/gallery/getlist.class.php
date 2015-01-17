@@ -75,9 +75,27 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 		$c->select('`Thumb`.`url` as `thumbnail`');
 
 		$c->where(array('resource_id' => $this->getProperty('resource_id')));
+
 		$parent = $this->getProperty('parent');
 		if ($parent !== false) {
 			$c->where(array('parent' => $parent));
+		}
+		$query = trim($this->getProperty('query'));
+		if (!empty($query)) {
+			$c->where(array(
+				'file:LIKE' => "%{$query}%",
+				'OR:name:LIKE' => "%{$query}%",
+				'OR:alt:LIKE' => "%{$query}%",
+				'OR:description:LIKE' => "%{$query}%",
+				'OR:add:LIKE' => "%{$query}%",
+			));
+		}
+		$tags = array_map('trim', explode(',',$this->getProperty('tags')));
+		if (!empty($tags[0])) {
+			$tags = implode("','", $tags);
+			$c->innerJoin('msResourceFileTag','Tag',"`{$this->classKey}`.`id` = `Tag`.`file_id` AND `Tag`.`tag` IN ('" . $tags . "')");
+			$c->groupby($this->classKey . '.id');
+			$c->prepare();$this->modx->log(1, $c->toSQL());
 		}
 
 		return $c;
@@ -99,7 +117,7 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 			}
 			else {
 				//$row['thumbnail'] = $row['url'];
-				$row['thumbnail'] = MODX_ASSETS_URL . 'components/ms2gallery/img/mgr/ms2_small.png';
+				$row['thumbnail'] = MODX_ASSETS_URL . 'components/ms2gallery/img/web/ms2g_small.jpg';
 			}
 		}
 
@@ -112,6 +130,15 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 			: array();
 
 		$row['active'] = !empty($row['active']);
+
+		$row['tags'] = array();
+		$q = $this->modx->newQuery('msResourceFileTag', array('file_id' => $row['id']));
+		$q->select('tag');
+		if ($q->prepare() && $q->stmt->execute()) {
+			while ($tag = $q->stmt->fetchColumn()) {
+				$row['tags'][] = array('tag' => $tag);
+			}
+		}
 
 		return $row;
 	}

@@ -184,6 +184,7 @@ class msResourceFile extends xPDOSimpleObject {
 	/**
 	 * @return array|mixed
 	 */
+	/*
 	public function getFirstThumbnail() {
 		$c = array(
 			'resource_id' => $this->get('resource_id')
@@ -206,6 +207,65 @@ class msResourceFile extends xPDOSimpleObject {
 		}
 
 		return $res;
+	}
+	*/
+
+
+	/**
+	 * @param array|string $k
+	 * @param null $format
+	 * @param null $formatTemplate
+	 *
+	 * @return mixed
+	 */
+	public function get($k, $format = null, $formatTemplate = null) {
+		if (strtolower($k) == 'tags') {
+			$tags = array();
+			$q = $this->xpdo->newQuery('msResourceFileTag', array('file_id' => $this->get('id')));
+			$q->select('tag');
+			if ($q->prepare() && $q->stmt->execute()) {
+				$tags = $q->stmt->fetchAll(PDO::FETCH_COLUMN);
+			}
+			return $tags;
+		}
+		else {
+			return parent::get($k, $format, $formatTemplate);
+		}
+	}
+
+
+	/**
+	 * @param null $cacheFlag
+	 *
+	 * @return bool
+	 */
+	public function save($cacheFlag = null) {
+		$save = parent::save($cacheFlag);
+
+		$id = $this->get('id');
+		$table = $this->xpdo->getTableName('msResourceFileTag');
+		$sql = 'DELETE FROM '.$table.' WHERE `file_id` = '.$id;
+		$stmt = $this->xpdo->prepare($sql);
+		$stmt->execute();
+		$stmt->closeCursor();
+
+		if ($tags = parent::get('tags')) {
+			$values = array();
+			foreach ($tags as $tag) {
+				$tag = trim($tag);
+				if (!empty($tag)) {
+					$values[] = '('.$id.',"'.$tag.'")';
+				}
+			}
+			if (!empty($values)) {
+				$sql = 'INSERT INTO '.$table.' (`file_id`,`tag`) VALUES ' . implode(',', $values);
+				$stmt = $this->xpdo->prepare($sql);
+				$stmt->execute();
+				$stmt->closeCursor();
+			}
+		}
+
+		return $save;
 	}
 
 
@@ -248,7 +308,7 @@ class msResourceFile extends xPDOSimpleObject {
 		$path = $this->get('path');
 		$tmp = explode('.', $old_name);
 		$extension = end($tmp);
-		$name = preg_replace('/\..*$/', '', $new_name) . '.' . $extension;
+		$name = preg_replace('/\.' . $extension . '$/', '', $new_name) . '.' . $extension;
 
 		// Processing children
 		$children = $this->getMany('Children');
@@ -263,6 +323,7 @@ class msResourceFile extends xPDOSimpleObject {
 		if ($this->mediaSource->renameObject($path.$old_name, $name)) {
 			$this->set('file', $name);
 			$this->set('url', $this->mediaSource->getObjectUrl($path.$name));
+
 			return $this->save();
 		}
 		else {

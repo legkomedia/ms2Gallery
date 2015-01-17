@@ -4,8 +4,8 @@
 define('PKG_NAME','ms2Gallery');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
 
-define('PKG_VERSION','1.3.3');
-define('PKG_RELEASE','pl');
+define('PKG_VERSION','1.4.0');
+define('PKG_RELEASE','beta1');
 define('PKG_AUTO_INSTALL', true);
 
 /* define paths */
@@ -51,4 +51,5 @@ $BUILD_RESOLVERS = array(
 	'update',
 	'setup',
 	'tv',
+	'settings',
 );

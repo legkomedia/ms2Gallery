@@ -3,8 +3,12 @@
 $properties = array();
 
 $tmp = array(
-	'resource' => array(
-		'type' => 'numberfield'
+	'parents' => array(
+		'type' => 'textfield'
+		,'value' => ''
+	),
+	'resources' => array(
+		'type' => 'textfield'
 		,'value' => ''
 	),
 	'showLog' => array(
@@ -69,6 +73,15 @@ $tmp = array(
 	),
 	'frontend_js' => array(
 		'value' => '[[+jsUrl]]web/default.js',
+		'xtype' => 'textfield',
+	),
+
+	'tags' => array(
+		'value' => '',
+		'xtype' => 'textfield',
+	),
+	'tagsVar' => array(
+		'value' => '',
 		'xtype' => 'textfield',
 	),
 );

@@ -3,7 +3,7 @@ ms2Gallery.panel.Gallery = function(config) {
 
 	Ext.apply(config,{
 		id: 'ms2gallery-page',
-		baseCls: 'x-panel',
+		baseCls: 'x-panel ' + (MODx.modx23 ? 'modx23' : 'modx22'),
 		items: [{
 			border: false,
 			baseCls: 'panel-desc',
@@ -24,7 +24,7 @@ ms2Gallery.panel.Gallery = function(config) {
 				id: 'ms2gallery-images-panel',
 				cls: 'modx-pb-view-ct',
 				resource_id: config.record.id,
-				pageSize: config.pageSize || 50
+				pageSize: config.pageSize || MODx.config.ms2gallery_page_size
 			}]
 		}]
 	});

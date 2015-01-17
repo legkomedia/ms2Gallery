@@ -16,21 +16,101 @@ ms2Gallery.panel.Images = function(config) {
 		,cls: 'browser-view'
 		,border: false
 		,items: [this.view]
-		,tbar: new Ext.PagingToolbar({
+		,tbar: this.getTopBar(config)
+		,bbar: this.getBottomBar(config)
+	});
+	ms2Gallery.panel.Images.superclass.constructor.call(this,config);
+
+	var dv = this.view;
+	dv.on('render', function() {
+		dv.dragZone = new ms2Gallery.DragZone(dv);
+		dv.dropZone = new ms2Gallery.DropZone(dv);
+	});
+};
+Ext.extend(ms2Gallery.panel.Images,MODx.Panel, {
+
+	Tags: function(tf) {
+		var s = this.view.getStore();
+		s.baseParams.tags = tf.getValue();
+		this.getBottomToolbar().changePage(1);
+	}
+
+	,Search: function(tf) {
+		var s = this.view.getStore();
+		s.baseParams.query = tf.getValue();
+		this.getBottomToolbar().changePage(1);
+	}
+
+	,clearTags: function() {
+		var s = this.view.getStore();
+		s.baseParams.tags = '';
+		this.getBottomToolbar().changePage(1);
+	}
+
+	,clearSearch: function() {
+		var s = this.view.getStore();
+		s.baseParams.query = '';
+		Ext.getCmp('ms2gallery-search-filter').setValue('');
+		this.getBottomToolbar().changePage(1);
+	}
+
+	,getTopBar: function(config) {
+		return new Ext.Toolbar({
+			items: [
+				{
+					xtype: 'ms2gallery-combo-tags'
+					,id: 'ms2gallery-combo-tags-filter'
+					,width: 330
+					,emptyText: _('ms2gallery_file_tags')
+					,allowAddNewData: false
+					,addNewDataOnBlur: false
+					,supressClearValueRemoveEvents: true
+					,pageSize: 10 //MODx.config.default_per_page
+					//,editable: false
+					,listeners: {
+						clear: {fn:function(tf) {this.clearTags();}, scope:this}
+						,additem: {fn:function(tf) {this.Tags(tf);}, scope:this}
+						,removeitem: {fn:function(tf) {this.Tags(tf);}, scope:this}
+					}
+				} ,'->' ,{
+					xtype: 'trigger'
+					,id: 'ms2gallery-search-filter'
+					,width: 300
+					,emptyText: _('ms2gallery_file_search')
+					,triggerClass: 'ms2gallery-search-clear' + (MODx.modx23 ? '' : ' x-superboxselect-btn-clear')
+					,onTriggerClick: function() {this.fireEvent('click',this);}
+					,listeners: {
+						render: {fn:function(tf) {
+							tf.getEl().addKeyListener(Ext.EventObject.ENTER,function() {
+								this.Search(tf);
+							},this);
+						},scope:this}
+						,click: {fn:function() {
+							this.clearSearch();
+						}, scope:this}
+					}
+				}
+			]
+		})
+	}
+	,getBottomBar: function(config) {
+		return new Ext.PagingToolbar({
 			pageSize: config.pageSize || MODx.config.default_per_page
 			,store: this.view.store
 			,displayInfo: true
 			,autoLoad: true
-			,items: [
-				'-', _('per_page') + ':'
-				,{xtype: 'textfield', value: config.pageSize || MODx.config.default_per_page
+			,items: ['-',
+				_('per_page') + ':'
+				,{
+					xtype: 'textfield'
+					,value: config.pageSize || MODx.config.default_per_page
 					,width: 50
 					,listeners: {
 						change: {fn:function(tf,nv,ov) {
 							if (Ext.isEmpty(nv)) {return;}
 							nv = parseInt(nv);
-							this.getTopToolbar().pageSize = nv;
-							this.view.getStore().load({params:{start:0,limit: nv}});
+							this.getBottomToolbar().pageSize = nv;
+							this.view.getStore().load({params:{start:0, limit: nv}});
 						}, scope:this}
 						,render: {fn: function(cmp) {
 							new Ext.KeyMap(cmp.getEl(), {
@@ -41,19 +121,11 @@ ms2Gallery.panel.Images = function(config) {
 						}, scope:this}
 					}
 				}
-				,'-'
 			]
 		})
-	});
-	ms2Gallery.panel.Images.superclass.constructor.call(this,config);
+	}
 
-	var dv = this.view;
-	dv.on('render', function() {
-		dv.dragZone = new ms2Gallery.DragZone(dv);
-		dv.dropZone = new ms2Gallery.DropZone(dv);
-	});
-};
-Ext.extend(ms2Gallery.panel.Images,MODx.Panel);
+});
 Ext.reg('ms2gallery-images-panel',ms2Gallery.panel.Images);
 
 
@@ -64,7 +136,11 @@ ms2Gallery.view.Images = function(config) {
 
 	Ext.applyIf(config,{
 		url: ms2Gallery.config.connector_url
-		,fields: ['id','resource_id','name','description','url','createdon','createdby','file','thumbnail','source','source_name','type','rank','active','properties','class']
+		,fields: [
+			'id','resource_id','name','description','url','createdon','createdby','file','thumbnail',
+			'source','source_name','type','rank','active','properties','class',
+			'add','alt','tags'
+		]
 		,id: 'ms2gallery-images-view'
 		,baseParams: {
 			action: 'mgr/gallery/getlist'
@@ -73,7 +149,7 @@ ms2Gallery.view.Images = function(config) {
 			,type: 'image'
 			,limit: config.pageSize || MODx.config.default_per_page
 		}
-		,loadingText: _('loading')
+		//,loadingText: _('loading')
 		,enableDD: true
 		,multiSelect: true
 		,tpl: this.templates.thumb
@@ -86,6 +162,14 @@ ms2Gallery.view.Images = function(config) {
 	this.addEvents('sort','select');
 	this.on('sort',this.onSort,this);
 	this.on('dblclick',this.onDblClick,this);
+
+	var widget = this;
+	this.getStore().on('beforeload', function() {
+		widget.getEl().mask(_('loading'),'x-mask-loading');
+	});
+	this.getStore().on('load', function() {
+		widget.getEl().unmask();
+	});
 };
 Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 
@@ -106,7 +190,7 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 			,listeners: {
 				success: {fn: function() {
 					el.unmask();
-					//this.store.load();
+					this.store.reload();
 				}, scope: this}
 			}
 		});
@@ -134,6 +218,14 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 		});
 		w.setValues(data);
 		w.show(e.target);
+	}
+
+	,showImage: function(btn,e) {
+		var node = this.cm.activeNode;
+		var data = this.lookup[node.id];
+		if (!data) {return;}
+
+		window.open(data.url);
 	}
 
 	,deleteImage: function(btn,e) {
@@ -299,7 +391,7 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 	}
 
 	,formatData: function(data) {
-		data.shortName = Ext.util.Format.ellipsis(data.name, 16);
+		data.shortName = Ext.util.Format.ellipsis(data.name, 20);
 		data.createdon = ms2Gallery.utils.formatDate(data.createdon);
 		data.size = (data.properties['width'] && data.properties['height'])
 			? data.properties['width'] + 'x' + data.properties['height']
@@ -321,7 +413,7 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 					<div class="modx-browser-thumb modx-pb-thumb ms2gallery-thumb">\
 						<img src="{thumbnail}" title="{name}" />\
 					</div>\
-					<span>{shortName}</span>\
+					<small>{rank}. {shortName}</small>\
 				</div>\
 			</tpl>'
 		);
@@ -342,6 +434,11 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 			m.add({
 				text: '<i class="'+icon+'edit"></i> ' + _('ms2gallery_file_update')
 				,handler: this.updateImage
+				,scope: this
+			});
+			m.add({
+				text: '<i class="'+icon+'share"></i> ' + _('ms2gallery_file_show')
+				,handler: this.showImage
 				,scope: this
 			});
 			if (data.type == 'image') {

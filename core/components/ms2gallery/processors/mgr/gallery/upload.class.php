@@ -72,7 +72,7 @@ class msResourceFileUploadProcessor extends modObjectProcessor {
 		$product_file = $this->modx->newObject('msResourceFile', array(
 			'resource_id' => $this->resource->id
 			,'parent' => 0
-			,'name' => $data['name']
+			,'name' => preg_replace('#\.' . $extension . '$#', '', $data['name'])
 			,'file' => $filename
 			,'path' => $this->resource->id.'/'
 			,'source' => $this->mediaSource->get('id')

@@ -31,8 +31,8 @@ $_lang['ms2gallery_size'] = 'Размер';
 $_lang['ms2gallery_status'] = 'Статус';
 $_lang['ms2gallery_progress'] = 'Прогресс';
 $_lang['ms2gallery_inactive'] = 'Отключено';
-$_lang['ms2gallery_createdon'] = 'Дата создания';
-$_lang['ms2gallery_createdby'] = 'Автор';
+$_lang['ms2gallery_createdon'] = 'Дата загрузки';
+$_lang['ms2gallery_createdby'] = 'Пользователь';
 $_lang['ms2gallery_url'] = 'Адрес';
 $_lang['ms2gallery_name'] = 'Название';
 $_lang['ms2gallery_status'] = 'Статус';
@@ -45,6 +45,7 @@ $_lang['ms2gallery_combo_select'] = 'Нажмите для выбора';
 
 $_lang['ms2gallery_image_generate_thumbs'] = 'Обновить превьюшки';
 $_lang['ms2gallery_file_update'] = 'Изменить свойства';
+$_lang['ms2gallery_file_show'] = 'Открыть в новом окне';
 $_lang['ms2gallery_file_delete'] = 'Удалить файл';
 $_lang['ms2gallery_file_delete_confirm'] = 'Вы действительно хотите удалить этот файл вместе со всеми его уменьшенными копиями?<br/>Эта операция необратима.';
 $_lang['ms2gallery_file_delete_multiple'] = 'Удалить файлы';
@@ -72,9 +73,13 @@ $_lang['ms2gallery_err_gallery_exists'] = 'Такое изображение у�
 
 $_lang['ms2gallery_file_active'] = 'Активен';
 $_lang['ms2gallery_file_inactive'] = 'Неактивен';
-$_lang['ms2gallery_file_name'] = 'Имя файла';
+$_lang['ms2gallery_file_name'] = 'Файл';
 $_lang['ms2gallery_file_title'] = 'Название';
 $_lang['ms2gallery_file_description'] = 'Описание';
+$_lang['ms2gallery_file_add'] = 'Дополнительно';
+$_lang['ms2gallery_file_alt'] = 'Альтернативное имя';
+$_lang['ms2gallery_file_tags'] = 'Теги (Группы)';
+$_lang['ms2gallery_file_search'] = 'Поиск...';
 
 $_lang['ms2gallery_status_code_1'] = 'В очереди';
 $_lang['ms2gallery_status_code_2'] = 'В процессе';

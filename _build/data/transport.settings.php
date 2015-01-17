@@ -13,18 +13,13 @@ $tmp = array(
 		'xtype' => 'modx-combo-source',
 		'area' => 'ms2gallery_resource',
 	),
-	'thumbnail_size' => array(
-		'value' => '120x90',
-		'xtype' => 'textfield',
-		'area' => 'ms2gallery_resource',
-	),
 	'date_format' => array(
 		'value' => '%d.%m.%y %H:%M',
 		'xtype' => 'textfield',
 		'area' => 'ms2gallery_resource',
 	),
 	'page_size' => array(
-		'value' => '20',
+		'value' => '50',
 		'xtype' => 'textfield',
 		'area' => 'ms2gallery_resource',
 	),

@@ -10,8 +10,6 @@ $_lang['area_ms2gallery_frontend'] = 'Сайт';
 
 $_lang['setting_ms2gallery_source_default'] = 'Источник файлов по умолчанию';
 $_lang['setting_ms2gallery_source_default_desc'] = 'Источник файлов для галереи изображений ресурса по умолчанию.';
-$_lang['setting_ms2gallery_thumbnail_size'] = 'Размер превью по умолчанию';
-$_lang['setting_ms2gallery_thumbnail_size_desc'] = 'Здесь вы можете указать размер заранее уменьшенной копии изображения для вставки поля "thumb" товара. Конечно, этот размер должен существовать и в настройках источника медиа, чтобы генерировались такие превью. В противном случае вы получите логотип miniShop2 вместо изображения в админке.';
 $_lang['setting_ms2gallery_date_format'] = 'Формат даты';
 $_lang['setting_ms2gallery_date_format_desc'] = 'Укажите формат дат, используя синтаксис php функции strftime(). По умолчанию формат "%d.%m.%y %H:%M".';
 $_lang['setting_ms2gallery_disable_for_templates'] = 'Отключить показ у шаблонов';

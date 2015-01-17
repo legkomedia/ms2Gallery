@@ -14,53 +14,90 @@ $css = $modx->getOption('frontend_css', $scriptProperties, 'frontend_css');
 if (!empty($css) && preg_match('/\.css/i', $css)) {
 	$modx->regClientCSS(str_replace($config['pl'], $config['vl'], $css));
 }
-
 $js = $modx->getOption('frontend_js', $scriptProperties, 'frontend_js');
 if (!empty($js) && preg_match('/\.js/i', $js)) {
-	$modx->regClientStartupScript(str_replace('		', '', '
-		<script type="text/javascript">
-			if(typeof jQuery == "undefined") {
-				document.write("<script src=\"'.$ms2Gallery->config['jsUrl'].'web/lib/jquery.min.js\" type=\"text/javascript\"><\/script>");
-			}
-		</script>
-	'), true);
 	$modx->regClientScript(str_replace($config['pl'], $config['vl'], $js));
 }
 
-/** @var modResource $resource */
-$resource = (!empty($resource) && $resource != $modx->resource->id)
-	? $modx->getObject('modResource', $resource)
-	: $modx->resource;
-
-if (empty($limit) && !empty($offset)) {$scriptProperties['limit'] = 10000;}
 $where = array(
-	'resource_id' => $resource->get('id'),
-	'parent' => 0,
+	'File.parent' => 0,
 );
+
+// Define where parameters
+if ($scriptProperties['parents'] == '' && empty($scriptProperties['resources'])) {
+	$resources = !empty($resource)
+		? $resource
+		: $modx->resource->get('id');
+	$scriptProperties['resources'] = $resources;
+}
+
 if (!empty($filetype)) {
-	$where['type:IN'] = array_map('trim', explode(',', $filetype));
+	$where['File.type:IN'] = array_map('trim', explode(',', $filetype));
 }
+
 if (empty($showInactive)) {
-	$where['active'] = 1;
+	$where['File.active'] = 1;
 }
-// processing additional query params
-if (!empty($scriptProperties['where'])) {
-	$tmp = $modx->fromJSON($scriptProperties['where']);
-	if (is_array($tmp) && !empty($tmp)) {
-		$where = array_merge($where, $tmp);
+
+$innerJoin = array(
+	'File' => array(
+		'class' => 'msResourceFile',
+		'on' => 'File.resource_id = modResource.id',
+	)
+);
+if (!empty($tagsVar) && isset($_REQUEST[$tagsVar])) {
+	$tags = $modx->stripTags($_REQUEST[$tagsVar]);
+}
+if (!empty($tags)) {
+	$tags = array_map('trim', explode(',', $tags));
+	$tags = implode('","', $tags);
+	$innerJoin['Tag'] = array(
+		'class' => 'msResourceFileTag',
+		'on' => 'Tag.file_id = File.id AND Tag.tag IN ("' . $tags . '")',
+	);
+}
+
+$select = array(
+	'File' => '*'
+);
+
+// Set default sort by File table
+if (!empty($sortby)) {
+	$sortby = array_map('trim', explode(',', $sortby));
+	foreach ($sortby as &$value) {
+		if (strpos($value, '.') === false) {
+			$value = 'File.' . $value;
+		}
 	}
+	$scriptProperties['sortby'] = implode(', ', $sortby);
 }
-unset($scriptProperties['where']);
+
+// processing additional query params
+foreach (array('where', 'innerJoin', 'select') as $v) {
+	if (!empty($scriptProperties[$v])) {
+		$tmp = $modx->fromJSON($scriptProperties[$v]);
+		if (is_array($tmp)) {
+			$$v = array_merge($$v, $tmp);
+		}
+	}
+	unset($scriptProperties[$v]);
+}
+
+if (empty($limit) && !empty($offset)) {
+	$scriptProperties['limit'] = 10000;
+}
 
 // Default parameters
 $default = array(
-	'class' => 'msResourceFile',
+	'class' => 'modResource',
+	'innerJoin' => $innerJoin,
 	'where' => $modx->toJSON($where),
-	//'select' => '{"msResourceFile":"all"}',
-	'limit' => $limit,
+	'select' => $select,
+	'limit' => 10,
 	'sortby' => 'rank',
 	'sortdir' => 'ASC',
 	'fastMode' => false,
+	'groupby' => 'File.id',
 	'return' => 'data',
 	'nestedChunkPrefix' => 'ms2gallery_',
 );

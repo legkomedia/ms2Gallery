@@ -1,5 +1,14 @@
 Changelog for ms2Gallery.
 
+1.4.0-beta1
+==============
+- Removed extension from default file name on upload.
+- New file fields: "add" and "alt".
+- Fixed system parameter "ms2gallery_page_size".
+- Snippet ms2Gallery can load files from multiple resources.
+- Added tags.
+- UI improvements.
+
 1.3.3-pl
 ==============
 - Fixed sort processor.

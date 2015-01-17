@@ -5,7 +5,8 @@
  * @package ms2gallery
  * @subpackage lexicon
  */
-$_lang['ms2gallery_prop_resource'] = 'Id of the resource. If empty, will used id of the current document.';
+$_lang['ms2gallery_prop_parents'] = 'List of containers separated by commas, to search for files of galleries. The default setting is empty, i.e. the query is not limited to parents and obeys parameter &resources. If the id of the parent begins with a hyphen, he and his descendants are excluded from the query.';
+$_lang['ms2gallery_prop_resources'] = 'The resource List, separated by commas, for output files. If the id of the resource begins with a hyphen, this resource is excluded from the sample. If the parameter is empty - displays a gallery of the current resource.';
 
 $_lang['ms2gallery_prop_tplRow'] = 'Chunk for template one row of query.';
 $_lang['ms2gallery_prop_tplOuter'] = 'Wrapper for template results of snippet work.';
@@ -31,3 +32,6 @@ $_lang['ms2gallery_prop_frontend_js'] = 'Path to file with scripts of the shop. 
 $_lang['ms2gallery_prop_typeOfJoin'] = 'attachment Type image resource. Left is the Left Join, that is, the resources will be selected, even if they have no pictures. And the inner is the Inner Join will only be selected resources with pictures.';
 $_lang['ms2gallery_prop_includeThumbs'] = 'List of permissions preview separated by commas. For example, "120x90,360x270".';
 $_lang['ms2gallery_prop_includeOriginal'] = 'Adding to the sample an additional join with a link to the original image. Will be available in an array of resource as "resolution.original", for example "120x90.original".';
+
+$_lang['ms2gallery_prop_tags'] = 'List of tags, separated by commas, for output files.';
+$_lang['ms2gallery_prop_tagsVar'] = 'If this parameter is not empty, then the snippet will take the value of "tags" in $_REQUEST[specifiedname]. For example, if you specify "tag", the snippet will display only files matching $_REQUEST["tag"].';

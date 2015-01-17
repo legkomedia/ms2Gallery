@@ -1,27 +1,15 @@
 .ms2gallery-images {float:left;}
-/* Image list */
+
+/* Images list */
+#ms2gallery-images-view {min-height: 150px;}
 .ms2gallery-thumb-wrap {border: 1px solid #efefef; cursor: pointer;}
 .ms2gallery-thumb-wrap:hover {border: 1px solid #AAA;}
 .ms2gallery-thumb-wrap.inactive {opacity: .5; border-color: darkgoldenrod;}
 .ms2gallery-thumb {width: 120px; height: 90px;}
 .ms2gallery-thumb img {max-width: 120px; max-height: 90px; display: block; margin: auto;}
-
 .ms2gallery-window-thumb {border: 1px solid #efefef; border-radius: 2px;}
-.ms2gallery-window-details {width: 100%;}
-.ms2gallery-window-details th {text-align: right; padding-right: 5px; width: 50%;}
 
-#ms2gallery-images-view {min-height: 150px;}
-
-/* Image preview */
-/*
-.modx-gallery-details-thumb {padding-bottom: 20px; border-bottom: 1px solid #efefef;}
-.modx-gallery-details-thumb a {color: #005580;}
-.modx-gallery-details-thumb img {max-width: 300px; display: block; margin: auto; width: 100%;}
-.modx-gallery-details-inactive {text-align: right; color: brown;}
-.modx-gallery-details-info {padding-top: 0; border: 0;}
-*/
-
-/* Progress bar:*/
+/* Upload grid progress bar */
 td.x-grid3-td-progress-cell {padding: 0;}
 td.x-grid3-td-progress-cell div.x-grid3-cell-inner {padding: 0;position: relative;line-height: 36px;height: 41px;}
 .ux-progress-cell-inner {position: absolute;top: 0;left: 0;height: 100%;width: 100%;overflow: hidden;}
@@ -41,3 +29,37 @@ td.x-grid3-td-progress-cell div.x-grid3-cell-inner {padding: 0;position: relativ
 a.x-menu-item .x-menu-item-text, a.x-menu-item .x-menu-item-text .fa {cursor: pointer;}
 a.x-menu-item .x-menu-item-text .fa {line-height:16px; top:auto;}
 .x-menu-list .fa {min-width: 1em; text-align:center;}
+
+/* Image window */
+.ms2gallery-cba .x-form-cb-label {margin-top: 6px;}
+.ms2gallery-window-details {width: 100%; font-size: 12px;}
+.ms2gallery-window-details th {text-align: right; padding-right: 5px; width: 50%;}
+
+.x-superboxselect-list .x-combo-list-inner {
+	height: auto !important;
+}
+
+/* MODX 2.2+ */
+.modx23 .x-form-field-wrap .ms2gallery-search-clear:before {
+	content: "\f00d";
+}
+/* MODX < 2.3 */
+.modx22 .x-superboxselect-input-field {
+	background-color: transparent;
+}
+.modx22 .x-superboxselect li {
+	margin: 2px 2px 0 0;
+}
+.modx22 .x-form-field-trigger-wrap .x-form-text.x-superboxselect,
+.modx22 .x-small-editor .x-form-field-trigger-wrap .x-form-text.x-superboxselect {
+	padding: 2px 4px 4px 4px !important;
+}
+.modx22 .x-form-field-wrap .ms2gallery-search-clear {
+	margin-top:6px;
+	height: 16px;
+	width: 20px;
+	background: url('../../img/mgr/extjs/sb_clear.png') no-repeat scroll left 0 !important;
+}
+.modx22 .x-form-field-wrap .ms2gallery-search-clear.x-form-trigger-over {
+	background-position: left -16px !important;;
+}
