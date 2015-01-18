@@ -1,20 +1,30 @@
 var ms2Gallery = {
 	initialize: function(selector) {
-		var gallery = $(selector);
-		if (!gallery.length) {return false;}
-
-		$(document).on('click', selector + ' .thumbnail', function(e) {
-			var src = $(this).attr('href');
-			var href = $(this).data('image');
-			$('#mainImage', gallery).attr('src', src).parent().attr('href', href);
+		var galleries = $(selector);
+		if (!galleries.length) {
 			return false;
+		}
+
+		galleries.each(function() {
+			var gallery = $(this);
+			var thumbnails = gallery.find('.thumbnail');
+			thumbnails.on('click', function(e) {
+				e.preventDefault();
+				var thumbnail = $(this);
+				thumbnails.removeClass('active');
+				thumbnail.addClass('active');
+				var main = gallery.find('#mainImage, .mainImage');
+				main.attr('src', thumbnail.attr('href'))
+					.parent().attr('href', thumbnail.data('image'));
+				return false;
+			});
+			gallery.find('.thumbnail:first').click();
 		});
 
-		$('.thumbnail:first', gallery).trigger('click');
-        return true;
+		return true;
 	}
 };
 
 $(document).ready(function() {
-	ms2Gallery.initialize('#msGallery');
+	ms2Gallery.initialize('#msGallery, .ms2Gallery');
 });
