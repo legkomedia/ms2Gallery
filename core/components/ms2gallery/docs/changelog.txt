@@ -1,6 +1,6 @@
 Changelog for ms2Gallery.
 
-1.4.0-beta2
+1.4.0-beta3
 ==============
 - Removed extension from default file name on upload.
 - New file fields: "add" and "alt".

@@ -241,27 +241,30 @@ class msResourceFile extends xPDOSimpleObject {
 	 */
 	public function save($cacheFlag = null) {
 		$save = parent::save($cacheFlag);
+		$tags = parent::get('tags');
 
-		$id = $this->get('id');
-		$table = $this->xpdo->getTableName('msResourceFileTag');
-		$sql = 'DELETE FROM '.$table.' WHERE `file_id` = '.$id;
-		$stmt = $this->xpdo->prepare($sql);
-		$stmt->execute();
-		$stmt->closeCursor();
+		if (is_array($tags)) {
+			$id = $this->get('id');
+			$table = $this->xpdo->getTableName('msResourceFileTag');
+			$sql = 'DELETE FROM '.$table.' WHERE `file_id` = '.$id;
+			$stmt = $this->xpdo->prepare($sql);
+			$stmt->execute();
+			$stmt->closeCursor();
 
-		if ($tags = parent::get('tags')) {
-			$values = array();
-			foreach ($tags as $tag) {
-				$tag = trim($tag);
-				if (!empty($tag)) {
-					$values[] = '('.$id.',"'.$tag.'")';
+		 	if (!empty($tags)) {
+				$values = array();
+				foreach ($tags as $tag) {
+					$tag = trim($tag);
+					if (!empty($tag)) {
+						$values[] = '('.$id.',"'.$tag.'")';
+					}
 				}
-			}
-			if (!empty($values)) {
-				$sql = 'INSERT INTO '.$table.' (`file_id`,`tag`) VALUES ' . implode(',', $values);
-				$stmt = $this->xpdo->prepare($sql);
-				$stmt->execute();
-				$stmt->closeCursor();
+				if (!empty($values)) {
+					$sql = 'INSERT INTO '.$table.' (`file_id`,`tag`) VALUES ' . implode(',', $values);
+					$stmt = $this->xpdo->prepare($sql);
+					$stmt->execute();
+					$stmt->closeCursor();
+				}
 			}
 		}
 
