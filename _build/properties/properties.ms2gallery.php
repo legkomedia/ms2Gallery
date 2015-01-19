@@ -32,6 +32,10 @@ $tmp = array(
 		'type' => 'textfield'
 		,'value' => 'tpl.ms2Gallery.empty'
 	),
+	'tplSingle' => array(
+		'type' => 'textfield'
+		,'value' => 'tpl.ms2Gallery.single'
+	),
 
 	'limit' => array(
 		'type' => 'numberfield'
@@ -82,6 +86,14 @@ $tmp = array(
 	),
 	'tagsVar' => array(
 		'value' => '',
+		'xtype' => 'textfield',
+	),
+	'getTags' => array(
+		'value' => false,
+		'xtype' => 'combo-boolean',
+	),
+	'tagsSeparator' => array(
+		'value' => ',',
 		'xtype' => 'textfield',
 	),
 );

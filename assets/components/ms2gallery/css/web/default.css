@@ -17,7 +17,8 @@
 	padding: 2px;
 }
 
-.msGalleryLog {
+.msGalleryLog,
+.ms2GalleryLog {
 	width: 100%;
 	overflow: auto;
 	word-wrap: normal;

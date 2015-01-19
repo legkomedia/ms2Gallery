@@ -1,9 +1,11 @@
 <?php
 /* @var array $scriptProperties */
 /* @var ms2Gallery $ms2Gallery */
-$ms2Gallery = $modx->getService('ms2gallery','ms2Gallery', MODX_CORE_PATH.'components/ms2gallery/model/ms2gallery/');
+$ms2Gallery = $modx->getService('ms2gallery', 'ms2Gallery', MODX_CORE_PATH . 'components/ms2gallery/model/ms2gallery/');
 /* @var pdoFetch $pdoFetch */
-if (!$modx->loadClass('pdofetch', MODX_CORE_PATH . 'components/pdotools/model/pdotools/', false, true)) {return false;}
+if (!$modx->loadClass('pdofetch', MODX_CORE_PATH . 'components/pdotools/model/pdotools/', false, true)) {
+	return false;
+}
 $pdoFetch = new pdoFetch($modx, $scriptProperties);
 
 $extensionsDir = $modx->getOption('extensionsDir', $scriptProperties, 'components/ms2gallery/img/mgr/extensions/', true);
@@ -17,6 +19,12 @@ if (!empty($css) && preg_match('/\.css/i', $css)) {
 $js = $modx->getOption('frontend_js', $scriptProperties, 'frontend_js');
 if (!empty($js) && preg_match('/\.js/i', $js)) {
 	$modx->regClientScript(str_replace($config['pl'], $config['vl'], $js));
+}
+if (empty($outputSeparator)) {
+	$outputSeparator = "\n";
+}
+if (empty($tagsSeparator)) {
+	$tagsSeparator = ',';
 }
 
 $where = array(
@@ -115,56 +123,71 @@ if (!empty($rows)) {
 	if (isset($properties['thumbnails']['value'])) {
 		$fileTypes = $modx->fromJSON($properties['thumbnails']['value']);
 		foreach ($fileTypes as $v) {
-			$resolution[] = $v['w'].'x'.$v['h'];
+			$resolution[] = $v['w'] . 'x' . $v['h'];
 		}
 	}
 }
 
-
 // Processing rows
-$output = null; $images = array();
-$pdoFetch->addTime('Fetching thumbnails');
+$output = null;
+$images = array();
 foreach ($rows as $k => $row) {
 	$row['idx'] = $pdoFetch->idx++;
-	$images[$row['id']] = $row;
+	$row['tags'] = '';
 
 	if (isset($row['type']) && $row['type'] == 'image') {
 		$q = $modx->newQuery('msResourceFile', array('parent' => $row['id']));
 		$q->select('url');
+		$tstart = microtime(true);
 		if ($q->prepare() && $q->stmt->execute()) {
-			while ($tmp = $q->stmt->fetch(PDO::FETCH_COLUMN)) {
+			$modx->queryTime += microtime(true) - $tstart;
+			$modx->executedQueries++;
+			while ($tmp = $q->stmt->fetchColumn()) {
 				if (preg_match('/((?:\d{1,4}|)x(?:\d{1,4}|))/', $tmp, $size)) {
-					$images[$row['id']][$size[0]] = $tmp;
+					$row[$size[0]] = $tmp;
 				}
 			}
 		}
 	}
-	elseif (isset($row['type'])) {
-		$row['thumbnail'] = $row['url'] =  (file_exists(MODX_ASSETS_PATH . $extensionsDir . $row['type'] . '.png'))
-			? MODX_ASSETS_URL . $extensionsDir . $row['type'].'.png'
+	elseif (!empty($row['type'])) {
+		$row['thumbnail'] = $row['url'] = file_exists(MODX_ASSETS_PATH . $extensionsDir . $row['type'] . '.png')
+			? MODX_ASSETS_URL . $extensionsDir . $row['type'] . '.png'
 			: MODX_ASSETS_URL . $extensionsDir . 'other.png';
 		foreach ($resolution as $v) {
-			$images[$row['id']][$v] = $row['thumbnail'];
+			$row[$v] = $row['thumbnail'];
 		}
 	}
+
+	if (!empty($getTags)) {
+		$q = $modx->newQuery('msResourceFileTag', array('file_id' => $row['id']));
+		$q->select('tag');
+		$tstart = microtime(true);
+		if ($q->prepare() && $q->stmt->execute()) {
+			$modx->queryTime += microtime(true) - $tstart;
+			$modx->executedQueries++;
+			$row['tags'] = implode($tagsSeparator, $q->stmt->fetchAll(PDO::FETCH_COLUMN));
+		}
+	}
+
+	$images[] = $row;
 }
+$pdoFetch->addTime(!empty($getTags) ? 'Thumbnails and tags was retrieved' : 'Thumbnails was retrieved');
 
 // Processing chunks
-$pdoFetch->addTime('Processing chunks');
 $output = array();
 foreach ($images as $row) {
 	$tpl = $pdoFetch->defineChunk($row);
 
 	$output[] = empty($tpl)
-		? $pdoFetch->getChunk('', $row)
+		? '<pre>' . $pdoFetch->getChunk('', $row) . '</pre>'
 		: $pdoFetch->getChunk($tpl, $row, $pdoFetch->config['fastMode']);
 }
-$pdoFetch->addTime('Returning processed chunks');
+$pdoFetch->addTime('Rows was templated');
 
 // Return output
 $log = '';
 if ($modx->user->hasSessionContext('mgr') && !empty($showLog)) {
-	$log .= '<pre class="msGalleryLog">' . print_r($pdoFetch->getTime(), 1) . '</pre>';
+	$log .= '<pre class="ms2GalleryLog">' . print_r($pdoFetch->getTime(), 1) . '</pre>';
 }
 
 if (!empty($toSeparatePlaceholders)) {
@@ -176,15 +199,16 @@ else {
 		$output = $pdoFetch->getChunk($tplSingle, array_shift($images));
 	}
 	else {
-		if (empty($outputSeparator)) {$outputSeparator = "\n";}
 		$output = implode($outputSeparator, $output);
 
-		if (!empty($tplOuter) && !empty($output)) {
+		if (!empty($output)) {
 			$arr = array_shift($images);
 			$arr['rows'] = $output;
-			$output = $pdoFetch->getChunk($tplOuter, $arr);
+			if (!empty($tplOuter)) {
+				$output = $pdoFetch->getChunk($tplOuter, $arr);
+			}
 		}
-		elseif (empty($output)) {
+		else {
 			$output = !empty($tplEmpty)
 				? $pdoFetch->getChunk($tplEmpty)
 				: '';

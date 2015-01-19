@@ -1,14 +1,18 @@
 Changelog for ms2Gallery.
 
-1.4.0-beta3
+1.4.0-rc
 ==============
 - Removed extension from default file name on upload.
-- New file fields: "add" and "alt".
-- Fixed system parameter "ms2gallery_page_size".
-- Snippet ms2Gallery can load files from multiple resources.
-- Added tags.
-- UI improvements.
+- Added new fields in files: "add" and "alt".
+- Gallery view in manager now respects system parameter "ms2gallery_page_size".
+- Added ability to specify tags for files.
+- [ms2Gallery] Added parameter &tplSingle for such cases when retrieved only one file.
+- [ms2Gallery] Added parameter &parents so it can load files from multiple resources.
+- [ms2Gallery] Added parameter &tags for filtering files by tags.
+- [ms2Gallery] Added parameter &tagsVar for specifying &tags through $_REQUEST[&tagsVar].
+- [ms2Gallery] Added parameter &getTags to enable retrieving strings with tags of files.
 - Improved default javascript and css for calling multiple galleries on page.
+- Various UI improvements.
 
 1.3.3-pl
 ==============

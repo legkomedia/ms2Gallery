@@ -11,6 +11,7 @@ $_lang['ms2gallery_prop_resources'] = 'The resource List, separated by commas, f
 $_lang['ms2gallery_prop_tplRow'] = 'Chunk for template one row of query.';
 $_lang['ms2gallery_prop_tplOuter'] = 'Wrapper for template results of snippet work.';
 $_lang['ms2gallery_prop_tplEmpty'] = 'Chunk that returns when no results.';
+$_lang['ms2gallery_prop_tplSingle'] = 'Chunk that returns when there is only one result.';
 
 $_lang['ms2gallery_prop_limit'] = 'The number of results to limit.';
 $_lang['ms2gallery_prop_offset'] = 'An offset of resources returned by the criteria to skip';
@@ -18,7 +19,7 @@ $_lang['ms2gallery_prop_sortby'] = 'The field to sort by.';
 $_lang['ms2gallery_prop_sortdir'] = 'The direction to sort by';
 $_lang['ms2gallery_prop_toPlaceholder'] = 'If not empty, the snippet will save output to placeholder with that name, instead of return it to screen.';
 $_lang['ms2gallery_prop_showLog'] = 'Display additional information about snippet work. Only for authenticated in context "mgr".';
-$_lang['ms2gallery_prop_where'] = 'A JSON-style expression of criteria to build any additional where clauses from';
+$_lang['ms2gallery_prop_where'] = 'A JSON-style expression of criteria to build any additional where clauses from. To filter the files you need to use the table alias "File". For example &where=`{"File.name:LIKE":"%img%"}`.';
 
 $_lang['ms2gallery_prop_parents'] = 'Container list, separated by commas, to search results. By default, the query is limited to the current parent. If set to 0, query not limited.';
 $_lang['ms2gallery_prop_resources'] = 'Comma-delimited list of ids to include in the results. Prefix an id with a dash to exclude the resource from the result.';
@@ -35,3 +36,5 @@ $_lang['ms2gallery_prop_includeOriginal'] = 'Adding to the sample an additional 
 
 $_lang['ms2gallery_prop_tags'] = 'List of tags, separated by commas, for output files.';
 $_lang['ms2gallery_prop_tagsVar'] = 'If this parameter is not empty, then the snippet will take the value of "tags" in $_REQUEST[specifiedname]. For example, if you specify "tag", the snippet will display only files matching $_REQUEST["tag"].';
+$_lang['ms2gallery_prop_getTags'] = 'Make additional requests to get the tags of a file?';
+$_lang['ms2gallery_prop_tagsSeparator'] = 'If you enable the obtaining of tags of files, they will be separated by the string specified in this parameter.';

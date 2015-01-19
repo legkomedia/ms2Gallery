@@ -10,12 +10,21 @@ var ms2Gallery = {
 			var thumbnails = gallery.find('.thumbnail');
 			thumbnails.on('click', function(e) {
 				e.preventDefault();
-				var thumbnail = $(this);
 				thumbnails.removeClass('active');
+
+				var thumbnail = $(this);
 				thumbnail.addClass('active');
+
 				var main = gallery.find('#mainImage, .mainImage');
-				main.attr('src', thumbnail.attr('href'))
-					.parent().attr('href', thumbnail.data('image'));
+				main.attr('src', thumbnail.attr('href'));
+				main.parent().attr('href', thumbnail.data('image'));
+
+				var image = $(this).find('img');
+				if (image.length) {
+					main.attr('title', image[0].title)
+						.attr('alt', image[0].alt);
+				}
+
 				return false;
 			});
 			gallery.find('.thumbnail:first').click();
