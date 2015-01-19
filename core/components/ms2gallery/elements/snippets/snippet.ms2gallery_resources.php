@@ -64,7 +64,9 @@ if (!empty($thumbs[0])) {
 			`$thumb`.`description` as `$thumb.description`,
 			`$thumb`.`createdon` as `$thumb.createdon`,
 			`$thumb`.`createdby` as `$thumb.createdby`,
-			`$thumb`.`properties` as `$thumb.properties`
+			`$thumb`.`properties` as `$thumb.properties`,
+			`$thumb`.`alt` as `$thumb.alt`,
+			`$thumb`.`add` as `$thumb.add`
 		");
 
 		if (!empty($includeOriginal)) {
