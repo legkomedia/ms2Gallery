@@ -1,6 +1,6 @@
 Changelog for ms2Gallery.
 
-1.4.0-rc2
+1.4.0-rc3
 ==============
 - Removed extension from default file name on upload.
 - Added new fields in files: "add" and "alt".

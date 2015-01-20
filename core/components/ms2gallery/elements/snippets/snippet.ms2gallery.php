@@ -73,7 +73,7 @@ $select = array(
 if (!empty($sortby)) {
 	$sortby = array_map('trim', explode(',', $sortby));
 	foreach ($sortby as &$value) {
-		if (strpos($value, '.') === false) {
+		if (strpos($value, '.') === false && strpos($value, '(') === false) {
 			$value = 'File.' . $value;
 		}
 	}
