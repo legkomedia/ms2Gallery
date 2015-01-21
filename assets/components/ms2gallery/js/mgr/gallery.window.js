@@ -2,8 +2,12 @@ ms2Gallery.window.Image = function(config) {
 	config = config || {};
 	this.ident = config.ident || Ext.id();
 
-	var img = MODx.config.connectors_url + 'system/phpthumb.php?src=' + config.record['url']+ '&w=333&h=198&f=jpg&bg=efefef&q=90&HTTP_MODAUTH=' + MODx.siteId + '&wctx=mgr&source=' + config.record['source'];
-	img += MODx.modx23 ? '&far=1' : '&zc=1';
+	var img = MODx.config.connectors_url + 'system/phpthumb.php?src=';
+	img += config.record['type'] == 'image'
+		? config.record['url']
+		: config.record['thumbnail'];
+	img += '&w=333&h=198&f=jpg&bg=efefef&q=90&zc=0&far=1&HTTP_MODAUTH=' + MODx.siteId + '&wctx=mgr&source=' + config.record['source'];
+
 	var fields = {
 		ms2gallery_source: config.record['source_name'],
 		ms2gallery_size: config.record['size'],
