@@ -273,7 +273,7 @@ $xpdo_meta_map['msResourceFile']= array (
     ),
     'Resource' => 
     array (
-      'class' => 'msResource',
+      'class' => 'modResource',
       'local' => 'resource_id',
       'foreign' => 'id',
       'cardinality' => 'one',

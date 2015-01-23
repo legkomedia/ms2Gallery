@@ -23,9 +23,10 @@ class msResourceFile extends xPDOSimpleObject {
 		}
 		else {
 			/* @var modResource $resource */
-			if ($resource = $this->xpdo->getObject('modResource', $this->get('resource_id'))) {
+			if ($resource = $this->getOne('Resource')) {
+				$properties = $resource->getProperties('ms2gallery');
+				$source = $properties['media_source'];
 				$ctx = $resource->get('context_key');
-				$source = $this->get('source');
 				$ms2Gallery = $this->xpdo->getService('ms2gallery','ms2Gallery', MODX_CORE_PATH.'components/ms2gallery/model/ms2gallery/');
 				$this->mediaSource = $ms2Gallery->initializeMediaSource($ctx, $source);
 				if (!$this->mediaSource || !($this->mediaSource instanceof modMediaSource)) {
@@ -34,7 +35,7 @@ class msResourceFile extends xPDOSimpleObject {
 				return true;
 			}
 			else {
-				return 'Could not find resource with id = '.$this->get('resource_id');
+				return 'Could not load file resource with id = ' . $this->get('resource_id');
 			}
 		}
 	}
@@ -278,7 +279,11 @@ class msResourceFile extends xPDOSimpleObject {
 	 * @return bool
 	 */
 	public function remove(array $ancestors= array ()) {
-		$this->prepareSource();
+		$res = $this->prepareSource();
+		if ($res !== true) {
+			$this->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Could not initialize media source:"' . $res . '"');
+			return $res;
+		}
 		if (!$this->mediaSource->removeObject($this->get('path').$this->get('file'))) {
 			$this->xpdo->log(xPDO::LOG_LEVEL_ERROR,
 				'Could not remove file at "'.$this->get('path').$this->get('file').'": '.$this->mediaSource->errors['file']
