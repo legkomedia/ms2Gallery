@@ -34,7 +34,7 @@ $tmp = array(
 	),
 	'tplSingle' => array(
 		'type' => 'textfield'
-		,'value' => 'tpl.ms2Gallery.single'
+		,'value' => ''
 	),
 
 	'limit' => array(

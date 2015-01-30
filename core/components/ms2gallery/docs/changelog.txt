@@ -1,6 +1,6 @@
 Changelog for ms2Gallery.
 
-1.4.0-rc5
+1.4.0-rc6
 ==============
 - Removed extension from default file name on upload.
 - Added new fields in files: "add" and "alt".
@@ -11,6 +11,7 @@ Changelog for ms2Gallery.
 - [ms2Gallery] Added parameter &tags for filtering files by tags.
 - [ms2Gallery] Added parameter &tagsVar for specifying &tags through $_REQUEST[&tagsVar].
 - [ms2Gallery] Added parameter &getTags to enable retrieving strings with tags of files.
+- [ms2Gallery] Added parameter &tplSingle. It`s empty by default.
 - Improved default javascript and css for calling multiple galleries on page.
 - Various UI improvements.
 - Fixed aggregate connection with resource in model.
