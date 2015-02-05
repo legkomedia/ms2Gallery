@@ -1,11 +1,11 @@
 <?php
 
 class msResourceFileUpdateProcessor extends modObjectUpdateProcessor {
-    /* @var msResourceFile $object */
-    public $object;
+	/* @var msResourceFile $object */
+	public $object;
 	public $classKey = 'msResourceFile';
-	public $languageTopics = array('core:default','ms2gallery:default');
-    protected $old_name = null;
+	public $languageTopics = array('core:default', 'ms2gallery:default');
+	protected $old_name = null;
 
 
 	/**
@@ -35,9 +35,9 @@ class msResourceFileUpdateProcessor extends modObjectUpdateProcessor {
 	 * @return bool
 	 */
 	public function afterSave() {
-		$tmp = explode('.', $this->old_name);
-		$extension = end($tmp);
-		$file = preg_replace('/\.' . $extension . '$/', '', $this->object->get('file')) . '.' . $extension;
+		$extension = pathinfo($this->old_name, PATHINFO_EXTENSION);
+		$file = preg_replace('#\.' . $extension . '$#i', '', $this->object->get('file'));
+		$file .= '.' . $extension;
 		if ($this->old_name != $file) {
 			$this->object->rename($this->object->get('file'), $this->old_name);
 		}
@@ -64,4 +64,5 @@ class msResourceFileUpdateProcessor extends modObjectUpdateProcessor {
 	}
 
 }
+
 return 'msResourceFileUpdateProcessor';

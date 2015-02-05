@@ -183,36 +183,6 @@ class msResourceFile extends xPDOSimpleObject {
 
 
 	/**
-	 * @return array|mixed
-	 */
-	/*
-	public function getFirstThumbnail() {
-		$c = array(
-			'resource_id' => $this->get('resource_id')
-			,'parent' => $this->get('id')
-			,'path:LIKE' => '%'.$this->xpdo->getOption('ms2gallery_thumbnail_size', null, '120x90').'/'
-		);
-
-		if (!$this->xpdo->getCount('msResourceFile', $c)) {
-			unset($c['path']);
-		}
-
-		$q = $this->xpdo->newQuery('msResourceFile', $c);
-		$q->limit(1);
-		$q->sortby('url', 'ASC');
-		$q->select('id,url');
-
-		$res = array();
-		if ($q->prepare() && $q->stmt->execute()) {
-			$res = $q->stmt->fetch(PDO::FETCH_ASSOC);
-		}
-
-		return $res;
-	}
-	*/
-
-
-	/**
 	 * @param array|string $k
 	 * @param null $format
 	 * @param null $formatTemplate
@@ -314,9 +284,9 @@ class msResourceFile extends xPDOSimpleObject {
 		}
 
 		$path = $this->get('path');
-		$tmp = explode('.', $old_name);
-		$extension = end($tmp);
-		$name = preg_replace('/\.' . $extension . '$/', '', $new_name) . '.' . $extension;
+		$extension = strtolower(pathinfo($old_name, PATHINFO_EXTENSION));
+		$name = preg_replace('#\.' . $extension . '$#', '', $new_name);
+		$name .= '.' . $extension;
 
 		// Processing children
 		$children = $this->getMany('Children');

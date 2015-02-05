@@ -64,6 +64,7 @@ $_lang['ms2gallery_err_gallery_save'] = 'Could not save file. See system log for
 $_lang['ms2gallery_err_gallery_ns'] = 'Could not read file';
 $_lang['ms2gallery_err_gallery_ext'] = 'Wrong file extension';
 $_lang['ms2gallery_err_gallery_exists'] = 'Such an image is already in the resource gallery.';
+$_lang['ms2gallery_err_wrong_image'] = 'File is not a valid image.';
 
 $_lang['ms2gallery_file_active'] = 'Active';
 $_lang['ms2gallery_file_inactive'] = 'Inactive';

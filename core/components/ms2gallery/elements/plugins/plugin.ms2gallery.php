@@ -6,7 +6,9 @@ switch ($modx->event->name) {
 		if ($resource instanceof msProduct || $mode == 'new') {
 			return;
 		}
-		elseif (in_array($resource->get('template'), array_map('trim', explode(',', $modx->getOption('ms2gallery_disable_for_templates'))))) {
+		$template = $resource->get('template');
+		$templates = array_map('trim', explode(',', $modx->getOption('ms2gallery_disable_for_templates')));
+		if ($templates[0] != '' && in_array($template, $templates)) {
 			return;
 		}
 		$modx23 = !empty($modx->version) && version_compare($modx->version['full_version'], '2.3.0', '>=');

@@ -70,6 +70,7 @@ $_lang['ms2gallery_err_gallery_save'] = 'Не могу сохранить фай
 $_lang['ms2gallery_err_gallery_ns'] = 'Передан пустой файл';
 $_lang['ms2gallery_err_gallery_ext'] = 'Неверное расширение файла';
 $_lang['ms2gallery_err_gallery_exists'] = 'Такое изображение уже есть в галерее ресурса.';
+$_lang['ms2gallery_err_wrong_image'] = 'Файл не является корректным изображением.';
 
 $_lang['ms2gallery_file_active'] = 'Активен';
 $_lang['ms2gallery_file_inactive'] = 'Неактивен';
