@@ -7,7 +7,7 @@ ms2Gallery.panel.Images = function(config) {
 		,cls: 'ms2gallery-images'
 		//,onSelect: {fn:function() { }, scope: this}
 		,containerScroll: true
-		,pageSize: config.pageSize || MODx.config.default_per_page
+		,pageSize: parseInt(config.pageSize) || MODx.config.default_per_page
 		,resource_id: config.resource_id
 	});
 
@@ -95,7 +95,7 @@ Ext.extend(ms2Gallery.panel.Images,MODx.Panel, {
 	}
 	,getBottomBar: function(config) {
 		return new Ext.PagingToolbar({
-			pageSize: config.pageSize || MODx.config.default_per_page
+			pageSize: parseInt(config.pageSize) || MODx.config.default_per_page
 			,store: this.view.store
 			,displayInfo: true
 			,autoLoad: true
@@ -103,7 +103,7 @@ Ext.extend(ms2Gallery.panel.Images,MODx.Panel, {
 				_('per_page') + ':'
 				,{
 					xtype: 'textfield'
-					,value: config.pageSize || MODx.config.default_per_page
+					,value: parseInt(config.pageSize) || MODx.config.default_per_page
 					,width: 50
 					,listeners: {
 						change: {fn:function(tf,nv,ov) {
