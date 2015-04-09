@@ -1,5 +1,9 @@
 Changelog for ms2Gallery.
 
+1.4.1-pl
+==============
+- New system setting "duplicate_check".
+
 1.4.0-pl
 ==============
 - Removed extension from default file name on upload.

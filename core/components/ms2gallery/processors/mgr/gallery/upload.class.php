@@ -66,14 +66,29 @@ class msResourceFileUploadProcessor extends modObjectProcessor {
 		}
 		$hash = sha1($data['stream']);
 
-		if ($this->modx->getCount('msResourceFile', array('resource_id' => $this->resource->id, 'hash' => $hash, 'parent' => 0))) {
-			return $this->failure($this->modx->lexicon('ms2gallery_err_gallery_exists'));
+		if ($this->modx->getOption('ms2gallery_duplicate_check', null, true, true)) {
+			if ($this->modx->getCount('msResourceFile', array('resource_id' => $this->resource->id, 'hash' => $hash, 'parent' => 0))) {
+				return $this->failure($this->modx->lexicon('ms2gallery_err_gallery_exists'));
+			}
 		}
 
 		$filename = !empty($properties['imageNameType']) && $properties['imageNameType'] == 'friendly'
 			? $this->resource->cleanAlias($basename)
 			: $hash;
 		$filename .= '.' . $extension;
+		$tmp_filename = $filename;
+		$i = 1;
+		while (true) {
+			if (!$count = $this->modx->getCount('msResourceFile', array('resource_id' => $this->resource->id, 'file' => $tmp_filename, 'parent' => 0))) {
+				$filename = $tmp_filename;
+				break;
+			}
+			else {
+				$pcre = '#(-'.($i - 1).'|)\.'.$extension.'$#';
+				$tmp_filename = preg_replace($pcre, "-$i.$extension", $tmp_filename);
+				$i ++;
+			}
+		}
 
 		$rank = isset($properties['imageUploadDir']) && empty($properties['imageUploadDir'])
 			? 0

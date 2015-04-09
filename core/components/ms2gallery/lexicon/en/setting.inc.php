@@ -8,6 +8,8 @@
 $_lang['area_ms2gallery_resource'] = 'Resource';
 $_lang['area_ms2gallery_frontend'] = 'Frontend';
 
+$_lang['setting_ms2gallery_duplicate_check'] = 'Check of duplicates in gallery';
+$_lang['setting_ms2gallery_duplicate_check_desc'] = 'Enables or disables check for duplicates of file in gallery.';
 $_lang['setting_ms2gallery_source_default'] = 'Default media source';
 $_lang['setting_ms2gallery_source_default_desc'] = 'Default media source for the resource gallery.';
 $_lang['setting_ms2gallery_date_format'] = 'Format of dates';

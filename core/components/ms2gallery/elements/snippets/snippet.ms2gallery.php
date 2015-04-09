@@ -57,7 +57,7 @@ if (!empty($tagsVar) && isset($_REQUEST[$tagsVar])) {
 	$tags = $modx->stripTags($_REQUEST[$tagsVar]);
 }
 if (!empty($tags)) {
-	$tags = array_map('trim', explode(',', $tags));
+	$tags = array_map('trim', explode(',', str_replace('"', '', $tags)));
 	$tags = implode('","', $tags);
 	$innerJoin['Tag'] = array(
 		'class' => 'msResourceFileTag',

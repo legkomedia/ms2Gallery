@@ -8,6 +8,11 @@
 $settings = array();
 
 $tmp = array(
+	'duplicate_check' => array(
+		'value' => true,
+		'xtype' => 'combo-boolean',
+		'area' => 'ms2gallery_resource',
+	),
 	'source_default' => array(
 		'value' => '0',
 		'xtype' => 'modx-combo-source',
