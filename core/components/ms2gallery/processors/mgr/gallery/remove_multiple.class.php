@@ -19,7 +19,11 @@ class msResourceFileRemoveMultipleProcessor extends modObjectProcessor {
 				$file->remove();
 			}
 		}
-		$this->modx->ms2Gallery->rankResourceImages($resource_id);
+
+		/** @var ms2Gallery $ms2Gallery */
+		if ($ms2Gallery = $this->modx->getService('ms2gallery')) {
+			$ms2Gallery->rankResourceImages($resource_id);
+		}
 
 		return $this->success();
 	}

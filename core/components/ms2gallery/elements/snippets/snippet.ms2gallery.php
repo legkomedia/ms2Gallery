@@ -118,12 +118,13 @@ $rows = $pdoFetch->run();
 if (!empty($rows)) {
 	$tmp = current($rows);
 	$resolution = array();
-	$ms2Gallery->initializeMediaSource($modx->context->key, $tmp['source']);
-	$properties = $ms2Gallery->mediaSource->getProperties();
-	if (isset($properties['thumbnails']['value'])) {
-		$fileTypes = $modx->fromJSON($properties['thumbnails']['value']);
-		foreach ($fileTypes as $v) {
-			$resolution[] = $v['w'] . 'x' . $v['h'];
+	if ($mediaSource = $modx->getObject('sources.modMediaSource', $tmp['source'])) {
+		$properties = $mediaSource->getProperties();
+		if (isset($properties['thumbnails']['value'])) {
+			$fileTypes = $modx->fromJSON($properties['thumbnails']['value']);
+			foreach ($fileTypes as $v) {
+				$resolution[] = $v['w'] . 'x' . $v['h'];
+			}
 		}
 	}
 }

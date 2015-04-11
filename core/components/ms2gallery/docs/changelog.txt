@@ -1,8 +1,14 @@
 Changelog for ms2Gallery.
 
+1.4.2-pl
+==============
+- New system setting "exact_sorting".
+- Some code improvements.
+
 1.4.1-pl
 ==============
 - New system setting "duplicate_check".
+- Fixed possible overwriting files with the equal names.
 
 1.4.0-pl
 ==============

@@ -21,7 +21,11 @@ class msResourceFileUploadProcessor extends modObjectProcessor {
 		$properties = $resource->getProperties('ms2gallery');
 		$source = $properties['media_source'];
 
-		if (!$this->mediaSource = $this->modx->ms2Gallery->initializeMediaSource($ctx, $source)) {
+		/** @var ms2Gallery $ms2Gallery */
+		if (!$ms2Gallery = $this->modx->getService('ms2gallery')) {
+			return 'Could not load class ms2Gallery!';
+		}
+		elseif (!$this->mediaSource = $ms2Gallery->initializeMediaSource($ctx, $source)) {
 			return $this->modx->lexicon('ms2gallery_err_no_source');
 		}
 

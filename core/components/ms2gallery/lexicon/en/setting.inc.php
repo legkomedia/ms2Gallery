@@ -10,6 +10,8 @@ $_lang['area_ms2gallery_frontend'] = 'Frontend';
 
 $_lang['setting_ms2gallery_duplicate_check'] = 'Check of duplicates in gallery';
 $_lang['setting_ms2gallery_duplicate_check_desc'] = 'Enables or disables check for duplicates of file in gallery.';
+$_lang['setting_ms2gallery_exact_sorting'] = 'Exact sorting of files';
+$_lang['setting_ms2gallery_exact_sorting_desc'] = 'Enables or disables the exact sort of files by additional requests to the database. Can slow down the sorting of files in large galleries.';
 $_lang['setting_ms2gallery_source_default'] = 'Default media source';
 $_lang['setting_ms2gallery_source_default_desc'] = 'Default media source for the resource gallery.';
 $_lang['setting_ms2gallery_date_format'] = 'Format of dates';

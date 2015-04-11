@@ -9,7 +9,9 @@ $_lang['area_ms2gallery_resource'] = 'Ресурс';
 $_lang['area_ms2gallery_frontend'] = 'Сайт';
 
 $_lang['setting_ms2gallery_duplicate_check'] = 'Проверка дубликатов в галерее';
-$_lang['setting_ms2gallery_duplicate_check_desc'] = 'Включает или выключет проверку на дубликаты файлов в галерее.';
+$_lang['setting_ms2gallery_duplicate_check_desc'] = 'Включает или выключает проверку на дубликаты файлов в галерее.';
+$_lang['setting_ms2gallery_exact_sorting'] = 'Точная сортировка файлов';
+$_lang['setting_ms2gallery_exact_sorting_desc'] = 'Включает или выключает точную сортировку файлов дополнительными запросами в БД. Может замедлять сортировку файлов в больших галереях.';
 $_lang['setting_ms2gallery_source_default'] = 'Источник файлов по умолчанию';
 $_lang['setting_ms2gallery_source_default_desc'] = 'Источник файлов для галереи изображений ресурса по умолчанию.';
 $_lang['setting_ms2gallery_date_format'] = 'Формат даты';

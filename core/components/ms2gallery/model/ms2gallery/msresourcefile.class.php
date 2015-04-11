@@ -1,7 +1,6 @@
 <?php
 
 class msResourceFile extends xPDOSimpleObject {
-	public $file;
 	/* @var modPhpThumb $phpThumb */
 	public $phpThumb;
 	/* @var modMediaSource $mediaSource */
@@ -27,10 +26,10 @@ class msResourceFile extends xPDOSimpleObject {
 				$properties = $resource->getProperties('ms2gallery');
 				$source = $properties['media_source'];
 				$ctx = $resource->get('context_key');
-				$ms2Gallery = $this->xpdo->getService('ms2gallery','ms2Gallery', MODX_CORE_PATH.'components/ms2gallery/model/ms2gallery/');
+				$ms2Gallery = $this->xpdo->getService('ms2gallery', 'ms2Gallery', MODX_CORE_PATH . 'components/ms2gallery/model/ms2gallery/');
 				$this->mediaSource = $ms2Gallery->initializeMediaSource($ctx, $source);
 				if (!$this->mediaSource || !($this->mediaSource instanceof modMediaSource)) {
-					return 'Could not initialize media source for resource with id = '.$this->get('resource_id');
+					return 'Could not initialize media source for resource with id = ' . $this->get('resource_id');
 				}
 				return true;
 			}
@@ -47,17 +46,25 @@ class msResourceFile extends xPDOSimpleObject {
 	 * @return bool|string
 	 */
 	public function generateThumbnails(modMediaSource $mediaSource = null) {
-		if ($this->get('type') != 'image' || $this->get('parent') != 0) {return true;}
-
-		$prepare = $this->prepareSource($mediaSource);
-		if ($prepare !== true) {return $prepare;}
-
-		$this->file = $this->mediaSource->getObjectContents($this->get('path').$this->get('file'));
-		if (!empty($this->mediaSource->errors['file'])) {
-			return 'Could not retrieve file "'.$this->path.$this->file.'" from media source. '.$this->mediaSource->errors['file'];
+		if ($this->get('type') != 'image' || $this->get('parent') != 0) {
+			return true;
 		}
 
-		require_once  MODX_CORE_PATH . 'model/phpthumb/modphpthumb.class.php';
+		$prepare = $this->prepareSource($mediaSource);
+		if ($prepare !== true) {
+			return $prepare;
+		}
+
+		$this->mediaSource->errors = array();
+		$filename = $this->get('path') . $this->get('file');
+		$info = $this->mediaSource->getObjectContents($filename);
+		if (!is_array($info)) {
+			return "Could not retrieve contents of file {$filename} from media source.";
+		}
+		elseif (!empty($this->mediaSource->errors['file'])) {
+			return "Could not retrieve file {$filename} from media source: " . $this->mediaSource->errors['file'];
+		}
+
 		$properties = $this->mediaSource->getProperties();
 		$thumbnails = array();
 		if (array_key_exists('thumbnails', $properties) && !empty($properties['thumbnails']['value'])) {
@@ -65,21 +72,25 @@ class msResourceFile extends xPDOSimpleObject {
 		}
 
 		if (empty($thumbnails)) {
-			$thumbnails = array(array(
-				'w' => 120
-				,'h' => 90
-				,'q' => 90
-				,'zc' => 'T'
-				,'bg' => '000000'
-				,'f' => !empty($properties['thumbnailType']['value']) ? $properties['thumbnailType']['value'] : 'jpg'
-			));
+			$thumbnails = array(
+				array(
+					'w' => 120,
+					'h' => 90,
+					'q' => 90,
+					'zc' => 'T',
+					'bg' => '000000',
+					'f' => !empty($properties['thumbnailType']['value'])
+						? $properties['thumbnailType']['value']
+						: 'jpg',
+				)
+			);
 		}
 
 		foreach ($thumbnails as $options) {
 			if (empty($options['f'])) {
 				$options['f'] = !empty($properties['thumbnailType']['value']) ? $properties['thumbnailType']['value'] : 'jpg';
 			}
-			if ($image = $this->makeThumbnail($options)) {
+			if ($image = $this->makeThumbnail($options, $info)) {
 				$this->saveThumbnail($image, $options);
 			}
 		}
@@ -90,15 +101,20 @@ class msResourceFile extends xPDOSimpleObject {
 
 	/**
 	 * @param array $options
+	 * @param array $info
 	 *
 	 * @return bool|null
 	 */
-	public function makeThumbnail($options = array()) {
+	public function makeThumbnail($options = array(), array $info) {
+		if (!class_exists('modPhpThumb')) {
+			/** @noinspection PhpIncludeInspection */
+			require MODX_CORE_PATH . 'model/phpthumb/modphpthumb.class.php';
+		}
 		$phpThumb = new modPhpThumb($this->xpdo);
 		$phpThumb->initialize();
 
 		$tf = tempnam(MODX_BASE_PATH, 'ms2g_');
-		file_put_contents($tf, $this->file['content']);
+		file_put_contents($tf, $info['content']);
 		$phpThumb->setSourceFilename($tf);
 
 		foreach ($options as $k => $v) {
@@ -113,10 +129,11 @@ class msResourceFile extends xPDOSimpleObject {
 				return $phpThumb->outputImageData;
 			}
 		}
-		else {
-			$this->xpdo->log(modX::LOG_LEVEL_ERROR, 'Could not generate thumbnail for "'.$this->get('url').'". '.print_r($phpThumb->debugmessages,1));
-			return false;
-		}
+		@unlink($phpThumb->sourceFilename);
+		@unlink($tf);
+
+		$this->xpdo->log(modX::LOG_LEVEL_ERROR, 'Could not generate thumbnail for "' . $this->get('url') . '". ' . print_r($phpThumb->debugmessages, 1));
+		return false;
 	}
 
 
@@ -128,23 +145,24 @@ class msResourceFile extends xPDOSimpleObject {
 	 */
 	public function saveThumbnail($raw_image, $options = array()) {
 		$filename = preg_replace('/\..*$/', '', $this->get('file')) . '.' . $options['f'];
-		$path = $this->get('path') . $options['w'] .'x'.$options['h'] .'/';
+		$path = $this->get('path') . $options['w'] . 'x' . $options['h'] . '/';
 
 		/* @var msResourceFile $resource_file */
+		/** @noinspection PhpUndefinedFieldInspection */
 		$resource_file = $this->xpdo->newObject('msResourceFile', array(
-			'resource_id' => $this->get('resource_id')
-			,'parent' => $this->get('id')
-			,'name' => $this->get('name')
-			,'file' => $filename
-			,'path' => $path
-			,'source' => $this->mediaSource->get('id')
-			,'type' => $this->get('type')
-			,'rank' => $this->get('rank')
-			,'createdon' => date('Y-m-d H:i:s')
-			,'createdby' => $this->xpdo->user->id
-			,'active' => 1
-			,'hash' => sha1($raw_image)
-			,'properties' => array(
+			'resource_id' => $this->get('resource_id'),
+			'parent' => $this->get('id'),
+			'name' => $this->get('name'),
+			'file' => $filename,
+			'path' => $path,
+			'source' => $this->mediaSource->get('id'),
+			'type' => $this->get('type'),
+			'rank' => $this->get('rank'),
+			'createdon' => date('Y-m-d H:i:s'),
+			'createdby' => $this->xpdo->user->id,
+			'active' => 1,
+			'hash' => sha1($raw_image),
+			'properties' => array(
 				'size' => strlen($raw_image),
 			)
 		));
@@ -166,13 +184,13 @@ class msResourceFile extends xPDOSimpleObject {
 
 		$this->mediaSource->createContainer($resource_file->get('path'), '/');
 		$file = $this->mediaSource->createObject(
-			$resource_file->get('path')
-			,$resource_file->get('file')
-			,$raw_image
+			$resource_file->get('path'),
+			$resource_file->get('file'),
+			$raw_image
 		);
 
 		if ($file) {
-			$resource_file->set('url', $this->mediaSource->getObjectUrl($resource_file->get('path').$resource_file->get('file')));
+			$resource_file->set('url', $this->mediaSource->getObjectUrl($resource_file->get('path') . $resource_file->get('file')));
 			$resource_file->save();
 			return true;
 		}
@@ -217,24 +235,18 @@ class msResourceFile extends xPDOSimpleObject {
 		if (is_array($tags)) {
 			$id = $this->get('id');
 			$table = $this->xpdo->getTableName('msResourceFileTag');
-			$sql = 'DELETE FROM '.$table.' WHERE `file_id` = '.$id;
-			$stmt = $this->xpdo->prepare($sql);
-			$stmt->execute();
-			$stmt->closeCursor();
+			$this->xpdo->exec("DELETE FROM {$table} WHERE `file_id` = $id;");
 
-		 	if (!empty($tags)) {
+			if (!empty($tags)) {
 				$values = array();
 				foreach ($tags as $tag) {
 					$tag = trim($tag);
 					if (!empty($tag)) {
-						$values[] = '('.$id.',"'.$tag.'")';
+						$values[] = '(' . $id . ',"' . $tag . '")';
 					}
 				}
 				if (!empty($values)) {
-					$sql = 'INSERT INTO '.$table.' (`file_id`,`tag`) VALUES ' . implode(',', $values);
-					$stmt = $this->xpdo->prepare($sql);
-					$stmt->execute();
-					$stmt->closeCursor();
+					$this->xpdo->exec("INSERT INTO {$table} (`file_id`,`tag`) VALUES " . implode(',', $values));
 				}
 			}
 		}
@@ -248,15 +260,15 @@ class msResourceFile extends xPDOSimpleObject {
 	 *
 	 * @return bool
 	 */
-	public function remove(array $ancestors= array ()) {
+	public function remove(array $ancestors = array()) {
 		$res = $this->prepareSource();
 		if ($res !== true) {
 			$this->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Could not initialize media source:"' . $res . '"');
 			return $res;
 		}
-		if (!$this->mediaSource->removeObject($this->get('path').$this->get('file'))) {
+		if (!$this->mediaSource->removeObject($this->get('path') . $this->get('file'))) {
 			$this->xpdo->log(xPDO::LOG_LEVEL_ERROR,
-				'Could not remove file at "'.$this->get('path').$this->get('file').'": '.$this->mediaSource->errors['file']
+				'Could not remove file at "' . $this->get('path') . $this->get('file') . '": ' . $this->mediaSource->errors['file']
 			);
 		}
 
@@ -298,9 +310,9 @@ class msResourceFile extends xPDOSimpleObject {
 		}
 
 		$this->prepareSource();
-		if ($this->mediaSource->renameObject($path.$old_name, $name)) {
+		if ($this->mediaSource->renameObject($path . $old_name, $name)) {
 			$this->set('file', $name);
-			$this->set('url', $this->mediaSource->getObjectUrl($path.$name));
+			$this->set('url', $this->mediaSource->getObjectUrl($path . $name));
 
 			return $this->save();
 		}

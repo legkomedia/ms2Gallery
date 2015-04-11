@@ -13,6 +13,11 @@ $tmp = array(
 		'xtype' => 'combo-boolean',
 		'area' => 'ms2gallery_resource',
 	),
+	'exact_sorting' => array(
+		'value' => true,
+		'xtype' => 'combo-boolean',
+		'area' => 'ms2gallery_resource',
+	),
 	'source_default' => array(
 		'value' => '0',
 		'xtype' => 'modx-combo-source',
