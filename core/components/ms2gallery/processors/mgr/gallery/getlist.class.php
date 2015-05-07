@@ -5,6 +5,7 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 	public $defaultSortField = 'rank';
 	public $defaultSortDirection = 'ASC';
 	public $languageTopics = array('default', 'ms2gallery:default');
+	protected $_modx23;
 
 
 	/**
@@ -12,6 +13,10 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 	 * @return mixed
 	 */
 	public function process() {
+		/** @var ms2Gallery $ms2Gallery */
+		$ms2Gallery = $this->modx->getService('ms2Gallery');
+		$this->_modx23 = $ms2Gallery->systemVersion();
+
 		$beforeQuery = $this->beforeQuery();
 		if ($beforeQuery !== true) {
 			return $this->failure($beforeQuery);
@@ -116,7 +121,6 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 					: MODX_ASSETS_URL . 'components/ms2gallery/img/mgr/extensions/other.png';
 			}
 			else {
-				//$row['thumbnail'] = $row['url'];
 				$row['thumbnail'] = MODX_ASSETS_URL . 'components/ms2gallery/img/web/ms2g_small.jpg';
 			}
 		}
@@ -139,6 +143,72 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 				$row['tags'][] = array('tag' => $tag);
 			}
 		}
+
+		$icon = 'x-menu-item-icon ' . ($this->_modx23 ? 'icon' : 'fa');
+		$row['actions'] = array();
+
+		$row['actions'][] = array(
+			'cls' => '',
+			'icon' => "$icon $icon-edit",
+			'title' => $this->modx->lexicon('ms2gallery_file_update'),
+			'action' => 'updateFile',
+			'button' => false,
+			'menu' => true,
+		);
+
+		$row['actions'][] = array(
+			'cls' => '',
+			'icon' => "$icon $icon-share",
+			'title' => $this->modx->lexicon('ms2gallery_file_show'),
+			'action' => 'showFile',
+			'button' => false,
+			'menu' => true,
+		);
+
+		if ($row['type'] == 'image') {
+			$row['actions'][] = array(
+				'cls' => '',
+				'icon' => "$icon $icon-refresh",
+				'title' => $this->modx->lexicon('ms2gallery_image_generate_thumbs'),
+				'multiple' => $this->modx->lexicon('ms2gallery_image_generate_thumbs'),
+				'action' => 'generateThumbs',
+				'button' => false,
+				'menu' => true,
+			);
+		}
+
+		if (!$row['active']) {
+			$row['actions'][] = array(
+				'cls' => '',
+				'icon' => "$icon $icon-power-off action-green",
+				'title' => $this->modx->lexicon('ms2gallery_file_activate'),
+				'multiple' => $this->modx->lexicon('ms2gallery_file_activate_multiple'),
+				'action' => 'activateFiles',
+				'button' => false,
+				'menu' => true,
+			);
+		}
+		else {
+			$row['actions'][] = array(
+				'cls' => '',
+				'icon' => "$icon $icon-power-off action-yellow",
+				'title' => $this->modx->lexicon('ms2gallery_file_inactivate'),
+				'multiple' => $this->modx->lexicon('ms2gallery_file_inactivate_multiple'),
+				'action' => 'inActivateFiles',
+				'button' => false,
+				'menu' => true,
+			);
+		}
+
+		$row['actions'][] = array(
+			'cls' => '',
+			'icon' => "$icon $icon-trash-o action-red",
+			'title' => $this->modx->lexicon('ms2gallery_file_delete'),
+			'multiple' => $this->modx->lexicon('ms2gallery_file_delete_multiple'),
+			'action' => 'deleteFiles',
+			'button' => false,
+			'menu' => true,
+		);
 
 		return $row;
 	}

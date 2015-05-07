@@ -4,7 +4,7 @@ var ms2Gallery = function(config) {
 };
 
 Ext.extend(ms2Gallery,Ext.Component,{
-	page:{},window:{},grid:{},tree:{},panel:{},combo:{},config:{},view:{},keymap:{}, plugin:{}
+	page:{},window:{},grid:{},tree:{},panel:{},combo:{},config:{},view:{},keymap:{},plugin:{},utils:{},
 });
 
 Ext.reg('ms2gallery', ms2Gallery);

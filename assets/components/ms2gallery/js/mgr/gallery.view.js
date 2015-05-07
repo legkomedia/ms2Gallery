@@ -2,22 +2,22 @@ ms2Gallery.panel.Images = function(config) {
 	config = config || {};
 
 	this.view = MODx.load({
-		xtype: 'ms2gallery-images-view'
-		,id: 'ms2gallery-images-view'
-		,cls: 'ms2gallery-images'
-		//,onSelect: {fn:function() { }, scope: this}
-		,containerScroll: true
-		,pageSize: parseInt(config.pageSize) || MODx.config.default_per_page
-		,resource_id: config.resource_id
+		xtype: 'ms2gallery-images-view',
+		id: 'ms2gallery-images-view',
+		cls: 'ms2gallery-images',
+		//onSelect: {fn:function() { }, scope: this},
+		containerScroll: true,
+		pageSize: parseInt(config.pageSize) || MODx.config.default_per_page,
+		resource_id: config.resource_id,
 	});
 
 	Ext.applyIf(config,{
-		id: 'ms2gallery-images'
-		,cls: 'browser-view'
-		,border: false
-		,items: [this.view]
-		,tbar: this.getTopBar(config)
-		,bbar: this.getBottomBar(config)
+		id: 'ms2gallery-images',
+		cls: 'browser-view',
+		border: false,
+		items: [this.view],
+		tbar: this.getTopBar(config),
+		bbar: this.getBottomBar(config),
 	});
 	ms2Gallery.panel.Images.superclass.constructor.call(this,config);
 
@@ -33,86 +33,76 @@ Ext.extend(ms2Gallery.panel.Images,MODx.Panel, {
 		var s = this.view.getStore();
 		s.baseParams.tags = tf.getValue();
 		this.getBottomToolbar().changePage(1);
-	}
+	},
 
-	,Search: function(tf) {
-		var s = this.view.getStore();
-		s.baseParams.query = tf.getValue();
-		this.getBottomToolbar().changePage(1);
-	}
-
-	,clearTags: function() {
+	clearTags: function() {
 		var s = this.view.getStore();
 		s.baseParams.tags = '';
 		this.getBottomToolbar().changePage(1);
-	}
+	},
 
-	,clearSearch: function() {
-		var s = this.view.getStore();
-		s.baseParams.query = '';
-		Ext.getCmp('ms2gallery-search-filter').setValue('');
+	Search: function(tf) {
+		this.view.getStore().baseParams.query = tf.getValue();
 		this.getBottomToolbar().changePage(1);
-	}
+	},
 
-	,getTopBar: function(config) {
+	clearSearch: function() {
+		this.view.getStore().baseParams.query = '';
+		this.getBottomToolbar().changePage(1);
+	},
+
+	getTopBar: function(config) {
 		return new Ext.Toolbar({
-			items: [
-				{
-					xtype: 'ms2gallery-combo-tags'
-					,id: 'ms2gallery-combo-tags-filter'
-					,width: 330
-					,emptyText: _('ms2gallery_file_tags')
-					,allowAddNewData: false
-					,addNewDataOnBlur: false
-					,supressClearValueRemoveEvents: true
-					,pageSize: 10 //MODx.config.default_per_page
-					//,editable: false
-					,listeners: {
-						clear: {fn:function(tf) {this.clearTags();}, scope:this}
-						,additem: {fn:function(tf) {this.Tags(tf);}, scope:this}
-						,removeitem: {fn:function(tf) {this.Tags(tf);}, scope:this}
-					}
-				} ,'->' ,{
-					xtype: 'trigger'
-					,id: 'ms2gallery-search-filter'
-					,width: 300
-					,emptyText: _('ms2gallery_file_search')
-					,triggerClass: 'ms2gallery-search-clear' + (MODx.modx23 ? '' : ' x-superboxselect-btn-clear')
-					,onTriggerClick: function() {this.fireEvent('click',this);}
-					,listeners: {
-						render: {fn:function(tf) {
-							tf.getEl().addKeyListener(Ext.EventObject.ENTER,function() {
-								this.Search(tf);
-							},this);
-						},scope:this}
-						,click: {fn:function() {
-							this.clearSearch();
-						}, scope:this}
-					}
-				}
-			]
+			items: [{
+				xtype: 'ms2gallery-combo-tags',
+				id: 'ms2gallery-combo-tags-filter',
+				width: 300,
+				emptyText: _('ms2gallery_file_tags'),
+				allowAddNewData: false,
+				addNewDataOnBlur: false,
+				supressClearValueRemoveEvents: true,
+				pageSize: 10,
+				listeners: {
+					clear: {fn:function(tf) {this.clearTags();}, scope:this},
+					additem: {fn:function(tf) {this.Tags(tf);}, scope:this},
+					removeitem: {fn:function(tf) {this.Tags(tf);}, scope:this},
+				},
+			}, '->', {
+				xtype: 'ms2gallery-field-search',
+				width: 300,
+				listeners: {
+					search: {fn: function(field) {
+						this.Search(field);
+					}, scope: this},
+					clear: {fn: function(field) {
+						field.setValue('');
+						this.clearSearch();
+					}, scope: this},
+				},
+			}]
 		})
-	}
-	,getBottomBar: function(config) {
+	},
+
+	getBottomBar: function(config) {
 		return new Ext.PagingToolbar({
-			pageSize: parseInt(config.pageSize) || MODx.config.default_per_page
-			,store: this.view.store
-			,displayInfo: true
-			,autoLoad: true
-			,items: ['-',
-				_('per_page') + ':'
-				,{
-					xtype: 'textfield'
-					,value: parseInt(config.pageSize) || MODx.config.default_per_page
-					,width: 50
-					,listeners: {
+			pageSize: parseInt(config.pageSize) || MODx.config.default_per_page,
+			store: this.view.store,
+			displayInfo: true,
+			autoLoad: true,
+			items: ['-',
+				_('per_page') + ':',
+				{
+					xtype: 'textfield',
+					value: parseInt(config.pageSize) || MODx.config.default_per_page,
+					width: 50,
+					listeners: {
 						change: {fn:function(tf,nv,ov) {
 							if (Ext.isEmpty(nv)) {return;}
 							nv = parseInt(nv);
 							this.getBottomToolbar().pageSize = nv;
 							this.view.getStore().load({params:{start:0, limit: nv}});
-						}, scope:this}
-						,render: {fn: function(cmp) {
+						}, scope:this},
+						render: {fn: function(cmp) {
 							new Ext.KeyMap(cmp.getEl(), {
 								key: Ext.EventObject.ENTER
 								,fn: function() {this.fireEvent('change',this.getValue());this.blur();return true;}
@@ -122,8 +112,8 @@ Ext.extend(ms2Gallery.panel.Images,MODx.Panel, {
 					}
 				}
 			]
-		})
-	}
+		});
+	},
 
 });
 Ext.reg('ms2gallery-images-panel',ms2Gallery.panel.Images);
@@ -139,7 +129,7 @@ ms2Gallery.view.Images = function(config) {
 		,fields: [
 			'id','resource_id','name','description','url','createdon','createdby','file','thumbnail',
 			'source','source_name','type','rank','active','properties','class',
-			'add','alt','tags'
+			'add','alt','tags','actions'
 		]
 		,id: 'ms2gallery-images-view'
 		,baseParams: {
@@ -173,10 +163,10 @@ ms2Gallery.view.Images = function(config) {
 };
 Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 
-	templates: {}
-	,windows: {}
+	templates: {},
+	windows: {},
 
-	,onSort: function(o) {
+	onSort: function(o) {
 		var el = this.getEl();
 		el.mask(_('loading'),'x-mask-loading');
 		MODx.Ajax.request({
@@ -194,193 +184,101 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 				}, scope: this}
 			}
 		});
-	}
+	},
 
-	,onDblClick: function(e) {
+	onDblClick: function(e) {
 		var node = this.getSelectedNodes()[0];
 		if (!node) {return;}
 
 		this.cm.activeNode = node;
-		this.updateImage(node,e);
-	}
+		this.updateFile(node,e);
+	},
 
-	,updateImage: function(btn,e) {
+	updateFile: function(btn,e) {
 		var node = this.cm.activeNode;
 		var data = this.lookup[node.id];
 		if (!data) {return;}
 
 		var w = MODx.load({
-			xtype: 'ms2gallery-gallery-image'
-			,record: data
-			,listeners: {
+			xtype: 'ms2gallery-gallery-image',
+			record: data,
+			listeners: {
 				success: {fn:function() {this.store.reload()},scope: this}
 			}
 		});
 		w.setValues(data);
 		w.show(e.target);
-	}
+	},
 
-	,showImage: function(btn,e) {
+	showFile: function(btn,e) {
 		var node = this.cm.activeNode;
 		var data = this.lookup[node.id];
 		if (!data) {return;}
 
 		window.open(data.url);
-	}
+	},
 
-	,deleteImage: function(btn,e) {
-		var node = this.cm.activeNode;
-		var data = this.lookup[node.id];
-		if (!data) return;
-
-		MODx.msg.confirm({
-			text: _('ms2gallery_file_delete_confirm')
-			,url: this.config.url
-			,params: {
-				action: 'mgr/gallery/remove'
-				,id: data.id
-			}
-			,listeners: {
-				success: {fn:function() {this.store.reload()},scope: this}
-			}
-		});
-	}
-
-	,deleteMultiple: function(btn,e) {
-		var recs = this.getSelectedRecords();
-		if (!recs) return;
-
-		var ids = '';
-		for (var i=0;i<recs.length;i++) {
-			ids += ','+recs[i].id;
+	fileAction: function(method) {
+		var ids = this._getSelectedIds();
+		if (!ids.length) {
+			return false;
 		}
-
-		MODx.msg.confirm({
-			text: _('ms2gallery_file_delete_multiple_confirm')
-			,url: this.config.url
-			,params: {
-				action: 'mgr/gallery/remove_multiple'
-				,ids: ids.substr(1)
-				,resource_id: this.config.resource_id
-			}
-			,listeners: {
-				success: {fn:function() {this.store.reload()},scope: this}
-			}
-		});
-	}
-
-	,generateThumbs: function() {
-		var node = this.cm.activeNode;
-		var data = this.lookup[node.id];
-		if (!data) return;
-
+		this.getEl().mask(_('loading'),'x-mask-loading');
 		MODx.Ajax.request({
-			url: ms2Gallery.config.connector_url
-			,params: {
-				action: 'mgr/gallery/generate'
-				,id: data.id
+			url: ms2Gallery.config.connector_url,
+			params: {
+				action: 'mgr/gallery/multiple',
+				method: method,
+				ids: Ext.util.JSON.encode(ids),
+			},
+			listeners: {
+				success: {
+					fn: function () {
+						this.store.reload();
+					}, scope: this
+				},
+				failure: {
+					fn: function (response) {
+						MODx.msg.alert(_('error'), response.message);
+					}, scope: this
+				},
 			}
-			,listeners: {
-				success: {fn:function() {this.store.reload()},scope: this}
-			}
-		});
-	}
+		})
+	},
 
-	,generateThumbsMultiple: function() {
-		var recs = this.getSelectedRecords();
-		if (!recs) return;
+	deleteFiles: function() {
+		var ids = this._getSelectedIds();
+		var title = ids.length > 1
+			? 'ms2gallery_file_delete_multiple'
+			: 'ms2gallery_file_delete';
+		var message = ids.length > 1
+			? 'ms2gallery_file_delete_multiple_confirm'
+			: 'ms2gallery_file_delete_confirm';
+		Ext.MessageBox.confirm(
+			_(title),
+			_(message),
+			function(val) {
+				if (val == 'yes') {
+					this.fileAction('remove');
+				}
+			},
+			this
+		);
+	},
 
-		var ids = '';
-		for (var i=0;i<recs.length;i++) {
-			ids += ','+recs[i].id;
-		}
-		MODx.Ajax.request({
-			url: ms2Gallery.config.connector_url
-			,params: {
-				action: 'mgr/gallery/generate_multiple'
-				,ids: ids.substr(1)
-			}
-			,listeners: {
-				success: {fn:function() {this.store.reload()},scope: this}
-			}
-		});
-	}
+	generateThumbs: function() {
+		this.fileAction('generate');
+	},
 
-	,Activate: function() {
-		var node = this.cm.activeNode;
-		var data = this.lookup[node.id];
-		if (!data) return;
+	activateFiles: function() {
+		this.fileAction('activate');
+	},
 
-		MODx.Ajax.request({
-			url: ms2Gallery.config.connector_url
-			,params: {
-				action: 'mgr/gallery/activate'
-				,id: data.id
-			}
-			,listeners: {
-				success: {fn:function() {this.store.reload()},scope: this}
-			}
-		});
-	}
+	inActivateFiles: function() {
+		this.fileAction('inactivate');
+	},
 
-	,activateMultiple: function() {
-		var recs = this.getSelectedRecords();
-		if (!recs) return;
-
-		var ids = '';
-		for (var i=0;i<recs.length;i++) {
-			ids += ','+recs[i].id;
-		}
-		MODx.Ajax.request({
-			url: ms2Gallery.config.connector_url
-			,params: {
-				action: 'mgr/gallery/activate_multiple'
-				,ids: ids.substr(1)
-			}
-			,listeners: {
-				success: {fn:function() {this.store.reload()},scope: this}
-			}
-		});
-	}
-
-	,inActivate: function() {
-		var node = this.cm.activeNode;
-		var data = this.lookup[node.id];
-		if (!data) return;
-
-		MODx.Ajax.request({
-			url: ms2Gallery.config.connector_url
-			,params: {
-				action: 'mgr/gallery/inactivate'
-				,id: data.id
-			}
-			,listeners: {
-				success: {fn:function() {this.store.reload()},scope: this}
-			}
-		});
-	}
-
-	,inactivateMultiple: function() {
-		var recs = this.getSelectedRecords();
-		if (!recs) return;
-
-		var ids = '';
-		for (var i=0;i<recs.length;i++) {
-			ids += ','+recs[i].id;
-		}
-		MODx.Ajax.request({
-			url: ms2Gallery.config.connector_url
-			,params: {
-				action: 'mgr/gallery/inactivate_multiple'
-				,ids: ids.substr(1)
-			}
-			,listeners: {
-				success: {fn:function() {this.store.reload()},scope: this}
-			}
-		});
-	}
-
-	,run: function(p) {
+	run: function(p) {
 		p = p || {};
 		var v = {};
 		Ext.apply(v,this.store.baseParams);
@@ -388,9 +286,9 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 		this.changePage(1);
 		this.store.baseParams = v;
 		this.store.load();
-	}
+	},
 
-	,formatData: function(data) {
+	formatData: function(data) {
 		data.shortName = Ext.util.Format.ellipsis(data.name, 20);
 		data.createdon = ms2Gallery.utils.formatDate(data.createdon);
 		data.size = (data.properties['width'] && data.properties['height'])
@@ -404,9 +302,9 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 			: '';
 		this.lookup['ms2-resource-image-'+data.id] = data;
 		return data;
-	}
+	},
 
-	,_initTemplates: function() {
+	_initTemplates: function() {
 		this.templates.thumb = new Ext.XTemplate(
 			'<tpl for=".">\
 				<div class="modx-browser-thumb-wrap modx-pb-thumb-wrap ms2gallery-thumb-wrap {class}" id="ms2-resource-image-{id}">\
@@ -418,87 +316,39 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 			</tpl>'
 		);
 		this.templates.thumb.compile();
-	}
+	},
 
-	,_showContextMenu: function(v,i,n,e) {
+	_showContextMenu: function(v, i, n, e) {
 		e.preventDefault();
 		var data = this.lookup[n.id];
 		var m = this.cm;
 		m.removeAll();
-		var ct = this.getSelectionCount();
-		var icon = MODx.modx23
-			? 'x-menu-item-icon icon icon-'
-			: 'x-menu-item-icon fa fa-';
 
-		if (ct == 1) {
-			m.add({
-				text: '<i class="'+icon+'edit"></i> ' + _('ms2gallery_file_update')
-				,handler: this.updateImage
-				,scope: this
-			});
-			m.add({
-				text: '<i class="'+icon+'share"></i> ' + _('ms2gallery_file_show')
-				,handler: this.showImage
-				,scope: this
-			});
-			if (data.type == 'image') {
-				m.add({
-					text: '<i class="'+icon+'refresh"></i> ' + _('ms2gallery_image_generate_thumbs')
-					,handler: this.generateThumbs
-					,scope: this
-				});
+		var menu = ms2Gallery.utils.getMenu(data.actions, this, this._getSelectedIds());
+		for (var item in menu) {
+			if (!menu.hasOwnProperty(item)) {
+				continue;
 			}
-			if (data.active == 1) {
-				m.add({
-					text: '<i class="'+icon+'power-off"></i> ' + _('ms2gallery_file_inactivate')
-					,handler: this.inActivate
-					,scope: this
-				});
-			}
-			else {
-				m.add({
-					text: '<i class="'+icon+'check"></i> ' + _('ms2gallery_file_activate')
-					,handler: this.Activate
-					,scope: this
-				});
-			}
-			m.add('-');
-			m.add({
-				text: '<i class="'+icon+'times"></i> ' + _('ms2gallery_file_delete')
-				,handler: this.deleteImage
-				,scope: this
-			});
-			m.show(n,'tl-c?');
-		}
-		else if (ct > 1) {
-			if (data.type == 'image') {
-				m.add({
-					text: '<i class="'+icon+'refresh"></i> ' + _('ms2gallery_image_generate_thumbs')
-					,handler: this.generateThumbsMultiple
-					,scope: this
-				});
-			}
-			m.add({
-				text: '<i class="'+icon+'check"></i> ' + _('ms2gallery_file_activate_multiple')
-				,handler: this.activateMultiple
-				,scope: this
-			});
-			m.add({
-				text: '<i class="'+icon+'power-off"></i> ' + _('ms2gallery_file_inactivate_multiple')
-				,handler: this.inactivateMultiple
-				,scope: this
-			});
-			m.add('-');
-			m.add({
-				text: '<i class="'+icon+'times"></i> ' + _('ms2gallery_file_delete_multiple')
-				,handler: this.deleteMultiple
-				,scope: this
-			});
-			m.show(n,'tl-c?');
+			m.add(menu[item]);
 		}
 
+		m.show(n, 'tl-c?');
 		m.activeNode = n;
-	}
+	},
+
+	_getSelectedIds: function() {
+		var ids = [];
+		var selected = this.getSelectedRecords();
+
+		for (var i in selected) {
+			if (!selected.hasOwnProperty(i)) {
+				continue;
+			}
+			ids.push(selected[i]['id']);
+		}
+
+		return ids;
+	},
 
 });
 Ext.reg('ms2gallery-images-view',ms2Gallery.view.Images);

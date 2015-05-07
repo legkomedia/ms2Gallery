@@ -25,8 +25,8 @@ ms2Gallery.window.Image = function(config) {
 	Ext.applyIf(config,{
 		title: config.record['name'] || _('ms2gallery_file_update')
 		,id: this.ident
-		,cls: (MODx.modx23 ? 'modx23' : 'modx22')
-		,closeAction: 'close'
+		,cls: 'ms2gallery ' + (MODx.modx23 ? 'modx23' : 'modx22')
+		//,closeAction: 'close'
 		,width: 700
 		,autoHeight: true
 		,url: ms2Gallery.config.connector_url

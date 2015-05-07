@@ -4,6 +4,8 @@ Changelog for ms2Gallery.
 ==============
 - Improved injection of gallery tab in resource page.
 - Improved compatibility with AjaxManager.
+- Improved multiple processors.
+- Improved styles for MODX < 2.3.
 
 1.4.2-pl
 ==============

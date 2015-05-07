@@ -3,7 +3,7 @@ ms2Gallery.panel.Gallery = function(config) {
 
 	Ext.apply(config,{
 		id: 'ms2gallery-page',
-		baseCls: 'x-panel ' + (MODx.modx23 ? 'modx23' : 'modx22'),
+		baseCls: 'x-panel ms2gallery ' + (MODx.modx23 ? 'modx23' : 'modx22'),
 		items: [{
 			border: false,
 			baseCls: 'panel-desc',

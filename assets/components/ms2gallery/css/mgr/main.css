@@ -1,6 +1,5 @@
-.ms2gallery-images {float:left;}
-
 /* Images list */
+.ms2gallery-images {float:left;}
 #ms2gallery-images-view {min-height: 150px;}
 .ms2gallery-thumb-wrap {border: 1px solid #efefef; cursor: pointer;}
 .ms2gallery-thumb-wrap:hover {border: 1px solid #AAA;}
@@ -25,41 +24,82 @@ td.x-grid3-td-progress-cell div.x-grid3-cell-inner {padding: 0;position: relativ
 .ux-progress-cell-inner-center div {padding: 3px 0 0 0;position: relative;}
 .ux-progress-cell-inner-left div {padding: 3px 0 0 4px;position: relative;}
 
-/* Menu icons */
-a.x-menu-item .x-menu-item-text, a.x-menu-item .x-menu-item-text .fa {cursor: pointer;}
-a.x-menu-item .x-menu-item-text .fa {line-height:16px; top:auto;}
-.x-menu-list .fa {min-width: 1em; text-align:center;}
-
 /* Image window */
 .ms2gallery-cba .x-form-cb-label {margin-top: 6px;}
 .ms2gallery-window-details {width: 100%; font-size: 12px;}
 .ms2gallery-window-details th {text-align: right; padding-right: 5px; width: 50%;}
 
-.x-superboxselect-list .x-combo-list-inner {
-	height: auto !important;
+/* Search and Tags */
+.ms2gallery .x-superboxselect-btns {overflow: visible !important; right: 0; padding: 0; width: 61px;}
+.ms2gallery .x-superboxselect-list .x-combo-list-inner {height: auto !important;}
+.ms2gallery .x-superboxselect-btn-expand.x-form-trigger {border-left: 1px solid #e4e4e4;}
+.ms2gallery .x-superboxselect-btn-expand.x-form-trigger:hover {border-left-color: transparent;}
+
+.x-field-search-clear,
+.x-field-search-go {border-left: 1px solid #e4e4e4 !important;}
+.x-field-search-clear:hover,
+.x-field-search-go:hover {border-left-color: transparent !important;}
+
+.x-field-search-clear:before,
+.x-superboxselect-btn-clear:before {content: "\f00d" !important;}
+
+.x-field-search-go,
+.x-superboxselect-btn-expand {right: 31px !important; border-radius: 0 !important;}
+
+.x-field-search-go:before {content: "\f002" !important;}
+.x-superboxselect-btn-expand:before {content: "\f0dc" !important;}
+
+.modx22 .x-form-trigger.x-field-search-clear,
+.modx22 .x-form-trigger.x-superboxselect-btn-clear {
+	position: absolute;
+	background-image: none !important;
+	right: 0;
+	font: normal normal normal 14px/1 FontAwesome !important;
+	text-align: center;
+	padding-top: 8px;
+	height: 22px;
+	border-left: 1px solid #e4e4e4 !important;
+}
+.modx22 .x-form-trigger.x-field-search-go,
+.modx22 .x-form-trigger.x-superboxselect-btn-expand {
+	background-image: none !important;
+	font: normal normal normal 14px/1 FontAwesome !important;
+	text-align: center;
+	padding-top: 8px;
+	height: 22px;
+	border-left: 1px solid #e4e4e4 !important;
 }
 
-/* MODX 2.2+ */
-.modx23 .x-form-field-wrap .ms2gallery-search-clear:before {
-	content: "\f00d";
-}
-/* MODX < 2.3 */
-.modx22 .x-superboxselect-input-field {
-	background-color: transparent;
-}
-.modx22 .x-superboxselect li {
-	margin: 2px 2px 0 0;
-}
 .modx22 .x-form-field-trigger-wrap .x-form-text.x-superboxselect,
-.modx22 .x-small-editor .x-form-field-trigger-wrap .x-form-text.x-superboxselect {
-	padding: 2px 4px 4px 4px !important;
-}
-.modx22 .x-form-field-wrap .ms2gallery-search-clear {
-	margin-top:6px;
-	height: 16px;
-	width: 20px;
-	background: url('../../img/mgr/extjs/sb_clear.png') no-repeat scroll left 0 !important;
-}
-.modx22 .x-form-field-wrap .ms2gallery-search-clear.x-form-trigger-over {
-	background-position: left -16px !important;;
-}
+.modx22 .x-superboxselect {padding: 0 !important;}
+.modx22 .x-superboxselect ul {padding: 2px 4px 4px 4px !important;}
+.modx22 .x-superboxselect li {margin: 2px 2px 0 0;}
+.modx22 .x-superboxselect-input-field {background-color: transparent;}
+.modx22 .x-superboxselect-input .x-form-empty-field {color: #606060;font-weight: bold;}
+.modx22 .x-superboxselect-btns div {margin: 0 !important;}
+.modx22 .x-superboxselect-btn-hide {display:inline !important;}
+.modx22 .x-form-trigger.x-superboxselect-btn-clear:hover,
+.modx22 .x-form-trigger.x-superboxselect-btn-expand:hover {background-color:#f3f3f3;}
+
+/* Actions */
+.action-red {color: darkred !important;}
+.x-btn-over .action-red {color: white !important;}
+
+.action-green {color: darkgreen !important;}
+.x-btn-over .action-green {color: white !important;}
+
+.action-blue {color: cadetblue !important;}
+.x-btn-over .action-blue {color: white !important;}
+
+.action-yellow {color: goldenrod !important;}
+.x-btn-over .action-yellow {color: white !important;}
+
+.action-gray {color: dimgray !important;}
+.x-btn-over .action-gray {color: white !important;}
+
+a.x-menu-item .x-menu-item-text, a.x-menu-item .x-menu-item-text .icon {cursor: pointer;}
+a.x-menu-item .x-menu-item-text .icon,
+a.x-menu-item .x-menu-item-text .fa {line-height: 16px; top: auto;}
+.x-menu-list .icon,
+.x-menu-list .fa {min-width: 1em;text-align: center;}
+.x-menu-list-item:hover .icon {color: inherit !important;}

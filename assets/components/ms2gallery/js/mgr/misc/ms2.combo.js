@@ -51,8 +51,10 @@ ms2Gallery.combo.Tags = function(config) {
 		,valueField: 'tag'
 		,triggerAction: 'all'
 		,extraItemCls: 'x-tag'
-		,expandBtnCls: MODx.modx23 ? 'x-form-trigger' : 'x-superboxselect-btn-expand'
-		,clearBtnCls: MODx.modx23 ? 'x-form-trigger' : 'x-superboxselect-btn-clear'
+		//,expandBtnCls: MODx.modx23 ? 'x-form-trigger' : 'x-superboxselect-btn-expand'
+		//,clearBtnCls: MODx.modx23 ? 'x-form-trigger' : 'x-superboxselect-btn-clear'
+		,expandBtnCls:'x-form-trigger'
+		,clearBtnCls: 'x-form-trigger'
 		,listeners: {
 			newitem: function(bs, v) {
 				bs.addNewItem({tag: v});
@@ -64,3 +66,52 @@ ms2Gallery.combo.Tags = function(config) {
 };
 Ext.extend(ms2Gallery.combo.Tags,Ext.ux.form.SuperBoxSelect);
 Ext.reg('ms2gallery-combo-tags',ms2Gallery.combo.Tags);
+
+
+ms2Gallery.combo.Search = function(config) {
+	config = config || {};
+	Ext.applyIf(config, {
+		xtype: 'twintrigger',
+		ctCls: 'x-field-search',
+		allowBlank: true,
+		msgTarget: 'under',
+		emptyText: _('ms2gallery_file_search'),
+		name: 'query',
+		triggerAction: 'all',
+		clearBtnCls: 'x-field-search-clear',
+		searchBtnCls: 'x-field-search-go',
+		onTrigger1Click: this._triggerSearch,
+		onTrigger2Click: this._triggerClear,
+	});
+	ms2Gallery.combo.Search.superclass.constructor.call(this, config);
+	this.on('render', function() {
+		this.getEl().addKeyListener(Ext.EventObject.ENTER, function() {
+			this._triggerSearch();
+		}, this);
+	});
+	this.addEvents('clear', 'search');
+};
+Ext.extend(ms2Gallery.combo.Search, Ext.form.TwinTriggerField, {
+
+	initComponent: function() {
+		Ext.form.TwinTriggerField.superclass.initComponent.call(this);
+		this.triggerConfig = {
+			tag: 'span',
+			cls: 'x-field-search-btns',
+			cn: [
+				{tag: 'div', cls: 'x-form-trigger ' + this.searchBtnCls},
+				{tag: 'div', cls: 'x-form-trigger ' + this.clearBtnCls}
+			]
+		};
+	},
+
+	_triggerSearch: function() {
+		this.fireEvent('search', this);
+	},
+
+	_triggerClear: function() {
+		this.fireEvent('clear', this);
+	},
+
+});
+Ext.reg('ms2gallery-field-search', ms2Gallery.combo.Search);
