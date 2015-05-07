@@ -210,6 +210,52 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 		w.show(e.target);
 	},
 
+	editTags: function(btn,e) {
+		var ids = this._getSelectedIds();
+		var arr1 = [];
+		for (var id in ids) {
+			if (!ids.hasOwnProperty(id)) {
+				continue;
+			}
+			var data = this.lookup['ms2-resource-image-' + ids[id]];
+			if (data) {
+				var arr2 = [];
+				for (var tag in data.tags) {
+					if (data.tags.hasOwnProperty(tag)) {
+						if (id == 0) {
+							arr1.push(data.tags[tag]['tag']);
+						}
+						else {
+							arr2.push(data.tags[tag]['tag']);
+						}
+					}
+				}
+				if (id > 0) {
+					arr1 = this._array_intersect(arr1, arr2);
+				}
+			}
+		}
+
+		var tags = [];
+		if (arr1.length > 0) {
+			for (var i in arr1) {
+				if (arr1.hasOwnProperty(i)) {
+					tags.push({tag: arr1[i]});
+				}
+			}
+		}
+
+		var w = MODx.load({
+			xtype: 'ms2gallery-gallery-tags',
+			ids: Ext.util.JSON.encode(ids),
+			tags: tags,
+			listeners: {
+				success: {fn:function() {this.store.reload()},scope: this}
+			}
+		});
+		w.show(e.target);
+	},
+
 	showFile: function(btn,e) {
 		var node = this.cm.activeNode;
 		var data = this.lookup[node.id];
@@ -350,5 +396,17 @@ Ext.extend(ms2Gallery.view.Images,MODx.DataView,{
 		return ids;
 	},
 
+	_array_intersect: function(arr1, arr2) {
+		var results = [];
+
+		for (var i = 0; i < arr1.length; i++) {
+			if (arr2.indexOf(arr1[i]) !== -1) {
+				results.push(arr1[i]);
+			}
+		}
+
+		return results;
+	}
+
 });
-Ext.reg('ms2gallery-images-view',ms2Gallery.view.Images);
+Ext.reg('ms2gallery-images-view', ms2Gallery.view.Images);

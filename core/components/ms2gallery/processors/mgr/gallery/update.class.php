@@ -17,12 +17,14 @@ class msResourceFileUpdateProcessor extends modObjectUpdateProcessor {
 		}
 
 		foreach (array('file', 'name') as $v) {
-			$tmp = trim($this->getProperty($v));
-			if (empty($tmp)) {
-				$this->addFieldError($v, $this->modx->lexicon('field_required'));
-			}
-			else {
-				$this->setProperty($v, $tmp);
+			$tmp = $this->getProperty($v, null);
+			if ($tmp !== null) {
+				if (empty($tmp)) {
+					$this->addFieldError($v, $this->modx->lexicon('field_required'));
+				}
+				else {
+					$this->setProperty($v, $tmp);
+				}
 			}
 		}
 

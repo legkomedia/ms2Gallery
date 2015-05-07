@@ -2,6 +2,7 @@ Changelog for ms2Gallery.
 
 1.4.3-pl
 ==============
+- Ability to edit tags of multiple files.
 - Improved injection of gallery tab in resource page.
 - Improved compatibility with AjaxManager.
 - Improved multiple processors.

@@ -54,6 +54,8 @@ $_lang['ms2gallery_file_activate'] = 'Включить файл';
 $_lang['ms2gallery_file_inactivate'] = 'Отключить файл';
 $_lang['ms2gallery_file_activate_multiple'] = 'Включить файлы';
 $_lang['ms2gallery_file_inactivate_multiple'] = 'Отключить файлы';
+$_lang['ms2gallery_file_edit_tags'] = 'Изменить теги';
+$_lang['ms2gallery_file_edit_tags_intro'] = 'Эта операция перезапишет все теги выбранных файлов!';
 
 $_lang['ms2gallery_message_close_all'] = 'закрыть все';
 $_lang['ms2gallery_err_unknown'] = 'Неизвестная ошибка';

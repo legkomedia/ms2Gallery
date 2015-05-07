@@ -158,6 +158,16 @@ class msResourceFileGetListProcessor extends modObjectGetListProcessor {
 
 		$row['actions'][] = array(
 			'cls' => '',
+			'icon' => "$icon $icon-tags",
+			'title' => $this->modx->lexicon('ms2gallery_file_edit_tags'),
+			'multiple' => $this->modx->lexicon('ms2gallery_file_edit_tags'),
+			'action' => 'editTags',
+			'button' => false,
+			'menu' => true,
+		);
+
+		$row['actions'][] = array(
+			'cls' => '',
 			'icon' => "$icon $icon-share",
 			'title' => $this->modx->lexicon('ms2gallery_file_show'),
 			'action' => 'showFile',

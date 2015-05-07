@@ -48,6 +48,8 @@ $_lang['ms2gallery_file_activate'] = 'Activate file';
 $_lang['ms2gallery_file_inactivate'] = 'Inactivate file';
 $_lang['ms2gallery_file_activate_multiple'] = 'Activate files';
 $_lang['ms2gallery_file_inactivate_multiple'] = 'Inactivate files';
+$_lang['ms2gallery_file_edit_tags'] = 'Edit tags';
+$_lang['ms2gallery_file_edit_tags_intro'] = 'This operation will overwrite all tags of the selected files!';
 
 $_lang['ms2gallery_message_close_all'] = 'close all';
 $_lang['ms2gallery_err_unknown'] = 'Unknown error';
