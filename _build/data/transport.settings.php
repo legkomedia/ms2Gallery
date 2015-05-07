@@ -38,6 +38,13 @@ $tmp = array(
 		'xtype' => 'textfield',
 		'area' => 'ms2gallery_resource',
 	),
+	/*
+	'disable_for_ms2' => array(
+		'value' => true,
+		'xtype' => 'combo-boolean',
+		'area' => 'ms2gallery_resource',
+	),
+	*/
 	'set_placeholders' => array(
 		'value' => false,
 		'xtype' => 'combo-boolean',

@@ -18,6 +18,8 @@ $_lang['setting_ms2gallery_date_format'] = 'Формат даты';
 $_lang['setting_ms2gallery_date_format_desc'] = 'Укажите формат дат, используя синтаксис php функции strftime(). По умолчанию формат "%d.%m.%y %H:%M".';
 $_lang['setting_ms2gallery_disable_for_templates'] = 'Отключить показ у шаблонов';
 $_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Перечислите id шаблонов через запятую, для которых не нужно выводить вкладку с галерей.';
+$_lang['setting_ms2gallery_disable_for_ms2'] = 'Отключить для MS2';
+$_lang['setting_ms2gallery_disable_for_ms2_desc'] = 'Отключить вкладку с галерей для товаров miniShop2, у которых есть собственная галерея?';
 
 $_lang['setting_ms2gallery_set_placeholders'] = 'Включить авто-плейсхолдеры?';
 $_lang['setting_ms2gallery_set_placeholders_desc'] = 'Вы можете включить автоматическое выставление плейсхолдеров с изображениями на странице с гелереей.';

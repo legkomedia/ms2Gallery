@@ -18,6 +18,8 @@ $_lang['setting_ms2gallery_date_format'] = 'Format of dates';
 $_lang['setting_ms2gallery_date_format_desc'] = 'You can specify how to format dates using php strftime() syntax. By default format is "%d.%m.%y %H:%M".';
 $_lang['setting_ms2gallery_disable_for_templates'] = 'Disable for templates';
 $_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Specify comma-separated list of ids of a templates, for which you do not want to display the tab with gallery.';
+$_lang['setting_ms2gallery_disable_for_ms2'] = 'Disable for MS2';
+$_lang['setting_ms2gallery_disable_for_ms2_desc'] = 'Disable gallery tab for miniShop2 products that has their own gallery?';
 
 $_lang['setting_ms2gallery_set_placeholders'] = 'Enable auto-placeholders?';
 $_lang['setting_ms2gallery_set_placeholders_desc'] = 'You can enable auto set of placeholders with images of gallery on page.';

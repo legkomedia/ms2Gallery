@@ -1,9 +1,10 @@
 <?php
 /** @var array $scriptProperties */
 switch ($modx->event->name) {
+
 	case 'OnDocFormRender':
 		/** @var modResource $resource */
-		if ($resource instanceof msProduct || $mode == 'new') {
+		if ($mode == 'new' || ($resource->class_key == 'msProduct' && $modx->getOption('ms2gallery_disable_for_ms2', null, true))) {
 			return;
 		}
 		$template = $resource->get('template');
@@ -11,116 +12,20 @@ switch ($modx->event->name) {
 		if ($templates[0] != '' && in_array($template, $templates)) {
 			return;
 		}
-		$modx23 = !empty($modx->version) && version_compare($modx->version['full_version'], '2.3.0', '>=');
-		$modx->controller->addHtml('<script type="text/javascript">
-			Ext.onReady(function() {
-				MODx.modx23 = ' . (int)$modx23 . ';
-			});
-		</script>');
 
 		/** @var ms2Gallery $ms2Gallery */
-		$ms2Gallery = $modx->getService('ms2gallery', 'ms2Gallery', MODX_CORE_PATH . 'components/ms2gallery/model/ms2gallery/');
-		$modx->controller->addLexiconTopic('ms2gallery:default');
-		$url = $ms2Gallery->config['assetsUrl'];
-
-		$modx->controller->addJavascript($url . 'js/mgr/ms2gallery.js');
-		$modx->controller->addLastJavascript($url . 'js/mgr/misc/ms2.combo.js');
-		$modx->controller->addLastJavascript($url . 'js/mgr/misc/ms2.utils.js');
-		$modx->controller->addLastJavascript($url . 'js/mgr/misc/plupload/plupload.full.js');
-		$modx->controller->addLastJavascript($url . 'js/mgr/misc/ext.ddview.js');
-		$modx->controller->addLastJavascript($url . 'js/mgr/uploader.grid.js');
-		$modx->controller->addLastJavascript($url . 'js/mgr/gallery.view.js');
-		$modx->controller->addLastJavascript($url . 'js/mgr/gallery.window.js');
-		$modx->controller->addLastJavascript($url . 'js/mgr/gallery.panel.js');
-		$modx->controller->addCss($url . 'css/mgr/main.css');
-		if (!$modx23) {
-			$modx->controller->addCss($url . 'css/mgr/font-awesome.min.css');
-		}
-
-		$properties = $resource->getProperties('ms2gallery');
-		if (empty($properties['media_source'])) {
-			if (!$source_id = $resource->getTVValue('ms2Gallery')) {
-				$source_id = $modx->getOption('ms2gallery_source_default');
-			}
-			$resource->setProperties(array('media_source' => $source_id), 'ms2gallery');
-			$resource->save();
-		}
-		else {
-			$source_id = $properties['media_source'];
-		}
-
-		if (empty($source_id)) {
-			$source_id = $modx->getOption('ms2gallery_source_default');
-		}
-		$resource->set('media_source', $source_id);
-
-		$source_config = array();
-		/** @var modMediaSource $source */
-		if ($source = $modx->getObject('modMediaSource', $source_id)) {
-			$tmp = $source->getProperties();
-			$properties = array();
-			foreach ($tmp as $v) {
-				$source_config[$v['name']] = $v['value'];
-			}
-		}
-
-		if ($modx->getCount('modPlugin', array('name' => 'AjaxManager', 'disabled' => false))) {
-			$modx->controller->addHtml('
-			<script type="text/javascript">
-				ms2Gallery.config = ' . $modx->toJSON($ms2Gallery->config) . ';
-				ms2Gallery.config.media_source = ' . $modx->toJSON($source_config) . ';
-				Ext.onReady(function() {
-					window.setTimeout(function() {
-						var tabs = Ext.getCmp("modx-resource-tabs");
-						if (tabs) {
-							tabs.add({
-								xtype: "ms2gallery-page",
-								id: "ms2gallery-page",
-								title: _("ms2gallery"),
-								record: {
-									id: ' . $resource->get('id') . '
-									,source: ' . $source_id . '
-								}
-							});
-						}
-					}, 10);
-				});
-			</script>');
-		}
-		else {
-			$modx->controller->addHtml('
-			<script type="text/javascript">
-				ms2Gallery.config = ' . $modx->toJSON($ms2Gallery->config) . ';
-				ms2Gallery.config.media_source = ' . $modx->toJSON($source_config) . ';
-				Ext.ComponentMgr.onAvailable("modx-resource-tabs", function() {
-					this.on("beforerender", function() {
-						this.add({
-							xtype: "ms2gallery-page",
-							id: "ms2gallery-page",
-							title: _("ms2gallery"),
-							record: {
-								id: ' . $resource->get('id') . '
-								,source: ' . $source_id . '
-							}
-						});
-					});
-					Ext.apply(this, {
-							stateful: true,
-							stateId: "modx-resource-tabs-state",
-							stateEvents: ["tabchange"],
-							getState: function() {return {activeTab:this.items.indexOf(this.getActiveTab())};
-						}
-					});
-				});
-			</script>');
+		if ($ms2Gallery = $modx->getService('ms2gallery', 'ms2Gallery', MODX_CORE_PATH . 'components/ms2gallery/model/ms2gallery/')) {
+			$ms2Gallery->loadManagerFiles($modx->controller, $resource);
 		}
 		break;
+
 
 	case 'OnBeforeDocFormSave':
 		if ($source_id = $resource->get('media_source')) {
 			$resource->setProperties(array('media_source' => $source_id), 'ms2gallery');
 		}
 		break;
+
 
 	case 'OnLoadWebDocument':
 		$tstart = microtime(true);
@@ -185,6 +90,7 @@ switch ($modx->event->name) {
 		$modx->log(modX::LOG_LEVEL_INFO, '[ms2Gallery] Set image placeholders for page id = ' . $modx->resource->id . ' in ' . number_format(microtime(true) - $tstart, 7) . ' sec.');
 		break;
 
+
 	case 'OnBeforeEmptyTrash':
 		if (empty($scriptProperties['ids']) || !is_array($scriptProperties['ids'])) {
 			return;
@@ -207,8 +113,13 @@ switch ($modx->event->name) {
 				$images = $modx->getIterator('msResourceFile', array('resource_id' => $resource_id, 'parent' => 0));
 				/** @var msResourceFile $image */
 				foreach ($images as $image) {
-					$image->prepareSource($source);
-					$image->remove();
+					$prepare = $image->prepareSource($source);
+					if ($prepare === true) {
+						$image->remove();
+					}
+					else {
+						$modx->log(modX::LOG_LEVEL_ERROR, "[ms2Gallery] {$prepare}.");
+					}
 				}
 				if ($source) {
 					$source->removeContainer($source->getBasePath() . $resource_id);
@@ -216,4 +127,5 @@ switch ($modx->event->name) {
 			}
 		}
 		break;
+
 }

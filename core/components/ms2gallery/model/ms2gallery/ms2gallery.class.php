@@ -184,5 +184,81 @@ class ms2Gallery {
 
 		return $properties;
 	}
+
+
+	/**
+	 * Compares MODX version
+	 *
+	 * @param string $version
+	 * @param string $dir
+	 *
+	 * @return bool
+	 */
+	public function systemVersion($version = '2.3.0', $dir = '>=') {
+		$this->modx->getVersionData();
+
+		return !empty($this->modx->version) && version_compare($this->modx->version['full_version'], $version, $dir);
+	}
+
+
+	/**
+	 * @param modManagerController $controller
+	 * @param modResource $resource
+	 */
+	public function loadManagerFiles(modManagerController $controller, modResource $resource) {
+		$modx23 = (int)$this->systemVersion();
+		$cssUrl = $this->config['cssUrl'] . 'mgr/';
+		$jsUrl = $this->config['jsUrl'] . 'mgr/';
+
+		$properties = $resource->getProperties('ms2gallery');
+		if (empty($properties['media_source'])) {
+			if (!$source_id = $resource->getTVValue('ms2Gallery')) {
+				$source_id = $this->modx->getOption('ms2gallery_source_default');
+			}
+			$resource->setProperties(array('media_source' => $source_id), 'ms2gallery');
+			$resource->save();
+		}
+		else {
+			$source_id = $properties['media_source'];
+		}
+
+		if (empty($source_id)) {
+			$source_id = $this->modx->getOption('ms2gallery_source_default');
+		}
+		$resource->set('media_source', $source_id);
+
+		$controller->addLexiconTopic('ms2gallery:default');
+		$controller->addJavascript($jsUrl . 'ms2gallery.js');
+		$controller->addLastJavascript($jsUrl . 'misc/ms2.combo.js');
+		$controller->addLastJavascript($jsUrl . 'misc/ms2.utils.js');
+		$controller->addLastJavascript($jsUrl . 'misc/plupload/plupload.full.js');
+		$controller->addLastJavascript($jsUrl . 'misc/ext.ddview.js');
+		$controller->addLastJavascript($jsUrl . 'uploader.grid.js');
+		$controller->addLastJavascript($jsUrl . 'gallery.view.js');
+		$controller->addLastJavascript($jsUrl . 'gallery.window.js');
+		$controller->addLastJavascript($jsUrl . 'gallery.panel.js');
+		$controller->addLastJavascript($jsUrl . 'tab.js');
+		$controller->addCss($cssUrl . 'main.css');
+		if (!$modx23) {
+			$controller->addCss($cssUrl . 'font-awesome.min.css');
+		}
+
+		$source_config = array();
+		/** @var modMediaSource $source */
+		if ($source = $this->modx->getObject('modMediaSource', $source_id)) {
+			$tmp = $source->getProperties();
+			foreach ($tmp as $v) {
+				$source_config[$v['name']] = $v['value'];
+			}
+		}
+
+		$controller->addHtml('
+		<script type="text/javascript">
+			MODx.modx23 = ' . $modx23 . ';
+			ms2Gallery.config = ' . $this->modx->toJSON($this->config) . ';
+			ms2Gallery.config.media_source = ' . $this->modx->toJSON($source_config) . ';
+		</script>', true);
+	}
+
 }
 

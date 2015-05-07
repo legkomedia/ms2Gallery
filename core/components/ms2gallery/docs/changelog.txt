@@ -1,5 +1,10 @@
 Changelog for ms2Gallery.
 
+1.4.3-pl
+==============
+- Improved injection of gallery tab in resource page.
+- Improved compatibility with AjaxManager.
+
 1.4.2-pl
 ==============
 - New system setting "exact_sorting".

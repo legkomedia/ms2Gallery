@@ -59,10 +59,10 @@ class msResourceFile extends xPDOSimpleObject {
 		$filename = $this->get('path') . $this->get('file');
 		$info = $this->mediaSource->getObjectContents($filename);
 		if (!is_array($info)) {
-			return "Could not retrieve contents of file {$filename} from media source.";
+			return "[ms2Gallery] Could not retrieve contents of file {$filename} from media source.";
 		}
 		elseif (!empty($this->mediaSource->errors['file'])) {
-			return "Could not retrieve file {$filename} from media source: " . $this->mediaSource->errors['file'];
+			return "[ms2Gallery] Could not retrieve file {$filename} from media source: " . $this->mediaSource->errors['file'];
 		}
 
 		$properties = $this->mediaSource->getProperties();
@@ -126,13 +126,15 @@ class msResourceFile extends xPDOSimpleObject {
 			if ($phpThumb->RenderOutput()) {
 				@unlink($phpThumb->sourceFilename);
 				@unlink($tf);
+				$this->xpdo->log(modX::LOG_LEVEL_INFO, '[ms2Gallery] phpThumb messages for "' . $this->get('url') . '". ' . print_r($phpThumb->debugmessages, 1));
+
 				return $phpThumb->outputImageData;
 			}
 		}
 		@unlink($phpThumb->sourceFilename);
 		@unlink($tf);
 
-		$this->xpdo->log(modX::LOG_LEVEL_ERROR, 'Could not generate thumbnail for "' . $this->get('url') . '". ' . print_r($phpThumb->debugmessages, 1));
+		$this->xpdo->log(modX::LOG_LEVEL_ERROR, '[ms2Gallery] Could not generate thumbnail for "' . $this->get('url') . '". ' . print_r($phpThumb->debugmessages, 1));
 		return false;
 	}
 
