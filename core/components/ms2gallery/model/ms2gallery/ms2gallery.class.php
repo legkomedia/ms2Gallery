@@ -237,7 +237,6 @@ class ms2Gallery {
 		$controller->addLastJavascript($jsUrl . 'gallery.view.js');
 		$controller->addLastJavascript($jsUrl . 'gallery.window.js');
 		$controller->addLastJavascript($jsUrl . 'gallery.panel.js');
-		$controller->addLastJavascript($jsUrl . 'tab.js');
 		$controller->addCss($cssUrl . 'main.css');
 		if (!$modx23) {
 			$controller->addCss($cssUrl . 'font-awesome.min.css');
@@ -251,13 +250,53 @@ class ms2Gallery {
 				$source_config[$v['name']] = $v['value'];
 			}
 		}
-
 		$controller->addHtml('
 		<script type="text/javascript">
 			MODx.modx23 = ' . $modx23 . ';
 			ms2Gallery.config = ' . $this->modx->toJSON($this->config) . ';
 			ms2Gallery.config.media_source = ' . $this->modx->toJSON($source_config) . ';
 		</script>', true);
+
+		if ($this->modx->getOption('ms2gallery_new_tab_mode', null, true)) {
+			$controller->addLastJavascript($jsUrl . 'tab.js');
+		}
+		else {
+			$insert = '
+				tabs.add({
+					xtype: "ms2gallery-page",
+					id: "ms2gallery-page",
+					title: _("ms2gallery"),
+					record: {
+						id: ' . $resource->get('id') . ',
+						source: ' . $source_id . ',
+					}
+				});
+			';
+			if ($this->modx->getCount('modPlugin', array('name' => 'AjaxManager', 'disabled' => false))) {
+				$controller->addHtml('
+				<script type="text/javascript">
+					Ext.onReady(function() {
+						window.setTimeout(function() {
+							var tabs = Ext.getCmp("modx-resource-tabs");
+							if (tabs) {
+								' . $insert . '
+							}
+						}, 10);
+					});
+				</script>', true);
+			}
+			else {
+				$controller->addHtml('
+				<script type="text/javascript">
+					Ext.ComponentMgr.onAvailable("modx-resource-tabs", function() {
+						var tabs = this;
+						tabs.on("beforerender", function() {
+							' . $insert . '
+						});
+					});
+				</script>', true);
+			}
+		}
 	}
 
 }

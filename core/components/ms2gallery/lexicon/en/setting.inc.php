@@ -20,6 +20,8 @@ $_lang['setting_ms2gallery_disable_for_templates'] = 'Disable for templates';
 $_lang['setting_ms2gallery_disable_for_templates_desc'] = 'Specify comma-separated list of ids of a templates, for which you do not want to display the tab with gallery.';
 $_lang['setting_ms2gallery_disable_for_ms2'] = 'Disable for MS2';
 $_lang['setting_ms2gallery_disable_for_ms2_desc'] = 'Disable gallery tab for miniShop2 products that has their own gallery?';
+$_lang['setting_ms2gallery_new_tab_mode'] = 'The method of tab connection';
+$_lang['setting_ms2gallery_new_tab_mode_desc'] = 'Use a new way of connecting tab that works well with AjaxManager, but does not work with Articles and miniShop2?';
 
 $_lang['setting_ms2gallery_set_placeholders'] = 'Enable auto-placeholders?';
 $_lang['setting_ms2gallery_set_placeholders_desc'] = 'You can enable auto set of placeholders with images of gallery on page.';

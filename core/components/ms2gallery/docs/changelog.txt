@@ -1,5 +1,10 @@
 Changelog for ms2Gallery.
 
+1.4.4-pl
+==============
+- New system setting "new_tab_mode".
+- New system setting "disable_for_ms2".
+
 1.4.3-pl
 ==============
 - Ability to edit tags of multiple files.
