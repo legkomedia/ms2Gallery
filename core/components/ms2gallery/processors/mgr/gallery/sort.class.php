@@ -25,7 +25,6 @@ class msResourceFileSortProcessor extends modObjectProcessor {
 				SET rank = rank - 1 WHERE
 					resource_id = " . $resource_id . "
 					AND parent = 0
-					AND type = 'image'
 					AND rank <= {$target->get('rank')}
 					AND rank > {$source->get('rank')}
 					AND rank > 0
@@ -37,7 +36,6 @@ class msResourceFileSortProcessor extends modObjectProcessor {
 				SET rank = rank + 1 WHERE
 					resource_id = " . $resource_id . "
 					AND parent = 0
-					AND type = 'image'
 					AND rank >= {$target->get('rank')}
 					AND rank < {$source->get('rank')}
 			");
