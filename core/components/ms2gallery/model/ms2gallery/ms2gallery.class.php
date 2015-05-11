@@ -146,7 +146,7 @@ class ms2Gallery {
 			return;
 		}
 
-		$q = $this->modx->newQuery('msResourceFile', array('resource_id' => $resource_id, 'parent' => 0, 'type' => 'image'));
+		$q = $this->modx->newQuery('msResourceFile', array('resource_id' => $resource_id, 'parent' => 0));
 		$q->select('id');
 		$q->sortby('rank ASC, createdon', 'ASC');
 
@@ -155,7 +155,7 @@ class ms2Gallery {
 			$table = $this->modx->getTableName('msResourceFile');
 			if ($ids = $q->stmt->fetchAll(PDO::FETCH_COLUMN)) {
 				foreach ($ids as $k => $id) {
-					$sql .= "UPDATE {$table} SET `rank` = '{$k}' WHERE `type` = 'image' AND (`id` = {$id} OR `parent` = {$id});";
+					$sql .= "UPDATE {$table} SET `rank` = '{$k}' WHERE (`id` = {$id} OR `parent` = {$id});";
 				}
 			}
 			$sql .= "ALTER TABLE {$table} ORDER BY `rank` ASC;";
